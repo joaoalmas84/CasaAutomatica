@@ -7,11 +7,11 @@
 using namespace std;
 
 
-const vector <string> comandos = {"prox", "avanca", "hnova", "hrem", "znova", "zrem", "zlista", "zcomp", "zprops", "pmod","cnovo",
+const vector <string> comandos = {"prox", "avanc", "hnova", "hrem", "znova", "zrem", "zlista", "zcomp", "zprops", "pmod","cnovo",
                                   "crem", "rnova", "pmuda", "rlista", "rrem", "asoc", "ades", "acom", "psalva", "prepoe", "prem",
                                   "plista", "exec", "sair"};
 
-const vector <int> nArgs = {0, 1, 2, 0, 2, 1, 0, 1, 1, 3, 3, 3, 99, 3, 2, 3, 3, 3, 3, 3, 1, 1, 0, 1, 0};
+const vector <int> nArgs = {0, 1, 2, 0, 2, 1, 0, 1, 1, 3, -1,3, -1, -1, 2, 3, 3, 3, -1, 3, 1, 1, 0, 1, 0};
 
 const vector <string> spa = {"s", "p", "a"};
 

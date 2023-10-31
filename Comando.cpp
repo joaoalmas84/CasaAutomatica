@@ -158,7 +158,7 @@ bool Comando::isIntegerString(string str) {
 
 // -1 <- se nao encontrar str; se encontrar devolve o indice da posicao
 int Comando::isInVector(vector<string>v, string str) {
-    auto it = find (v.begin(), v.end(), str);
+    auto it = find(v.begin(), v.end(), str);
     if (it != v.end()) {
         return distance(v.begin(), it);
     } else {

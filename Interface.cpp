@@ -15,7 +15,7 @@ void UI() {
         switch (res) {
             case 0:
                 cout << c.descricao();
-               cout << '\n';
+                cout << '\n';
                 if (c.validaStx()) {
                     cout << "\nSintaxe valida";
                 } else {
