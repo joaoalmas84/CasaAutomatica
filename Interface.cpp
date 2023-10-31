@@ -1,21 +1,26 @@
 #include "Interface.h"
-#include <iostream>
+#include "utils.h"
 #include <sstream>
-#include <algorithm>
 
 void UI() {
     string cmd;
-    while (cmd != "sair") {
+    while (1) {
         cmd = "";
         int res = -1;
         Comando c;
 
         cmd = getCmd();
-        res = validaCmd(cmd, c);
+        res = c.validaCmd(cmd);
 
         switch (res) {
             case 0:
                 cout << c.descricao();
+               cout << '\n';
+                if (c.validaStx()) {
+                    cout << "\nSintaxe valida";
+                } else {
+                    cout << "\nSintaxe invalida";
+                }
                 break;
             case 1:
                 wcout << L"Comando nao encontrado";
@@ -39,32 +44,3 @@ string getCmd() {
     return cmd;
 }
 
-int countArgs(string cmd) {
-    istringstream iss(cmd);
-    string str;
-    int i = 0;
-    while (iss >> str) {
-        i++;
-    }
-    return i-1; // <- -1 Porque o nome do comando não conta para o n.º de argumentos
-}
-
-//0-> valido; 1 -> invalido; 2 -> falta argumentos; 3 -> excesso de argumentos;
-int validaCmd(string cmd, Comando& c) {
-    int argCount = countArgs(cmd);
-    istringstream iss(cmd);
-    string str;
-    iss >> str;
-    auto it = find(comandos.begin(), comandos.end(), str);
-
-    if (it == comandos.end()) {return 1;}
-    else if (argCount < nArgs[distance(comandos.begin(), it)]) {return 2;}
-    else if (argCount > nArgs[distance(comandos.begin(), it)]) {return 3;}
-    else {
-        c.setNome(str);
-        c.setNumArg(argCount);
-        c.setCorpo(cmd);
-        c.setSintaxe(stx[distance(comandos.begin(), it)]);
-        return 0;
-    }
-}
