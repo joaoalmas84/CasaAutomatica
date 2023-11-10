@@ -1,65 +1,59 @@
 //
-// Created by 35193 on 30/10/2023.
+// Created by 35193 on 09/11/2023.
 //
 
-#ifndef POO_ZONA_H
-#define POO_ZONA_H
-#include "Sensor.h"
+#ifndef OOP_TRABALHO_ZONA_H
+#define OOP_TRABALHO_ZONA_H
 #include "Propriedade.h"
+#include "Sensor.h"
 #include "Processador.h"
 #include <string>
 #include <map>
-#include <iostream>
 #include <vector>
 
 using namespace std;
-
 class Zona {
-    static int CONT;
-    const int ID;
-    string nome;
+    static int baseId;
+    const int id;
+    string tilulo;
+    map<string, Propriedade*> propriedades;
     vector<Sensor*> sensores;
-    vector<Processador> processador;
-    //vector<Aparelho*> Aparelho;
-    map<string, Propriedade> propriedades;
+    vector<Processador*> processadores;
 
 
 public:
 
-    //sobre a class Zona
-    Zona(string nome = "Sem Nome");
-    Zona(bool Default, string nome = "sem Nome");
+    ////////////////////////////construtores da class zona
+    explicit Zona(string nomeDaZona = "zona sem nome");
+    [[nodiscard]]
     string getAsString() const;
-    int get_NumSensor() const;
+    [[nodiscard]]
+    int getNumeroPropriedades() const;
+    [[nodiscard]]
+    int getId() const;
+
+    /////////////////////// criar uma propriedade nova e mudar o valor a funcao set nao deve ser usar e sum para testar
+    bool addPropriedade(const string& nomeDaPropriedades, optional<double> min);
+    bool addPropriedade(const string& nomeDaPropriedades, optional<double> min, optional<double> max);
+    bool addPropriedade(const string& nomeDaPropriedades);
+    bool setPropriedades(const string& nomeDaPropriedades, int valor);
+
+    ///////////////////// criar sensores
+    // a funcao tem um porblema
+    bool addSensor(const string& propsNome);
+
+    bool addProcessador();
+
+    bool addRegrasPorc(int idProc,int idsensor, const std::string &funcao, optional<double> x, optional<double> y = {});
+
+    string listaPropriedades() const;
 
 
-    // sobre as class SENSOR
-    double getValor_propriedade(string chave);
-    void setValor_Propriedades(string nomeDaPropriedades, int valor);
-    bool redefineValor_setValor_Propriedades(string nomeDaPropriedades, int valor);
-    void setPropriedade(string nomeDaPropriedades, optional<double> min);
-    void setPropriedade(string nomeDaPropriedades, optional<double> min, optional<double> max);
-    void setPropriedade(string nomeDaPropriedades);
-    void setPropriedade_max(string nomeDaPropriedades, optional<double> max);
-    bool addSensor(Sensor & Asensor);
-
-
-    bool addProcessador(Processador & Aprocessador );
-    void addAparelho();
-
-    void removeSensor(int id);
-    void removeProcessador(int id);
-    void removeAparelho(int id);
 
 private:
     void iniciarPropriedadesDefault();
 
-
-
-
-
-
 };
 
 
-#endif //POO_ZONA_H
+#endif //OOP_TRABALHO_ZONA_H

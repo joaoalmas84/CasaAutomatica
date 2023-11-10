@@ -1,17 +1,33 @@
 //
-// Created by 35193 on 01/11/2023.
+// Created by 35193 on 09/11/2023.
 //
 
-#ifndef POO_SENSOR_H
-#define POO_SENSOR_H
+#ifndef OOP_TRABALHO_SENSOR_H
+#define OOP_TRABALHO_SENSOR_H
+#include "Propriedade.h"
+#include <string>
 
+using namespace std;
 
 class Sensor {
-    const int ID;
-
+    static int baseId;
+    const int id;
+    Propriedade* propriedade;
+    double ultimaMedicao;
 public:
-    Sensor();
+    Sensor(Propriedade* propriedade);
+
+    [[nodiscard]]
+    int getid() const;
+    [[nodiscard]]
+    double getvalor();
+    [[nodiscard]]
+    string getAsString() const;
+
+    bool medir();
+
+
 };
 
 
-#endif //POO_SENSOR_H
+#endif //OOP_TRABALHO_SENSOR_H

@@ -1,20 +1,21 @@
 //
-// Created by 35193 on 31/10/2023.
+// Created by 35193 on 09/11/2023.
 //
-using namespace std;
+
 #include "Propriedade.h"
-#include <optional>
+#include <map>
+#include <sstream>
+int Propriedade::baseId = 0;
 
-
-Propriedade::Propriedade(optional<double> min, optional<double> max): minimo(min), maximo(max), valor(0){
+Propriedade::Propriedade(optional<double> min, optional<double> max): minimo(min), maximo(max), valor(0), id(baseId++){
     if (minimo.has_value() && maximo.has_value())
         if (minimo > maximo){
-            std::tie(minimo, maximo) = std::make_tuple(maximo, minimo);
+            tie(minimo, maximo) = make_tuple(maximo, minimo);
         }
 
 }
 
-//Propriedade::Propriedade(optional<double> max, char escolha): minimo({}), maximo(max), valor(0){}
+//Propriedade::Propriedade(optional<double> max, bool escolha): minimo({}), maximo(max), valor(0){}
 
 void Propriedade::definirValor(double valorA) {
 
@@ -42,7 +43,7 @@ void Propriedade::definirValor(double valorA) {
         valor += valorA;
 }
 
-double Propriedade::obterValor() const {
+double Propriedade::getValor() const {
     return valor;
 }
 bool Propriedade::has_max() const{
@@ -63,4 +64,7 @@ double Propriedade::getmin() const{
         return minimo.value();
     else
         throw "erro nao ha minimo";
+}
+int Propriedade::getid() const {
+    return id;
 }

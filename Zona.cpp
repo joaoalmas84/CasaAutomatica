@@ -1,105 +1,132 @@
 //
-// Created by 35193 on 30/10/2023.
+// Created by 35193 on 09/11/2023.
 //
 
 #include "Zona.h"
 #include <sstream>
-#include <optional>
-using namespace std;
+#include <new>
+#include <utility>
 
-int Zona::CONT = 0;
+// inicialiar as var static;;
+int Zona::baseId = 0;
 
-    Zona::Zona(string nome): nome(nome), ID(CONT + 1){
-        CONT++;
-        iniciarPropriedadesDefault();
+// criar
+Zona::Zona(string  nomeDaZona): tilulo(std::move(nomeDaZona)), id(baseId++){
+    iniciarPropriedadesDefault();
+}
+
+// info
+string Zona::getAsString() const {
+    ////////////////////////////// colocar os nome e id da zona;
+    ////////////////////////////// inumerar os propriedades;
+    ////////////////////////////// inumerar os Sensores
+    ostringstream dados;
+    dados << "Id da zona " << tilulo << " : " << id << endl;
+    int num = 0;
+    for(const auto& prop : propriedades){
+        dados << "Propriedades : " << num++ << "=> " << prop.first << " / " << prop.second->getValor()<<endl;
+    }
+    for(const auto& sens : sensores){
+        dados << "Sensores : " << sens->getAsString() << endl;
+    }
+    for(const auto& proc : processadores){
+        dados << "processadores : " << proc->getAsSting() << endl;
     }
 
-    Zona::Zona(bool Default, string nome):ID(CONT + 1){
-        CONT++;
-        iniciarPropriedadesDefault();
-    }
+    return dados.str();
+}
+int Zona::getId() const {
+    return id;
+}
+int Zona::getNumeroPropriedades() const {
+    return (int)propriedades.size();
+}
 
-    double Zona::getValor_propriedade(string chave){
-        if (propriedades.find(chave) != propriedades.end()) {
-            return propriedades[chave].obterValor();
-        }else
-            throw "Nao existe essa propriedade";
-    }
+//private
+void Zona::iniciarPropriedadesDefault(){
+    int min[] = {-273, 0};
+    int max[] = {100};
 
-    string Zona::getAsString() const{
-      ostringstream os;
-        os << nome << endl;
-        os <<" ID ZONA : "<< ID << endl;
-        for(const auto& par : propriedades){
-            os <<" propriedade : "<< par.first << ": " << par.second.obterValor() << endl;
+    propriedades["Temperatura"] = new Propriedade(min[0]);
+    propriedades["Luz"] = new Propriedade(min[1]);
+    propriedades["Radiacao"] = new Propriedade(min[1]);
+    propriedades["Vibracao"] = new Propriedade(min[1]);
+    propriedades["Humidade"] = new Propriedade(min[1], max[0]);
+    propriedades["Fumo"] = new Propriedade(min[1], max[0]);
+    propriedades["Som"] = new Propriedade(min[1]);
+}
+
+//propriedade
+bool Zona::addPropriedade(const string& nomeDaPropriedades, optional<double> min){
+    if(propriedades.find(nomeDaPropriedades) != propriedades.end()){
+        return false;
+    }
+    propriedades[nomeDaPropriedades] = new Propriedade(min);
+    return true;
+}
+bool Zona::addPropriedade(const string& nomeDaPropriedades, optional<double> min, optional<double> max){
+    if(propriedades.find(nomeDaPropriedades) != propriedades.end()){
+        return false;
+    }
+    propriedades[nomeDaPropriedades] = new Propriedade(min, max);
+    return true;
+}
+bool Zona::addPropriedade(const string& nomeDaPropriedades){
+    if(propriedades.find(nomeDaPropriedades) != propriedades.end()){
+        return false;
+    }
+    propriedades[nomeDaPropriedades] = new Propriedade();
+    return true;
+}
+bool Zona::setPropriedades(const string& nomeDaPropriedades, int valor) {
+    if(propriedades.find(nomeDaPropriedades) == propriedades.end()){
+        return false;
+    }
+    propriedades[nomeDaPropriedades]->definirValor(valor);
+    return true;
+}
+
+// Sensor
+bool Zona::addSensor(const string &propsNome) {
+    if(propriedades.find(propsNome) == propriedades.end()){
+        return false;
+    }
+    sensores.push_back(new Sensor(propriedades[propsNome]));
+    return true;
+}
+
+bool Zona::addProcessador() {
+    processadores.push_back(new Processador());
+    return true;
+}
+
+bool Zona::addRegrasPorc(int idProc,int idsensor, const std::string &funcao, optional<double> x, optional<double> y) {
+    auto it = processadores.begin();
+    while (it != processadores.end()){
+        if((*it)->getid() == idProc){
+            break;
         }
-        for(const Sensor* p : sensores){
-            os <<" sensores = " << p << endl;
+        ++it;
+    }
+    auto it2 = sensores.begin();
+    while (it2 != sensores.end()){
+        if((*it2)->getid() == idsensor){
+            break;
         }
-        return os.str();
+        ++it2;
     }
-
-    void Zona::setValor_Propriedades(string nomeDaPropriedades, int valor){
-        propriedades[nomeDaPropriedades].definirValor(valor);
+    if(it != processadores.end() && it2 != sensores.end()){
+        (*it)->addRegra(funcao, (*it2), x, y);
+        return true;
+    }else{
+        return false;
     }
+}
 
-    void Zona::setPropriedade(string nomeDaPropriedades, optional<double> min){
-        propriedades[nomeDaPropriedades] = Propriedade(min);
+string Zona::listaPropriedades() const {
+    ostringstream os;
+    for(auto props : propriedades){
+        os << "propriedade: " << props.second->getid() << " : " << props.first << endl;
     }
-
-    void Zona::setPropriedade_max(string nomeDaPropriedades, optional<double> max){
-        propriedades[nomeDaPropriedades] = Propriedade(max);
-    }
-
-    void Zona::setPropriedade(string nomeDaPropriedades, optional<double> min, optional<double> max){
-        propriedades[nomeDaPropriedades] = Propriedade(min, max);
-    }
-
-    void Zona::setPropriedade(string nomeDaPropriedades){
-        propriedades[nomeDaPropriedades] = Propriedade();
-    }
-
-    void Zona::iniciarPropriedadesDefault(){
-        vector<string> nome = {"Temperatura", "Luz", "Radiacao", "Vibracao", "Humidade", "Fumo", "Som"};
-        propriedades["Temperatura"] = Propriedade(-273);
-        propriedades["Luz"] = Propriedade(0);
-        propriedades["Radiacao"] = Propriedade(0);
-        propriedades["Vibracao"] = Propriedade(0);
-        propriedades["Humidade"] = Propriedade(0, 100);
-        propriedades["Fumo"] = Propriedade(0, 100);
-        propriedades["Som"] = Propriedade(0);
-    }
-
-    bool Zona::addSensor(Sensor & Asensor){
-        bool encontrado = false;
-
-        for (auto elemento : sensores) {
-            if (elemento == &Asensor) {
-                encontrado = true;
-                break; // Se encontrado, saia do loop
-            }
-        }
-        if(encontrado){
-            sensores.push_back(&Asensor);
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    bool Zona::addProcessador(Processador & Aprocessador ){
-        bool encontrado = false;
-
-        for (auto elemento : processador) {
-            if (elemento == Aprocessador) {
-                encontrado = true;
-                break; // Se encontrado, saia do loop
-            }
-        }
-        if(encontrado){
-            processador.push_back(Aprocessador);
-            return true;
-        }else{
-            return false;
-        }
-    }
+    return os.str();
+}

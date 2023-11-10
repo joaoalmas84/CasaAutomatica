@@ -1,25 +1,34 @@
 //
-// Created by 35193 on 01/11/2023.
+// Created by 35193 on 09/11/2023.
 //
 
-#ifndef POO_REGRA_H
-#define POO_REGRA_H
-#include <string>
+#ifndef OOP_TRABALHO_REGRA_H
+#define OOP_TRABALHO_REGRA_H
 #include "Sensor.h"
-using namespace std;
+#include <string>
+#include <optional>
 
 class Regra {
-    Sensor& sensor;
-    string type;
-    double value;
-    double minValue;
-    double maxValue;
-
+    static int baseId;
+    const int id;
+    const string funcao;
+    optional<double> x;
+    optional<double> y;
+    Sensor* sensor;
 public:
-    Regra(Sensor& Asensor, const string& type, double value);
-    Regra(Sensor& sensor, const std::string& type, double minValue, double maxValue);
-    bool evaluate() const;
+    Regra(const string& _funcao,Sensor* _sensor, optional<double> _x, optional<double> _y = {});
+    [[nodiscard]]
+    bool getValorDaRegra() const;
+    [[nodiscard]]
+    string getAsString() const;
+private:
+    bool igual() const;
+    bool menor() const;
+    bool maior() const;
+    bool entre() const;
+    bool naoEstre() const;
+
 };
 
 
-#endif //POO_REGRA_H
+#endif //OOP_TRABALHO_REGRA_H

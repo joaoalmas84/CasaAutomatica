@@ -1,23 +1,26 @@
 //
-// Created by 35193 on 01/11/2023.
+// Created by 35193 on 10/11/2023.
 //
 
-#ifndef POO_PROCESSADOR_H
-#define POO_PROCESSADOR_H
-#include <vector>
+#ifndef OOP_TRABALHO_PROCESSADOR_H
+#define OOP_TRABALHO_PROCESSADOR_H
 #include "Regra.h"
-using namespace std;
+#include <vector>
 
 class Processador {
-    static int CONT;
-    const int ID;
-    vector<Regra> regras;
-
+    static int baseId;
+    const int id;
+    vector<Regra*> regras;
 public:
     Processador();
-    bool ativarProcessador();
-    bool operator==(const Processador& pro)const;
+    bool addRegra(const string & funcao, Sensor* sensor, optional<double> x, optional<double> y = {});
+    [[nodiscard]]
+    string getAsSting() const;
+    [[nodiscard]]
+    bool testar() const;
+    [[nodiscard]]
+    int getid()const;
 };
 
 
-#endif //POO_PROCESSADOR_H
+#endif //OOP_TRABALHO_PROCESSADOR_H
