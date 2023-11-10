@@ -4,19 +4,21 @@
 
 void UI() {
     string cmd;
+    int res;
+    // * ... aqui.
     while (1) {
         cmd = "";
-        int res = -1;
-        Comando c;
+        res = -1;
+        Comando c; // <- Exprimentar por este comando ... *
 
         cmd = getCmd();
         res = c.validaCmd(cmd);
-
         switch (res) {
             case 0:
                 cout << c.descricao();
                 cout << '\n';
                 if (c.validaStx()) {
+                    c.execCmd();
                     cout << "\nSintaxe valida";
                 } else {
                     cout << "\nSintaxe invalida";
@@ -31,6 +33,8 @@ void UI() {
             case 3:
                 cout << "Demasiados argumentos";
                 break;
+            default:
+                break;
         }
         // Comando c é destruido aqui
     }
@@ -39,7 +43,7 @@ void UI() {
 string getCmd() {
     string cmd;
     cin.clear();
-    cout << "\n\nComando ->";
+    cout << "\n\nComando -> ";
     getline(cin, cmd);
     return cmd;
 }

@@ -18,6 +18,7 @@ public:
     int validaCmd(string cmd);// return 0 -> valido; 1 -> invalido; 2 -> falta argumentos; 3 -> excesso de argumentos;
     [[nodiscard]]
     bool validaStx();
+    void execCmd();
     [[nodiscard]]
     string descricao();
     ~Comando();
@@ -30,6 +31,7 @@ private:
     bool isIntegerString(string str);
     [[nodiscard]]
     int isInVector(vector<string> v, string str); // Devolve -1 se nao encontrar str. Se encontrar devolve o indice da posicao
+
     int id;
     string nome;
     vector<string> corpo;

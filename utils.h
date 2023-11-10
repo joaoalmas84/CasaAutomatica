@@ -9,9 +9,21 @@ using namespace std;
 
 const vector <string> comandos = {"prox", "avanc", "hnova", "hrem", "znova", "zrem", "zlista", "zcomp", "zprops", "pmod","cnovo",
                                   "crem", "rnova", "pmuda", "rlista", "rrem", "asoc", "ades", "acom", "psalva", "prepoe", "prem",
-                                  "plista", "exec", "sair"};
+                                  "plista", "exec", "sair", "clear", "help"};
 
-const vector <int> nArgs = {0, 1, 2, 0, 2, 1, 0, 1, 1, 3, -1,3, -1, -1, 2, 3, 3, 3, -1, 3, 1, 1, 0, 1, 0};
+// Comandos com nArgs -1 podem ter um número demasiado variável de argumentos
+const vector <int> nArgs = {0, 1, 2, 0, 2, 1, 0, 1, 1, 3, -1, 3, -1, -1, 2, 3, 3, 3, -1, 3, 1, 1, 0, 1, 0, 0, 0};
+
+
+const string ZZZcomandos [] = {"prox", "avanc", "hnova", "hrem", "znova", "zrem", "zlista", "zcomp",
+                             "zprops", "pmod","cnovo","crem", "rnova", "pmuda", "rlista", "rrem",
+                             "asoc", "ades", "acom", "psalva", "prepoe", "prem","plista", "exec",
+                             "sair", "clear", "help"};
+
+const int ZZZnArgs [] = {0, 1, 2, 0, 2, 1, 0, 1, 1, 3, -1, 3, -1,
+                       -1, 2, 3, 3, 3, -1, 3, 1, 1, 0, 1, 0,
+                       0, 0};
+
 
 const vector <string> spa = {"s", "p", "a"};
 
@@ -39,7 +51,9 @@ const vector <string> stx = {"prox",
                              "prem <nome>",
                              "plista",
                              "exec <nome de ficheiro>",
-                             "sair"};
+                             "sair",
+                             "clear",
+                             "help"};
 
 
 const vector <string> sensores = {"temperatura", "movimento", "luminosidade", "radiação", "radiação", "humidade", "som", "fumo"};
@@ -47,7 +61,6 @@ const vector <string> sensores = {"temperatura", "movimento", "luminosidade", "r
 const vector <string> sensoresLetra = {"t", "v", "m", "d", "h", "o", "f"};
 
 const vector <string> sensoresProp = {"Temperatura", "Vibração", "Luz", "Radiação", "Humidade", "Som", "Fumo"};
-
 
 const vector <string> aparelhos = {"aquecedor", "aspersor", "refrigerador", "lampada"};
 

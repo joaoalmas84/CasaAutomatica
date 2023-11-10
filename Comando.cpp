@@ -32,7 +32,6 @@ int Comando::validaCmd(string cmd) {
     string str;
     iss >> str;
     int index = isInVector(comandos, str);
-
     if (index == -1) {return 1;}
     else if (argCount < nArgs[index]) {return 2;}
     else if (argCount > nArgs[index]) {return 3;}
@@ -64,8 +63,8 @@ bool Comando::validaStx() {
             if (isIntegerString(corpo[1]) && isIntegerString(corpo[3])) {return true;}
             else {return false;}
             break;
-        case 10: // <- Caso especial, possibilidade de n.º de argumentos variar
-            // (Está a funcionar tudo exceto a variante corpo[2]="p" quando o processador recebe comandos com parametros)
+        case 10:    // <- Caso especial, possibilidade de n.º de argumentos variar
+                    // (Está a funcionar tudo exceto a variante corpo[2]="p" quando o processador recebe comandos com parametros)
             bool flag;
 
             if (isIntegerString(corpo[1])) {flag = true;}
@@ -112,6 +111,28 @@ bool Comando::validaStx() {
         //case 23: por fazer
         default:
             return true;
+    }
+    return false;
+}
+
+void Comando::execCmd() {
+    switch (id) {
+        case 24:
+            cout << "\nA sair...\n";
+            exit(1);
+            break;
+        case 25:
+            system("cls");
+            break;
+        case 26:
+            cout << "\nSintaxe dos comandos:";
+            for (string s : stx) {
+                cout << "\n-> " << s;
+            }
+            cout << '\n';
+            break;
+        default:
+            break;
     }
 }
 
