@@ -15,6 +15,8 @@ public:
     bool validaStx();
     [[nodiscard]]
     string descricao()const;
+    [[nodiscard]]
+    bool SAIR()const;
 
 private:
     [[nodiscard]]
@@ -24,9 +26,11 @@ private:
     [[nodiscard]]
     string getNomeCmd()const;
     [[nodiscard]]
-    bool isIntegerString(string str);
+    bool isIntegerString(string str)const;
     [[nodiscard]]
     vector<string> stringToVector(string str);
+    [[nodiscard]]
+    bool avaliaCmdFromParm(vector<string> v, int pos)const;
 
     string nome;
     int index;
@@ -37,20 +41,18 @@ private:
 
 const vector <string> comandos = {"prox", "avanc", "hnova", "hrem", "znova", "zrem", "zlista", "zcomp",
                                   "zprops", "pmod","cnovo","crem", "rnova", "pmuda", "rlista", "rrem",
-                                  "asoc", "ades", "acom", "psalva", "prepoe", "prem","plista", "exec",
-                                  "sair", "clear", "help"};
+                                  "asoc", "ades", "acom", "psalva", "prepoe", "prem", "plista", "sair"};
 
 // Comandos com n_Args == -1 podem ter um número variável de argumentos
-const vector <int> n_Args = {0, 1, 2, 0, 2, 1, 0, 1, 1, 3, -1, 3, -1, -1, 2, 3, 3, 3, -1, 3, 1, 1, 0, 1, 0, 0, 0};
+const vector <int> n_Args = {0, 1, 2, 0, 2, 1, 0, 1, 1, 3, -1, 3, -1, -1, 2, 3, 3, 3, -1, 3, 1, 1, 0, 0};
 
 const string ZZZcomandos [] = {"prox", "avanc", "hnova", "hrem", "znova", "zrem", "zlista", "zcomp",
                                "zprops", "pmod","cnovo","crem", "rnova", "pmuda", "rlista", "rrem",
                                "asoc", "ades", "acom", "psalva", "prepoe", "prem","plista", "exec",
-                               "sair", "clear", "help"};
+                               "sair"};
 
 const int ZZZnArgs [] = {0, 1, 2, 0, 2, 1, 0, 1, 1, 3, -1, 3, -1,
-                         -1, 2, 3, 3, 3, -1, 3, 1, 1, 0, 1, 0,
-                         0, 0};
+                         -1, 2, 3, 3, 3, -1, 3, 1, 1, 0, 1, 0,};
 
 const vector <string> spa = {"s", "p", "a"};
 
@@ -82,17 +84,15 @@ const vector <string> sintaxe = {"prox",
                                  "clear",
                                  "help"};
 
+const vector<string> sensores = {"temperatura", "movimento", "luminosidade", "radiação", "radiação", "humidade", "som", "fumo"};
 
-const vector <string> sensores = {"temperatura", "movimento", "luminosidade", "radiação", "radiação", "humidade", "som", "fumo"};
+const vector<string> sensoresLetra = {"t", "v", "m", "d", "h", "o", "f"};
 
-const vector <string> sensoresLetra = {"t", "v", "m", "d", "h", "o", "f"};
+const vector<string> sensoresProp = {"Temperatura", "Vibração", "Luz", "Radiação", "Humidade", "Som", "Fumo"};
 
-const vector <string> sensoresProp = {"Temperatura", "Vibração", "Luz", "Radiação", "Humidade", "Som", "Fumo"};
+const vector<string> aparelhos = {"aquecedor", "aspersor", "refrigerador", "lampada"};
 
-const vector <string> aparelhos = {"aquecedor", "aspersor", "refrigerador", "lampada"};
-
-const vector <string> aparelhosLetra = {"a", "s", "r", "l"};
-
+const vector<string> aparelhosLetra = {"a", "s", "r", "l"};
 
 
 #endif //SKIRT_COMANDO_H
