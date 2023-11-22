@@ -7,7 +7,7 @@
 int Processador::baseId = 0;
 Processador::Processador(): id(baseId++) {}
 
-bool Processador::addRegra(const string & funcao, Sensor* sensor, optional<double> x, optional<double> y){
+bool Processador::addRegra(const string & funcao, shared_ptr<Sensor> sensor, optional<double> x, optional<double> y){
     regras.push_back(new Regra(funcao, sensor, x, y));
     return true;
 }

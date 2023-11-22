@@ -1,9 +1,13 @@
+// POO 23/24
+// Biblioteca para manipulação da consola
 //
-// Created by 35193 on 01/11/2023.
+// Uso fora do âmbito de POO -> Perguntar primeiro aos professores
+// Depósito em repositórios públicos -> Perguntar primeiro aos professores
 //
+// Pode ser aumentada com funcionalidades novas (desde que funcionem)
 
-#ifndef TESTEBIBLIO_TERMINAL_H
-#define TESTEBIBLIO_TERMINAL_H
+#ifndef NCURSES_TERMINAL_H
+#define NCURSES_TERMINAL_H
 
 #include <string>
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
@@ -113,5 +117,4 @@ namespace term {
 }
 
 
-
-#endif //TESTEBIBLIO_TERMINAL_H
+#endif //NCURSES_TERMINAL_H

@@ -6,8 +6,8 @@
 #include <sstream>
 int Regra::baseId = 0;
 
-Regra::Regra(const std::string &_funcao, Sensor* _sensor, optional<double> _x, optional<double> _y)
-            :id(baseId++), funcao(_funcao), sensor(_sensor), x(_x), y(_y){}
+Regra::Regra(const std::string &_funcao, shared_ptr<Sensor> _sensor, optional<double> _x, optional<double> _y)
+            :id(baseId++), funcao(_funcao), Psensor(_sensor), x(_x), y(_y){}
 
 bool Regra::getValorDaRegra() const {
     if(funcao == "igual"){
@@ -21,30 +21,57 @@ bool Regra::getValorDaRegra() const {
     }else if(funcao == "naoEstre"){
         return naoEstre();
     }else{
-        return false;
+        throw "erro essa regra nao existe";
     }
 }
 
 bool Regra::igual() const {
-    return sensor->getvalor() == x;
+    shared_ptr<Sensor> sensor = Psensor.lock();
+    if(sensor){
+        return sensor->getvalor() == x;
+    }else{
+        throw "Erro: A regra não tem nenhum sensor associado.";
+    }
+
 }
 bool Regra::menor() const {
-    return sensor->getvalor() < x;
+    shared_ptr<Sensor> sensor = Psensor.lock();
+    if(sensor){
+        return sensor->getvalor() < x;
+    }else{
+        throw "Erro: A regra não tem nenhum sensor associado.";
+    }
 }
 bool Regra::maior() const {
-    return sensor->getvalor() > x;
+    shared_ptr<Sensor> sensor = Psensor.lock();
+    if(sensor){
+        return sensor->getvalor() > x;
+    }else{
+        throw "Erro: A regra não tem nenhum sensor associado.";
+    }
 }
 bool Regra::entre() const {
-    return sensor->getvalor() > x && sensor->getvalor() < y;
+    shared_ptr<Sensor> sensor = Psensor.lock();
+    if(sensor){
+        return sensor->getvalor() > x && sensor->getvalor() < y;
+    }else{
+        throw "Erro: A regra não tem nenhum sensor associado.";
+    }
 }
 bool Regra::naoEstre() const {
-    return sensor->getvalor() < x || sensor->getvalor() > y;
+    shared_ptr<Sensor> sensor = Psensor.lock();
+    if(sensor){
+        return sensor->getvalor() < x || sensor->getvalor() > y;
+    }else{
+        throw "Erro: A regra não tem nenhum sensor associado.";
+    }
 }
 
 string Regra::getAsString() const {
     ostringstream os;
     os << "id Da Regra: " << id << endl;
     os << "Regra " << id << " x: " << x.value() << endl;
+    os << "valor obtido : " << getValorDaRegra() << endl;
     if(y.has_value())
         os << "Regra " << id << " y: " << y.value() << endl;
     os << "funcao : " << funcao << endl;

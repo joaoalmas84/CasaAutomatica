@@ -7,16 +7,16 @@
 #include "Sensor.h"
 #include <string>
 #include <optional>
-
+#include <memory>
 class Regra {
     static int baseId;
     const int id;
     const string funcao;
     optional<double> x;
     optional<double> y;
-    Sensor* sensor;
+    weak_ptr<Sensor> Psensor;
 public:
-    Regra(const string& _funcao,Sensor* _sensor, optional<double> _x, optional<double> _y = {});
+    Regra(const string& _funcao, shared_ptr<Sensor> _sensor, optional<double> _x, optional<double> _y = {});
     [[nodiscard]]
     bool getValorDaRegra() const;
     [[nodiscard]]
