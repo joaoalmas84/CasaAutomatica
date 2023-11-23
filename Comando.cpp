@@ -43,11 +43,11 @@ bool Comando::validaStx() {
         case 4:
         case 14:
         case 19:
-            if (!isIntegerString(vectorInput[1]) || !isIntegerString(vectorInput[2])) {return false;}
+            if (!isIntegerString({vectorInput[1],vectorInput[2]})) {return false;}
             else {return true;}
             break;
         case 9:
-            if (!isIntegerString(vectorInput[1]) || !isIntegerString(vectorInput[3])) {return false;}
+            if (!isIntegerString({vectorInput[1],vectorInput[3]})) {return false;}
             else {return true;}
             break;
         case 10:    // <- Caso especial, possibilidade de n.º de argumentos variar
@@ -70,9 +70,7 @@ bool Comando::validaStx() {
             return true;
             break;
         case 11:
-            if (!isIntegerString(vectorInput[1])
-                || procuraEmVector(spa, vectorInput[2]) != -1
-                || !isIntegerString(vectorInput[3])) {return false;}
+            if (!isIntegerString({vectorInput[1], vectorInput[2]}) || procuraEmVector(spa, vectorInput[2]) != -1) {return false;}
             else {return true;}
             break;
             //case 12:
@@ -80,14 +78,13 @@ bool Comando::validaStx() {
             //    break;
         case 13:
         case 18:
-            if (!isIntegerString(vectorInput[1]) || !isIntegerString(vectorInput[2])) {return false;}
+            if (!isIntegerString({vectorInput[1], vectorInput[2]})) {return false;}
             else {return avaliaCmdFromParm(vectorInput, 3);}
             break;
         case 15:
         case 16:
         case 17:
-            if (!isIntegerString(vectorInput[1]) || !isIntegerString(vectorInput[2])
-                || !isIntegerString(vectorInput[3])) {return false;}
+            if (!isIntegerString({vectorInput[1], vectorInput[2], vectorInput[3]})) {return false;}
             else {return true;}
             break;
         default:
@@ -146,15 +143,26 @@ int Comando::countArgsCmd() const {
     return i - 1; // <- -1 Porque o nome do comando não conta para o n.º de argumentos
 }
 
-bool Comando::isIntegerString(string str) const {
-    bool flag;
-    istringstream iss(str);
-    int n = 0;
+bool Comando::isIntegerString(string s) const {
+    istringstream iss(s);
+    int n;
 
     iss >> n;
-
     if (iss.fail()) {return false;}
-    else {return true;}
+
+    return true;
+}
+
+bool Comando::isIntegerString(initializer_list<string> list) const {
+    int n;
+
+    for (const string & s : list) {
+        istringstream iss(s);
+        iss >> n;
+        if (iss.fail()) {return false;}
+    }
+
+    return true;
 }
 
 vector<string> Comando::stringToVector(string str) {

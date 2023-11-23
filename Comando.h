@@ -26,7 +26,9 @@ private:
     [[nodiscard]]
     string getNomeCmd()const;
     [[nodiscard]]
-    bool isIntegerString(string str)const;
+    bool isIntegerString(string s)const;
+    [[nodiscard]]
+    bool isIntegerString(initializer_list<string> list)const;
     [[nodiscard]]
     vector<string> stringToVector(string str);
     [[nodiscard]]
