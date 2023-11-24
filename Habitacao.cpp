@@ -42,7 +42,9 @@ void Habitacao::add_Zona(const int &linha, const int &coluna) {
 }
 
 Zona* Habitacao::get_idZona(int linha, int coluna) const {
-    return zonas[linha][coluna];
+    //if(linha < linhas && coluna < colunas)
+        return zonas[linha][coluna];
+    return nullptr;
 }
 
 
