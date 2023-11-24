@@ -7,6 +7,7 @@
 int Sensor::baseId = 0;
 
 Sensor::Sensor(Propriedade* propriedade): propriedade(propriedade), id(baseId++){medir();}
+Sensor::~Sensor() {}
 
 int Sensor::getid() const {
     return id;

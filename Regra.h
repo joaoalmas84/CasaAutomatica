@@ -17,15 +17,24 @@ class Regra {
     weak_ptr<Sensor> Psensor;
 public:
     Regra(const string& _funcao, shared_ptr<Sensor> _sensor, optional<double> _x, optional<double> _y = {});
+    ~Regra();
     [[nodiscard]]
     bool getValorDaRegra() const;
     [[nodiscard]]
     string getAsString() const;
+    [[nodiscard]]
+    int getId() const;
+
 private:
+    [[nodiscard]]
     bool igual() const;
+    [[nodiscard]]
     bool menor() const;
+    [[nodiscard]]
     bool maior() const;
+    [[nodiscard]]
     bool entre() const;
+    [[nodiscard]]
     bool naoEstre() const;
 
 };

@@ -16,14 +16,13 @@ class Sensor {
     double ultimaMedicao;
 public:
     Sensor(Propriedade* propriedade);
-
+    ~Sensor();
     [[nodiscard]]
     int getid() const;
     [[nodiscard]]
     double getvalor();
     [[nodiscard]]
     string getAsString() const;
-
     bool medir();
 
 
