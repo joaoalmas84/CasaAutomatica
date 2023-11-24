@@ -3,10 +3,12 @@
 //
 
 #include "Zona.h"
+
 #include <sstream>
 #include <new>
 #include <utility>
 #include <iostream>
+#include <algorithm>
 
 // inicialiar as var static;;
 int Zona::baseId = 1;

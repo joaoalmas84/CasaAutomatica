@@ -50,7 +50,7 @@ int UI::commandLine(string cmd) {
                 numdados += 6;
                 if (c.SAIR()) {return 1;}
                 string aux;
-                switch (c.getIdcomado()) {
+                switch (c.getIndex()) {
                     case 2:
 
                         if(habitacao == nullptr){
