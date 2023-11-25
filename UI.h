@@ -20,6 +20,7 @@ public:
     void atulizar_cmdW();
     void criarZonasWindow();
     void atualizar_zonas_UI(const int &linha, const int &coluna);
+    void verespaco();
 
 private:
     [[nodiscard]]

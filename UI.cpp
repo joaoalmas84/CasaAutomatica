@@ -42,6 +42,7 @@ void UI::START() {
     while (res != 1) {
         cmd = getCmd();
         res = commandLine(cmd);
+        verespaco();
     }
 }
 
@@ -97,12 +98,16 @@ int UI::commandLine(string cmd) {
                     case 4:
                         if(habitacao != nullptr) {
                             int linhasTemp, colunasTemp;
-                            if (stoi(inputAux[1]) > 0 && stoi(inputAux[1]) < linhas
-                                && stoi(inputAux[2]) > 0 && stoi(inputAux[2]) < colunas) {
+                            if (stoi(inputAux[1]) >= 0 && stoi(inputAux[1]) < linhas
+                                && stoi(inputAux[2]) >= 0 && stoi(inputAux[2]) < colunas) {
                                 linhasTemp = stoi(inputAux[1]);
                                 colunasTemp = stoi(inputAux[2]);
+                                try{
                                 habitacao->add_Zona(linhasTemp, colunasTemp);
                                 atualizar_zonas_UI(linhas, colunas);
+                                }catch(const char* strcatch){
+                                    *dadosW << set_color(5) << move_to(0, numdados++) << strcatch;
+                                }
                             } else {
                                 *dadosW << set_color(5) << move_to(0, numdados++) << "Dimensoes invalidas";
                                 break;
@@ -228,4 +233,11 @@ bool UI::isIntegerString(initializer_list<string> list) const {
     }
 
     return true;
+}
+
+void UI::verespaco(){
+    if (numdados + 5 > dimy){
+        dadosW->clear();
+        numdados = 0;
+    }
 }
