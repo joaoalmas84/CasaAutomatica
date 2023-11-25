@@ -1,9 +1,11 @@
-//
-// Created by 35193 on 09/11/2023.
-//
-
 #include "Sensor.h"
+#include "Propriedade.h"
+
+#include <iostream>
 #include <sstream>
+
+using namespace std;
+
 int Sensor::baseId = 0;
 
 Sensor::Sensor(Propriedade* propriedade): propriedade(propriedade), id(baseId++){medir();}

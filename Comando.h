@@ -1,5 +1,5 @@
-#ifndef SKIRT_COMANDO_H
-#define SKIRT_COMANDO_H
+#ifndef CODIGOFONTE_COMANDO_H
+#define CODIGOFONTE_COMANDO_H
 
 #include <iostream>
 #include <vector>
@@ -11,6 +11,8 @@ public:
     Comando(string _input) : nome(""), index(-1), input(_input), numArg(-1), stx("") {}
     [[nodiscard]]
     int getIndex();
+    [[nodiscard]]
+    vector <string> getVectorInput();
     [[nodiscard]]
     int validaCmd(); // 0 -> valido; 1 -> invalido; 2 -> falta argumentos; 3 -> excesso de argumentos;
     [[nodiscard]]
@@ -91,4 +93,4 @@ const vector<string> aparelhos = {"aquecedor", "aspersor", "refrigerador", "lamp
 const vector<string> aparelhosLetra = {"a", "s", "r", "l"};
 
 
-#endif //SKIRT_COMANDO_H
+#endif //CODIGOFONTE_COMANDO_H

@@ -1,9 +1,10 @@
-//
-// Created by 35193 on 21/11/2023.
-//
-
 #include "Habitacao.h"
+#include "Zona.h"
+
 #include <sstream>
+
+/***************************************** Public *****************************************/
+
 
                         ///////////////////////////////////////////////////////////////////
                         /////////// Comandos para gerir habitação e zonas//////////////////
@@ -96,9 +97,9 @@ string Habitacao::zcomp(const int &IDzona) const {
         }
     }
     return "zona nao existe";
-
     found:
-
     return  zonas[i][j]->getAsString();
-
 }
+
+
+/***************************************** Public *****************************************/

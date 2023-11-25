@@ -1,31 +1,19 @@
-//
-// Created by 35193 on 09/11/2023.
-//
+#ifndef CODIGOFONTE_ZONA_H
+#define CODIGOFONTE_ZONA_H
 
-#ifndef OOP_TRABALHO_ZONA_H
-#define OOP_TRABALHO_ZONA_H
 #include "Propriedade.h"
 #include "Sensor.h"
 #include "Processador.h"
 #include "Aparelho.h"
-#include <string>
+
+#include <iostream>
 #include <map>
-#include <vector>
-#include <memory>
+#include <optional>
 
 using namespace std;
+
 class Zona {
-    static int baseId;
-    const int id;
-    string tilulo;
-    map<string, Propriedade*> propriedades;
-    vector<shared_ptr<Sensor>> sensores;
-    vector<shared_ptr<Processador>> processadores;
-    vector<shared_ptr<Aparelho>> aparelhos;
-
-
 public:
-
     ////////////////////////////construtores da class zona
     explicit Zona(string nomeDaZona = "zona sem nome");
     ~Zona();
@@ -69,7 +57,14 @@ public:
 private:
     void iniciarPropriedadesDefault();
 
+    static int baseId;
+    const int id;
+    string tilulo;
+    map<string, Propriedade*> propriedades;
+    vector<shared_ptr<Sensor>> sensores;
+    vector<shared_ptr<Processador>> processadores;
+    vector<shared_ptr<Aparelho>> aparelhos;
 };
 
 
-#endif //OOP_TRABALHO_ZONA_H
+#endif //CODIGOFONTE_ZONA_H

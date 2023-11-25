@@ -1,28 +1,12 @@
+#ifndef CODIGOFONTE_UI_H
+#define CODIGOFONTE_UI_H
 
-
-#ifndef SKIRT_UI_H
-#define SKIRT_UI_H
-
-#include <iostream>
-#include <vector>
 #include "Terminal.h"
 #include "Habitacao.h"
-using namespace std;
-using namespace term;
-class UI{
-     Terminal &t;
-     Window *cmdW;
-     Window *dadosW;
-     Window ***zonasW;
-     const int dimx;
-     const int dimy;
-     int linhas;
-     int colunas;
-     const int dimzonasx;
-     const int dimzonasy;
-     int numdados;
-     Habitacao *habitacao;
 
+using namespace term;
+
+class UI{
 public:
     UI();
     ~UI();
@@ -37,6 +21,24 @@ public:
     void criarZonasWindow();
     void atualizar_zonas_UI(const int &linha, const int &coluna);
 
+private:
+    [[nodiscard]]
+    bool isIntegerString(string s)const;
+    [[nodiscard]]
+    bool isIntegerString(initializer_list<string> list)const;
+
+    Terminal &t;
+    Window *cmdW;
+    Window *dadosW;
+    Window ***zonasW;
+    const int dimx;
+    const int dimy;
+    int linhas;
+    int colunas;
+    const int dimzonasx;
+    const int dimzonasy;
+    int numdados;
+    Habitacao *habitacao;
 };
 
-#endif //SKIRT_UI_H
+#endif //CODIGOFONTE_UI_H

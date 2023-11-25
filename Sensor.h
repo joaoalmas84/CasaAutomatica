@@ -1,11 +1,9 @@
-//
-// Created by 35193 on 09/11/2023.
-//
+#ifndef CODIGOFONTE_SENSOR_H
+#define CODIGOFONTE_SENSOR_H
 
-#ifndef OOP_TRABALHO_SENSOR_H
-#define OOP_TRABALHO_SENSOR_H
 #include "Propriedade.h"
-#include <string>
+
+#include <iostream>
 
 using namespace std;
 
@@ -14,6 +12,7 @@ class Sensor {
     const int id;
     Propriedade* propriedade;
     double ultimaMedicao;
+
 public:
     Sensor(Propriedade* propriedade);
     ~Sensor();
@@ -24,9 +23,6 @@ public:
     [[nodiscard]]
     string getAsString() const;
     bool medir();
-
-
 };
 
-
-#endif //OOP_TRABALHO_SENSOR_H
+#endif //CODIGOFONTE_SENSOR_H

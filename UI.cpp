@@ -1,8 +1,13 @@
-
-#include "Comando.h"
 #include "UI.h"
+#include "Terminal.h"
+#include "Comando.h"
+
 #include <sstream>
 #include <fstream>
+
+using namespace term;
+
+/***************************************** Public *****************************************/
 
 UI::UI(): t(Terminal::instance()), dimx(t.getNumCols()), dimy(t.getNumRows()), linhas(0), colunas(0), dadosW(nullptr), dimzonasy((dimy - 3) / 4), dimzonasx((dimy - 3) / 4 * 3){
     habitacao = nullptr;
@@ -12,6 +17,7 @@ UI::UI(): t(Terminal::instance()), dimx(t.getNumCols()), dimy(t.getNumRows()), l
     *cmdW << set_color(3) <<move_to(0,0) << "Comando -> ";
     dadosW = ini_dadosW_UI();
 }
+
 UI::~UI() {
     for (int i = 0; i < linhas; ++i) {
         for (int j = 0; j < colunas; ++j) {
@@ -61,75 +67,54 @@ int UI::commandLine(string cmd) {
 
     switch (c.validaCmd()) {
         case 0:
+            bool flag;
             if (c.validaStx()) {
                 *dadosW << set_color(5) << move_to(0, numdados) << c.descricao();
                 numdados += 6;
                 if (c.SAIR()) {return 1;}
-                string aux;
+
+                vector <string> inputAux = c.getVectorInput();
+
                 switch (c.getIndex()) {
                     case 2:
 
-                        if(habitacao == nullptr){
-                            ///// REVOMER DEPOIS DA CLASS COMANDOS ESTAR COMPLETA = TRABALHO DA CLASS COMANDOS
-                            col:
-                        *dadosW << set_color(5) << move_to(0, numdados++) << "Intruduza o numero de colunas";
-                        *cmdW >> aux;
-                        atulizar_cmdW();
-                        try{colunas = stoi(aux);}catch(const std::invalid_argument& ia){goto col;}
-                        lin:
-                        *dadosW << set_color(5) << move_to(0, numdados++) << "Intruduza o numero de linhas";
-                        *cmdW >> aux;
-                        atulizar_cmdW();
-                        try{linhas = stoi(aux);}catch(const std::invalid_argument& ia){goto lin;}
-                        if(!(linhas > 1 && linhas < 5) ||  !(colunas > 1 && colunas < 5))
-                            goto col;
-                            ///// REVOMER DEPOIS DA CLASS COMANDOS ESTAR COMPLETA = TRABALHO DA CLASS COMANDOS
-
-                        habitacao = new Habitacao(linhas, colunas);
-                        criarZonasWindow();
-                        dadosW =ini_dadosW_UI();
-
-                        }else{
+                        if (habitacao == nullptr) {
+                            if (stoi(inputAux[1]) > 1 && stoi(inputAux[1]) < 5
+                                && stoi(inputAux[2]) > 1 && stoi(inputAux[2]) < 5) {
+                                linhas = stoi(inputAux[1]);
+                                colunas = stoi(inputAux[2]);
+                                habitacao = new Habitacao(linhas, colunas);
+                                criarZonasWindow();
+                                dadosW =ini_dadosW_UI();
+                            } else {
+                                *dadosW << set_color(5) << move_to(0, numdados++) << "Dimensoes invalidas";
+                                break;
+                            }
+                        } else {
                             *dadosW << set_color(5) << move_to(0, numdados++) << "ja existe uma habitacao";
                         }
                         break;
                     case 4:
-                        if(habitacao != nullptr){
+                        if(habitacao != nullptr) {
                             int linhasTemp, colunasTemp;
-
-                            ///// REVOMER DEPOIS DA CLASS COMANDOS ESTAR COMPLETA = TRABALHO DA CLASS COMANDOS
-                            re:
-                            *dadosW << set_color(5) << move_to(0, numdados++) << "Intruduza o numero de colunas";
-                            *cmdW >> aux;
-                            atulizar_cmdW();
-                            try{colunasTemp = stoi(aux);}catch(const std::invalid_argument& ia){goto re;}
-                            de:
-                            *dadosW << set_color(5) << move_to(0, numdados++) << "Intruduza o numero de linhas";
-                            *cmdW >> aux;
-                            atulizar_cmdW();
-                            try{linhasTemp = stoi(aux);}catch(const std::invalid_argument& ia){goto de;}
-                            ///// REVOMER DEPOIS DA CLASS COMANDOS ESTAR COMPLETA = TRABALHO DA CLASS COMANDOS
-                            try {
+                            if (stoi(inputAux[1]) > 0 && stoi(inputAux[1]) < linhas
+                                && stoi(inputAux[2]) > 0 && stoi(inputAux[2]) < colunas) {
+                                linhasTemp = stoi(inputAux[1]);
+                                colunasTemp = stoi(inputAux[2]);
                                 habitacao->add_Zona(linhasTemp, colunasTemp);
                                 atualizar_zonas_UI(linhas, colunas);
-                            }catch(const char* strcatch){*dadosW << set_color(5) << move_to(0, numdados++) <<strcatch;}
-                        }else{
+                            } else {
+                                *dadosW << set_color(5) << move_to(0, numdados++) << "Dimensoes invalidas";
+                                break;
+                            }
+                        } else {
                             *dadosW << set_color(3) << move_to(0, numdados++) << "nao existe zona";
                         }
-
                         break;
                     default:
                         *dadosW << set_color(5) << move_to(0, numdados++) << "Erro";
                         break;
                 }
-
-
-
-
-
-
-
-
             } else {
                 *dadosW << set_color(19) << move_to(0, numdados++) << "Sintaxe invalida";
             }
@@ -170,15 +155,14 @@ int UI::exec(string fileName)  {
 
 Window *UI::ini_cmd_UI() {
     return new Window(0, dimy - 3, dimx, 3);
-
 }
 
 Window *UI::ini_dadosW_UI() {
-        delete dadosW;
-        numdados = 0;
-        return new Window(dimzonasx*colunas, 0, dimx - (dimzonasx*colunas), dimy-3);
-
+    delete dadosW;
+    numdados = 0;
+    return new Window(dimzonasx*colunas, 0, dimx - (dimzonasx*colunas), dimy-3);
 }
+
 void UI::ini_cor(){
     for(int i=1; i<20; i++) {
         t.init_color(i, i, 0);
@@ -204,7 +188,7 @@ void UI::criarZonasWindow() {
     }
 }
 
-void UI::atualizar_zonas_UI(const int &linha, const int &coluna){
+void UI::atualizar_zonas_UI(const int &linha, const int &coluna) {
     for (int i = 0; i < linha; i++) {
         for (int j = 0; j < coluna; j++) {
             if(habitacao->get_idZona(i, j) != nullptr){
@@ -220,4 +204,29 @@ void UI::atualizar_zonas_UI(const int &linha, const int &coluna){
             }
         }
     }
+}
+
+/***************************************** Private *****************************************/
+
+
+bool UI::isIntegerString(string s) const {
+    istringstream iss(s);
+    int n;
+
+    iss >> n;
+    if (iss.fail()) {return false;}
+
+    return true;
+}
+
+bool UI::isIntegerString(initializer_list<string> list) const {
+    int n;
+
+    for (const string & s : list) {
+        istringstream iss(s);
+        iss >> n;
+        if (iss.fail()) {return false;}
+    }
+
+    return true;
 }

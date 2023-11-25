@@ -1,14 +1,11 @@
-//
-// Created by 35193 on 09/11/2023.
-//
-
 #include "Zona.h"
 
-#include <sstream>
-#include <new>
-#include <utility>
 #include <iostream>
+#include <optional>
+#include <sstream>
 #include <algorithm>
+
+using namespace std;
 
 // inicialiar as var static;;
 int Zona::baseId = 1;
@@ -138,14 +135,14 @@ string Zona::listaPropriedades() const {
     return os.str();
 }
 
-void Zona::eleminarSensor(int id) {
-        sensores.erase(std::remove_if(sensores.begin(), sensores.end(), [&id](const std::shared_ptr<Sensor>& s) {
-            cout << s->getid() << " ";return s->getid() == id;}), sensores.end());
+void Zona::eleminarSensor(int _id) {
+        sensores.erase(std::remove_if(sensores.begin(), sensores.end(), [&_id](const std::shared_ptr<Sensor>& s) {
+            cout << s->getid() << " ";return s->getid() == _id;}), sensores.end());
 }
 
-void Zona::eleminarProcessador(int id) {
-    processadores.erase(remove_if(processadores.begin(), processadores.end(), [&id](const shared_ptr<Processador> & p){
-        return  p->getid() == id;}), processadores.end());
+void Zona::eleminarProcessador(int _id) {
+    processadores.erase(remove_if(processadores.begin(), processadores.end(), [&_id](const shared_ptr<Processador> & p){
+        return  p->getid() == _id;}), processadores.end());
 }
 
 Zona::~Zona() {

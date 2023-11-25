@@ -1,6 +1,7 @@
 #include "Comando.h"
 
 #include <iostream>
+# include <vector>
 #include <algorithm>
 #include <sstream>
 
@@ -9,6 +10,10 @@ using namespace std;
 /***************************************** Public *****************************************/
 
 int Comando::getIndex() {return index;}
+
+vector <string> Comando::getVectorInput() {
+    return stringToVector(input);
+}
 
 // 0 -> valido; 1 -> invalido; 2 -> argumentos a menos; 3 -> argumentos a mais;
 int Comando::validaCmd() {

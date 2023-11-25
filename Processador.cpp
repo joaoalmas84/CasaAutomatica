@@ -1,10 +1,17 @@
 #include "Processador.h"
-#include <sstream>
+#include "Sensor.h"
+
 #include <iostream>
+#include <sstream>
 #include <algorithm>
+#include <optional>
+
+using namespace std;
 
 int Processador::baseId = 0;
+
 Processador::Processador(): id(baseId++) {}
+
 Processador::~Processador(){
     regras.clear();
 }
