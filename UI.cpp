@@ -12,6 +12,22 @@ UI::UI(): t(Terminal::instance()), dimx(t.getNumCols()), dimy(t.getNumRows()), l
     *cmdW << set_color(3) <<move_to(0,0) << "Comando -> ";
     dadosW = ini_dadosW_UI();
 }
+UI::~UI() {
+    for (int i = 0; i < linhas; ++i) {
+        for (int j = 0; j < colunas; ++j) {
+            delete zonasW[i][j];
+        }
+    }
+
+    for (int i = 0; i < linhas; ++i) {
+        delete[] zonasW[i];
+    }
+
+    delete[] zonasW;
+    delete dadosW;
+    delete cmdW;
+    delete habitacao;
+}
 
 void UI::START() {
     string cmd;
@@ -93,11 +109,12 @@ int UI::commandLine(string cmd) {
                             atulizar_cmdW();
                             try{linhasTemp = stoi(aux);}catch(const std::invalid_argument& ia){goto de;}
                             ///// REVOMER DEPOIS DA CLASS COMANDOS ESTAR COMPLETA = TRABALHO DA CLASS COMANDOS
-                            habitacao->add_Zona(linhasTemp, colunasTemp);
-                            atualizar_zonas_UI(linhas, colunas);
-
+                            try {
+                                habitacao->add_Zona(linhasTemp, colunasTemp);
+                                atualizar_zonas_UI(linhas, colunas);
+                            }catch(const char* strcatch){*dadosW << set_color(5) << move_to(0, numdados++) <<strcatch;}
                         }else{
-                            *dadosW << set_color(5) << move_to(0, numdados++) << "nao existe zona";
+                            *dadosW << set_color(3) << move_to(0, numdados++) << "nao existe zona";
                         }
 
                         break;
@@ -196,7 +213,10 @@ void UI::atualizar_zonas_UI(const int &linha, const int &coluna){
                     zonasW[i][j] = new Window(j*dimzonasx, i*dimzonasy, dimzonasx, dimzonasy);
 
                 (zonasW[i][j])->clear();
-                *(zonasW[i][j]) << set_color(3) << habitacao->get_idZona(i, j)->getId();
+                *(zonasW[i][j]) << set_color(3) << move_to(0, 0) << habitacao->get_idZona(i, j)->getId();
+                *(zonasW[i][j]) << set_color(3) << move_to(0, 1) << "num de Sensores: "<< habitacao->get_idZona(i, j)->numeroDeSensores();
+                *(zonasW[i][j]) << set_color(3) << move_to(0, 2) << "num de Aparelhos: "<<habitacao->get_idZona(i, j)->numeroDeAparelhos();
+                *(zonasW[i][j]) << set_color(3) << move_to(0, 3) << "num de Processadores: "<<habitacao->get_idZona(i, j)->numeroDeProcessadores();
             }
         }
     }

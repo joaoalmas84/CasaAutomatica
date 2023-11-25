@@ -25,6 +25,7 @@ class UI{
 
 public:
     UI();
+    ~UI();
     Window *ini_cmd_UI();
     Window *ini_dadosW_UI();
     int exec(string fileName);
