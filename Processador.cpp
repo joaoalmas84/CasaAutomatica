@@ -1,17 +1,16 @@
+//
+// Created by 35193 on 10/11/2023.
+//
+
 #include "Processador.h"
-#include "Sensor.h"
-
-#include <iostream>
+#include "Regra.h"
+#include "Aparelho.h"
+#include <vector>
+#include <memory>
 #include <sstream>
-#include <algorithm>
-#include <optional>
-
-using namespace std;
-
+#include <iostream>
 int Processador::baseId = 0;
-
 Processador::Processador(): id(baseId++) {}
-
 Processador::~Processador(){
     regras.clear();
 }

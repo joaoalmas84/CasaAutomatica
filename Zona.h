@@ -1,19 +1,22 @@
-#ifndef CODIGOFONTE_ZONA_H
-#define CODIGOFONTE_ZONA_H
+//
+// Created by 35193 on 09/11/2023.
+//
 
+#ifndef OOP_TRABALHO_ZONA_H
+#define OOP_TRABALHO_ZONA_H
 #include "Propriedade.h"
 #include "Sensor.h"
 #include "Processador.h"
 #include "Aparelho.h"
-
-#include <iostream>
+#include <string>
 #include <map>
-#include <optional>
+#include <vector>
+#include <memory>
 
 using namespace std;
-
 class Zona {
 public:
+
     ////////////////////////////construtores da class zona
     explicit Zona(string nomeDaZona = "zona sem nome");
     ~Zona();
@@ -30,21 +33,20 @@ public:
     bool addPropriedade(const string& nomeDaPropriedades, optional<double> min);
     bool addPropriedade(const string& nomeDaPropriedades, optional<double> min, optional<double> max);
     bool addPropriedade(const string& nomeDaPropriedades);
+
     bool setPropriedades(const string& nomeDaPropriedades, int valor);
 
     ///////////////////// criar sensores
     // a funcao tem um porblema
     bool addSensor(const string& propsNome);
-
     bool addProcessador();
-
     bool addRegrasPorc(const int idProc,int idsensor, const std::string &funcao, optional<double> x, optional<double> y = {});
     [[nodiscard]]
     string listaPropriedades() const;
 
     void eleminarSensor(int id);
     void eleminarProcessador(int id);
-    void eleminarRegraPorc(const int idProc);
+    ////////////////////void eleminarRegraPorc(const int idProc);
 
     // ESTE MÉTODOS SÃO PARA O MÉTODO DE DA CLASSE HABITAÇÃO
     [[nodiscard]]
@@ -64,7 +66,8 @@ private:
     vector<shared_ptr<Sensor>> sensores;
     vector<shared_ptr<Processador>> processadores;
     vector<shared_ptr<Aparelho>> aparelhos;
+
 };
 
 
-#endif //CODIGOFONTE_ZONA_H
+#endif //OOP_TRABALHO_ZONA_H

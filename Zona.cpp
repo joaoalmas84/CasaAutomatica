@@ -1,11 +1,20 @@
+//
+// Created by 35193 on 09/11/2023.
+//
+
 #include "Zona.h"
-
-#include <iostream>
-#include <optional>
+#include "Propriedade.h"
+#include "Sensor.h"
+#include "Processador.h"
+#include "Aparelho.h"
+#include <string>
+#include <map>
+#include <vector>
+#include <memory>
 #include <sstream>
-#include <algorithm>
-
-using namespace std;
+#include <new>
+#include <utility>
+#include <iostream>
 
 // inicialiar as var static;;
 int Zona::baseId = 1;
@@ -17,9 +26,16 @@ int Zona::baseId = 1;
 
 Zona::Zona(string  nomeDaZona): tilulo(std::move(nomeDaZona)), id(baseId++){iniciarPropriedadesDefault();}
 
+Zona::~Zona() {
+    for (auto pro: propriedades) {
+        delete pro.second;
+    }
+    sensores.clear();
+    processadores.clear();
+    aparelhos.clear();
+}
 // info
 string Zona::getAsString() const {
-
     ostringstream os;
     os << "componente do tipo : sensores" << endl;
     for (auto s: sensores) {
@@ -33,29 +49,13 @@ string Zona::getAsString() const {
     for (auto a: aparelhos) {
         //os << "s" << s->getid() << " // nome sensor // " << "estado: " << s->getvalor();
     }
-
     return os.str();
-}
-
-int Zona::getId() const {
-    return id;
 }
 int Zona::getNumeroPropriedades() const {
     return (int)propriedades.size();
 }
-
-//private
-void Zona::iniciarPropriedadesDefault(){
-    int min[] = {-273, 0};
-    int max[] = {100};
-
-    propriedades["Temperatura"] = new Propriedade(min[0]);
-    propriedades["Luz"] = new Propriedade(min[1]);
-    propriedades["Radiacao"] = new Propriedade(min[1]);
-    propriedades["Vibracao"] = new Propriedade(min[1]);
-    propriedades["Humidade"] = new Propriedade(min[1], max[0]);
-    propriedades["Fumo"] = new Propriedade(min[1], max[0]);
-    propriedades["Som"] = new Propriedade(min[1]);
+int Zona::getId() const {
+    return id;
 }
 
 //propriedade
@@ -135,23 +135,14 @@ string Zona::listaPropriedades() const {
     return os.str();
 }
 
-void Zona::eleminarSensor(int _id) {
-        sensores.erase(std::remove_if(sensores.begin(), sensores.end(), [&_id](const std::shared_ptr<Sensor>& s) {
-            cout << s->getid() << " ";return s->getid() == _id;}), sensores.end());
+void Zona::eleminarSensor(int id) {
+        sensores.erase(std::remove_if(sensores.begin(), sensores.end(), [&id](const std::shared_ptr<Sensor>& s) {
+            return s->getid() == id;}), sensores.end());
 }
 
-void Zona::eleminarProcessador(int _id) {
-    processadores.erase(remove_if(processadores.begin(), processadores.end(), [&_id](const shared_ptr<Processador> & p){
-        return  p->getid() == _id;}), processadores.end());
-}
-
-Zona::~Zona() {
-    for (auto pro: propriedades) {
-        delete pro.second;
-    }
-    sensores.clear();
-    processadores.clear();
-    aparelhos.clear();
+void Zona::eleminarProcessador(int id) {
+    processadores.erase(remove_if(processadores.begin(), processadores.end(), [&id](const shared_ptr<Processador> & p){
+        return  p->getid() == id;}), processadores.end());
 }
 
 int Zona::numeroDeSensores() const {
@@ -164,4 +155,17 @@ int Zona::numeroDeAparelhos() const {
 
 int Zona::numeroDeProcessadores() const {
     return processadores.size();
+}
+
+void Zona::iniciarPropriedadesDefault(){
+    int min[] = {-273, 0};
+    int max[] = {100};
+
+    propriedades["Temperatura"] = new Propriedade(min[0]);
+    propriedades["Luz"] = new Propriedade(min[1]);
+    propriedades["Radiacao"] = new Propriedade(min[1]);
+    propriedades["Vibracao"] = new Propriedade(min[1]);
+    propriedades["Humidade"] = new Propriedade(min[1], max[0]);
+    propriedades["Fumo"] = new Propriedade(min[1], max[0]);
+    propriedades["Som"] = new Propriedade(min[1]);
 }

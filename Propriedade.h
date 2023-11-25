@@ -1,12 +1,20 @@
-#ifndef CODIGOFONTE_PROPRIEDADE_H
-#define CODIGOFONTE_PROPRIEDADE_H
+//
+// Created by 35193 on 09/11/2023.
+//
 
-#include <iostream>
+#ifndef OOP_TRABALHO_PROPRIEDADE_H
+#define OOP_TRABALHO_PROPRIEDADE_H
 #include <optional>
+#include <string>
 
 using namespace std;
 
 class Propriedade {
+    static int baseId;
+    const int id;
+    double valor;
+    optional<double> minimo;
+    optional<double> maximo;
 public:
     //Propriedade(optional<double> max = {}, bool escolha = 'p');
     Propriedade(optional<double> min = {}, optional<double> max = {});
@@ -23,13 +31,8 @@ public:
     double getmin() const;
     [[nodiscard]]
     int getid() const;
-
-private:
-    static int baseId;
-    const int id;
-    double valor;
-    optional<double> minimo;
-    optional<double> maximo;
 };
 
-#endif //CODIGOFONTE_PROPRIEDADE_H
+
+
+#endif //OOP_TRABALHO_PROPRIEDADE_H

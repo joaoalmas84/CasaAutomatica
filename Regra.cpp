@@ -1,34 +1,34 @@
+//
+// Created by 35193 on 09/11/2023.
+//
+
 #include "Regra.h"
-#include "Sensor.h"
-
-#include <iostream>
 #include <sstream>
-#include <optional>
-
-using namespace std;
-
+#include <memory>
 int Regra::baseId = 0;
 
-/***************************************** Public *****************************************/
-
 Regra::Regra(const std::string &_funcao, shared_ptr<Sensor> _sensor, optional<double> _x, optional<double> _y)
-            : id(baseId++), funcao(_funcao), Psensor(_sensor), x(_x), y(_y) {}
+            :id(baseId++), funcao(_funcao), Psensor(_sensor), x(_x), y(_y){}
+
+Regra::~Regra(){};
+
 
 bool Regra::getValorDaRegra() const {
-    if (funcao == "igual") {
+    if(funcao == "igual"){
         return igual();
-    } else if(funcao == "menor") {
+    }else if(funcao == "menor"){
         return menor();
-    } else if(funcao == "maior") {
+    }else if(funcao == "maior"){
         return maior();
-    } else if(funcao == "entre") {
+    }else if(funcao == "entre"){
         return entre();
-    } else if(funcao == "naoEstre") {
+    }else if(funcao == "naoEstre"){
         return naoEstre();
-    } else {
+    }else{
         throw "erro essa regra nao existe";
     }
 }
+
 
 string Regra::getAsString() const {
     ostringstream os;
@@ -45,9 +45,6 @@ string Regra::getAsString() const {
 int Regra::getId() const {
     return id;
 }
-
-/***************************************** Private *****************************************/
-
 bool Regra::igual() const {
     shared_ptr<Sensor> sensor = Psensor.lock();
     if(sensor){

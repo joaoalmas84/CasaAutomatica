@@ -1,17 +1,20 @@
-#ifndef CODIGOFONTE_PROCESSADOR_H
-#define CODIGOFONTE_PROCESSADOR_H
+//
+// Created by 35193 on 10/11/2023.
+//
 
-#include "Sensor.h"
+#ifndef OOP_TRABALHO_PROCESSADOR_H
+#define OOP_TRABALHO_PROCESSADOR_H
 #include "Regra.h"
 #include "Aparelho.h"
-
-#include <iostream>
-#include <memory>
 #include <vector>
-
-using namespace std;
+#include <memory>
 
 class Processador {
+    static int baseId;
+    const int id;
+    vector<shared_ptr<Regra>> regras;
+    // ainda nao esta a ser usado para nada
+    vector<weak_ptr<Aparelho>> aparelhos;
 public:
     Processador();
     ~Processador();
@@ -23,13 +26,6 @@ public:
     [[nodiscard]]
     int getid()const;
     void eleminarRegra(int idRegra);
-
-private:
-    static int baseId;
-    const int id;
-    vector<shared_ptr<Regra>> regras;
-    // ainda nao esta a ser usado para nada
-    vector<weak_ptr<Aparelho>> aparelhos;
 };
 
-#endif //CODIGOFONTE_PROCESSADOR_H
+#endif //OOP_TRABALHO_PROCESSADOR_H

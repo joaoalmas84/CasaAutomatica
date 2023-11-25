@@ -1,17 +1,17 @@
-#ifndef CODIGOFONTE_REGRA_H
-#define CODIGOFONTE_REGRA_H
+//
+// Created by 35193 on 09/11/2023.
+//
 
+#ifndef OOP_TRABALHO_REGRA_H
+#define OOP_TRABALHO_REGRA_H
 #include "Sensor.h"
-
-#include <iostream>
+#include <string>
 #include <optional>
 #include <memory>
-
-using namespace std;
-
 class Regra {
 public:
     Regra(const string& _funcao, shared_ptr<Sensor> _sensor, optional<double> _x, optional<double> _y = {});
+    ~Regra();
     [[nodiscard]]
     bool getValorDaRegra() const;
     [[nodiscard]]
@@ -38,7 +38,8 @@ private:
     optional<double> y;
     weak_ptr<Sensor> Psensor;
 
+
 };
 
 
-#endif //CODIGOFONTE_REGRA_H
+#endif //OOP_TRABALHO_REGRA_H
