@@ -6,6 +6,7 @@
 #define OOP_TRABALHO_PROCESSADOR_H
 #include "Regra.h"
 #include "Aparelho.h"
+
 #include <vector>
 #include <memory>
 

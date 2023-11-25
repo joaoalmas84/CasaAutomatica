@@ -1,10 +1,8 @@
-//
-// Created by 35193 on 10/11/2023.
-//
-
 #include "Processador.h"
 #include <sstream>
 #include <iostream>
+#include <algorithm>
+
 int Processador::baseId = 0;
 Processador::Processador(): id(baseId++) {}
 Processador::~Processador(){

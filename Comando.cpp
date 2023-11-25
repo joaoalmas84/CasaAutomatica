@@ -8,6 +8,8 @@ using namespace std;
 
 /***************************************** Public *****************************************/
 
+int Comando::getIndex() {return index;}
+
 // 0 -> valido; 1 -> invalido; 2 -> argumentos a menos; 3 -> argumentos a mais;
 int Comando::validaCmd() {
     string cmdNome = getNomeCmd();
@@ -16,8 +18,24 @@ int Comando::validaCmd() {
     if (cmdIndex == -1) {return 1;}
 
     int cmdNumArg = countArgsCmd();
-    if (cmdNumArg < n_Args[cmdIndex] && n_Args[cmdIndex] != -1) {return 2;}
-    else if (cmdNumArg > n_Args[cmdIndex] && n_Args[cmdIndex] != -1) {return 3;}
+
+    if (n_Args[cmdIndex] != -1) {
+        if (cmdNumArg < n_Args[cmdIndex]) {return 2;}
+        else if (cmdNumArg > n_Args[cmdIndex]) {return 3;}
+    } else {
+        switch (cmdIndex) {
+            case 10:
+            case 13:
+            case 18:
+                if (cmdNumArg < 3) {return 2;}
+                break;
+            case 12:
+                if (cmdNumArg < 5) {return 2;}
+                break;
+            default:
+                break;
+        }
+    }
 
     nome = cmdNome;
     index = cmdIndex;
@@ -50,8 +68,7 @@ bool Comando::validaStx() {
             if (!isIntegerString({vectorInput[1],vectorInput[3]})) {return false;}
             else {return true;}
             break;
-        case 10:    // <- Caso especial, possibilidade de n.º de argumentos variar
-            // (Está a funcionar tudo exceto a variante corpo[2]="p" quando o processador recebe comandos com parametros)
+        case 10:
             if (!isIntegerString(vectorInput[1])) {return false;}
 
             if (vectorInput[2] == "s") {
@@ -73,9 +90,10 @@ bool Comando::validaStx() {
             if (!isIntegerString({vectorInput[1], vectorInput[2]}) || procuraEmVector(spa, vectorInput[2]) != -1) {return false;}
             else {return true;}
             break;
-            //case 12:
-            //    if (isIntegerString(vectorInput[1]) && isIntegerString(vectorInput[2]) && isIntegerString(vectorInput[4])) {}
-            //    break;
+        case 12:
+            if (!isIntegerString({vectorInput[1], vectorInput[2], vectorInput[4]})) {return false;}
+            else {return true;}
+            break;
         case 13:
         case 18:
             if (!isIntegerString({vectorInput[1], vectorInput[2]})) {return false;}
