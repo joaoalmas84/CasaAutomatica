@@ -112,7 +112,6 @@ int UI::commandLine(string cmd) {
                         }
                         break;
                     default:
-                        *dadosW << set_color(5) << move_to(0, numdados++) << "Erro";
                         break;
                 }
             } else {
