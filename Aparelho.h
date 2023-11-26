@@ -1,11 +1,9 @@
-//
-// Created by 35193 on 17/11/2023.
-//
+#ifndef CODIGOFONTE_APARELHO_H
+#define CODIGOFONTE_APARELHO_H
 
-#ifndef OOP_TRABALHO_APARELHO_H
-#define OOP_TRABALHO_APARELHO_H
 #include "Propriedade.h"
-struct modifa{
+
+struct modifa {
     Propriedade* propriedade;
     double valorA_Modeficar;
 };
@@ -16,8 +14,6 @@ class Aparelho {
 
 public:
     ~Aparelho();
-
 };
 
-
-#endif //OOP_TRABALHO_APARELHO_H
+#endif //CODIGOFONTE_APARELHO_H

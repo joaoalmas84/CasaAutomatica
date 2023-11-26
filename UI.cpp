@@ -35,127 +35,7 @@ UI::~UI() {
     delete habitacao;
 }
 
-void UI::START() {
-    string cmd;
-    int res = 0;
-
-    while (res != 1) {
-        cmd = getCmd();
-        res = commandLine(cmd);
-        verespaco();
-    }
-}
-
-string UI::getCmd() {
-    string cmd;
-    (*cmdW) >> cmd;
-    atulizar_cmdW();
-    return cmd;
-}
-
-int UI::commandLine(string cmd) {
-    istringstream iss(cmd);
-    string s1, s2;
-    iss >> s1 >> s2;
-    int res;
-
-    if (s1 == "exec") {
-        res = exec(s2);
-        if (res == 1) {return res;}
-    }
-
-    Comando c(cmd);
-
-    switch (c.validaCmd()) {
-        case 0:
-            bool flag;
-            if (c.validaStx()) {
-                *dadosW << set_color(5) << move_to(0, numdados) << c.descricao();
-                numdados += 6;
-                if (c.SAIR()) {return 1;}
-
-                vector <string> inputAux = c.getVectorInput();
-
-                switch (c.getIndex()) {
-                    case 2:
-
-                        if (habitacao == nullptr) {
-                            if (stoi(inputAux[1]) > 1 && stoi(inputAux[1]) < 5
-                                && stoi(inputAux[2]) > 1 && stoi(inputAux[2]) < 5) {
-                                linhas = stoi(inputAux[1]);
-                                colunas = stoi(inputAux[2]);
-                                habitacao = new Habitacao(linhas, colunas);
-                                criarZonasWindow();
-                                dadosW =ini_dadosW_UI();
-                            } else {
-                                *dadosW << set_color(5) << move_to(0, numdados++) << "Dimensoes invalidas";
-                                break;
-                            }
-                        } else {
-                            *dadosW << set_color(5) << move_to(0, numdados++) << "ja existe uma habitacao";
-                        }
-                        break;
-                    case 4:
-                        if(habitacao != nullptr) {
-                            int linhasTemp, colunasTemp;
-                            if (stoi(inputAux[1]) >= 0 && stoi(inputAux[1]) < linhas
-                                && stoi(inputAux[2]) >= 0 && stoi(inputAux[2]) < colunas) {
-                                linhasTemp = stoi(inputAux[1]);
-                                colunasTemp = stoi(inputAux[2]);
-                                try{
-                                habitacao->add_Zona(linhasTemp, colunasTemp);
-                                atualizar_zonas_UI(linhas, colunas);
-                                }catch(const char* strcatch){
-                                    *dadosW << set_color(5) << move_to(0, numdados++) << strcatch;
-                                }
-                            } else {
-                                *dadosW << set_color(5) << move_to(0, numdados++) << "Dimensoes invalidas";
-                                break;
-                            }
-                        } else {
-                            *dadosW << set_color(3) << move_to(0, numdados++) << "nao existe zona";
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            } else {
-                *dadosW << set_color(19) << move_to(0, numdados++) << "Sintaxe invalida";
-            }
-            break;
-        case 1:
-            *dadosW << set_color(19) << move_to(0, numdados++) << "Comando nao encontrado";
-            break;
-        case 2:
-            *dadosW << set_color(19) << move_to(0, numdados++) << "Argumentos a menos";
-            break;
-        case 3:
-            *dadosW << set_color(19) << move_to(0, numdados++) << "Argumentos a mais";
-            break;
-        default:
-            break;
-    }
-    // Comando c é destruido aqui
-    return 0;
-}
-
-int UI::exec(string fileName)  {
-    ifstream ifs(fileName);
-    string line;
-    int n = 0, res = 0;
-
-    if(!ifs.is_open()) {return -1;}
-
-    while (!ifs.eof()) {
-        getline(ifs, line);
-        res = commandLine(line);
-        n++;
-    }
-
-    ifs.close();
-
-    return res;
-}
+/************************************************ Gestão da parte gráfica ************************************************/
 
 Window *UI::ini_cmd_UI() {
     return new Window(0, dimy - 3, dimx, 3);
@@ -210,6 +90,156 @@ void UI::atualizar_zonas_UI(const int &linha, const int &coluna) {
     }
 }
 
+/********************************************************************************************************************************/
+
+void UI::START() {
+    string cmd;
+    int res = 0;
+    int i = 0;
+
+    *dadosW << set_color(5) << move_to(0, numdados++) << "\t\t\t\tBem Vindo\nAs dimensoes de uma habitacao tem obrigatoriamente de estar entre 2x2 e 4x4\n\tUma zona nao pode ocupar o total da sua habitacao";
+
+    while (res != 1) {
+        cmd = getCmd();
+        if (i == 0) {
+            dadosW = ini_dadosW_UI();
+        }
+        i++;
+        res = commandLine(cmd);
+    }
+}
+
+string UI::getCmd() {
+    string cmd;
+    (*cmdW) >> cmd;
+    atulizar_cmdW();
+    return cmd;
+}
+
+int UI::commandLine(string cmd) {
+    istringstream iss(cmd);
+    string s1, s2;
+    iss >> s1 >> s2;
+    int res;
+
+    if (s1 == "exec") {
+        res = exec(s2);
+        if (res == 1) {return res;}
+    }
+
+    Comando c(cmd);
+
+    switch (c.validaCmd()) {
+        case 0:
+            bool flag;
+            if (c.validaStx()) {
+                *dadosW << set_color(5) << move_to(0, numdados) << c.descricao();
+                numdados += 6;
+                if (c.SAIR()) {return 1;}
+
+                vector <string> inputAux = c.getVectorInput();
+
+                switch (c.getIndex()) {
+                    case 2:
+                        if (habitacao == nullptr) { // <- Habitação ainda não existe
+                            if (c.hnova()) {
+                                linhas = stoi(inputAux[1]);
+                                colunas = stoi(inputAux[2]);
+                                habitacao = new Habitacao(linhas, colunas);
+                                criarZonasWindow();
+                                dadosW =ini_dadosW_UI();
+                            } else {
+                                *dadosW << set_color(5) << move_to(0, numdados++) << "Dimensoes invalidas";
+                            }
+                        } else { // <- Habitação já existe
+                            *dadosW << set_color(5) << move_to(0, numdados++) << "Ja existe uma habitacao";
+                        }
+                        break;
+                    case 4:
+                        if (habitacao != nullptr) { // <- Habitação já existe
+                            int linhasTemp, colunasTemp;
+                            if (c.znova(habitacao)) {
+                                linhasTemp = stoi(inputAux[1]);
+                                colunasTemp = stoi(inputAux[2]);
+                                habitacao->add_Zona(linhasTemp, colunasTemp);
+                                atualizar_zonas_UI(linhas, colunas);
+                            } else {
+                                *dadosW << set_color(5) << move_to(0, numdados++) << "Dimensoes invalidas";
+                            }
+                        } else { // <- Habitação ainda não existe
+                            *dadosW << set_color(3) << move_to(0, numdados++) << "Habitacao ainda nao existe";
+                        }
+                        break;
+                    case 10:
+                        if (inputAux[2] == "s" && c.procuraEmVector(sensores, inputAux[3]) == -1) {
+                            *dadosW << set_color(3) << move_to(0, numdados++) << "Sensor desconhecido";
+                        }
+                        if (inputAux[2] == "a" && c.procuraEmVector(aparelhos, inputAux[3]) == -1) {
+                            *dadosW << set_color(3) << move_to(0, numdados++) << "Aparelho desconhecido";
+                        }
+                        break;
+                    case 11:
+                        if (inputAux[2] == "s" && c.procuraEmVector(sensores, inputAux[3]) == -1) {
+                            *dadosW << set_color(3) << move_to(0, numdados++) << "Sensor desconhecido";
+                        }
+                        if (inputAux[2] == "a" && c.procuraEmVector(aparelhos, inputAux[3]) == -1) {
+                            *dadosW << set_color(3) << move_to(0, numdados++) << "Aparelho desconhecido";
+                        }
+                    default:
+                        break;
+                }
+            } else {
+                *dadosW << set_color(19) << move_to(0, numdados++) << "Sintaxe invalida";
+            }
+            break;
+        case 1:
+            *dadosW << set_color(19) << move_to(0, numdados++) << "Comando nao encontrado";
+            break;
+        case 2:
+            *dadosW << set_color(19) << move_to(0, numdados++) << "Argumentos a menos";
+            break;
+        case 3:
+            *dadosW << set_color(19) << move_to(0, numdados++) << "Argumentos a mais";
+            break;
+        default:
+            break;
+    }
+    // Comando c é destruido aqui
+    return 0;
+}
+
+[[nodiscard]]
+int UI::exec(string fileName)  {
+    ifstream ifs(fileName);
+    string line;
+    int n = 0, res = 0;
+
+    if(!ifs.is_open()) {return -1;}
+
+    while (!ifs.eof()) {
+        getline(ifs, line);
+        res = commandLine(line);
+        n++;
+    }
+
+    ifs.close();
+
+    return res;
+}
+
+vector<string> UI::stringToVector(string str) {
+    vector<string> v;
+    istringstream iss(str);
+    string s;
+
+    while (!iss.fail()) {
+        iss >> s;
+        v.push_back(s);
+    }
+
+    return v;
+}
+
 /***************************************** Private *****************************************/
 
 
@@ -233,11 +263,4 @@ bool UI::isIntegerString(initializer_list<string> list) const {
     }
 
     return true;
-}
-
-void UI::verespaco(){
-    if (numdados + 5 > dimy){
-        dadosW->clear();
-        numdados = 0;
-    }
 }

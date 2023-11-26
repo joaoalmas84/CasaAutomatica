@@ -1,9 +1,11 @@
 #include "Comando.h"
+#include "Habitacao.h"
 
 #include <iostream>
-# include <vector>
+#include <vector>
 #include <algorithm>
 #include <sstream>
+#include <string>
 
 using namespace std;
 
@@ -27,20 +29,7 @@ int Comando::validaCmd() {
     if (n_Args[cmdIndex] != -1) {
         if (cmdNumArg < n_Args[cmdIndex]) {return 2;}
         else if (cmdNumArg > n_Args[cmdIndex]) {return 3;}
-    } else {
-        switch (cmdIndex) {
-            case 10:
-            case 13:
-            case 18:
-                if (cmdNumArg < 3) {return 2;}
-                break;
-            case 12:
-                if (cmdNumArg < 5) {return 2;}
-                break;
-            default:
-                break;
-        }
-    }
+    } else if (cmdNumArg < 5){return 2;}
 
     nome = cmdNome;
     index = cmdIndex;
@@ -75,34 +64,18 @@ bool Comando::validaStx() {
             break;
         case 10:
             if (!isIntegerString(vectorInput[1])) {return false;}
-
-            if (vectorInput[2] == "s") {
-                if (procuraEmVector(sensores, vectorInput[3]) == -1) {
-                    cout << "\nSensor desconhecido";
-                    return false;
-                }
-            } else if (vectorInput[2] == "p") {
-                return avaliaCmdFromParm(vectorInput, 3);
-            } else if (vectorInput[2] == "a") {
-                if (procuraEmVector(aparelhos, vectorInput[3]) == -1) {
-                    cout << "\nAparelho desconhecido";
-                    return false;
-                }
-            } else {return false;}
+            if (procuraEmVector(spa, vectorInput[2]) == -1) {return false;}
             return true;
             break;
         case 11:
-            if (!isIntegerString({vectorInput[1], vectorInput[2]}) || procuraEmVector(spa, vectorInput[2]) != -1) {return false;}
+        case 13:
+        case 18:
+            if (!isIntegerString({vectorInput[1], vectorInput[2]})) {return false;}
             else {return true;}
             break;
         case 12:
             if (!isIntegerString({vectorInput[1], vectorInput[2], vectorInput[4]})) {return false;}
             else {return true;}
-            break;
-        case 13:
-        case 18:
-            if (!isIntegerString({vectorInput[1], vectorInput[2]})) {return false;}
-            else {return avaliaCmdFromParm(vectorInput, 3);}
             break;
         case 15:
         case 16:
@@ -138,6 +111,33 @@ bool Comando::SAIR() const {
     else {return false;}
 }
 
+// Devolve -1 se nao encontrar str. Se encontrar devolve a posicao em que se encontra
+int Comando::procuraEmVector(vector<string> v, string str) const {
+    auto it = find(v.begin(), v.end(), str);
+    if (it == v.end()) {return -1;}
+    else {return distance(v.begin(), it);}
+}
+
+[[nodiscard]]
+bool Comando::hnova() {
+    vector <string> inputAux = getVectorInput();
+
+    if (!isBetween(stoi(inputAux[1]), 2, 4)) {return false;}
+    if (!isBetween(stoi(inputAux[2]), 2, 4)) {return false;}
+
+    return true;
+}
+
+[[nodiscard]]
+bool Comando::znova(Habitacao* h) {
+    vector <string> inputAux = getVectorInput();
+
+    if (!isBetween(stoi(inputAux[1]), 0, h->getLin()-1)) {return false;}
+    if (!isBetween(stoi(inputAux[2]), 0, h->getCol()-1)) {return false;}
+
+    return true;
+}
+
 /***************************************** Private *****************************************/
 
 string Comando::getNomeCmd() const {
@@ -145,13 +145,6 @@ string Comando::getNomeCmd() const {
     string str;
     iss >> str;
     return str;
-}
-
-// Devolve -1 se nao encontrar str. Se encontrar devolve a posicao em que se encontra
-int Comando::procuraEmVector(vector<string> v, string str) const {
-    auto it = find(v.begin(), v.end(), str);
-    if (it == v.end()) {return -1;}
-    else {return distance(v.begin(), it);}
 }
 
 int Comando::countArgsCmd() const {
@@ -201,23 +194,8 @@ vector<string> Comando::stringToVector(string str) {
     return v;
 }
 
-bool Comando::avaliaCmdFromParm(vector<string> v, int pos) const {
-    auto it = v.begin() + pos;
-    string cmd = "";
-
-    for (; it + 1 != v.end(); it++) {
-        if (it + 2 == v.end()) {cmd += *it;}
-        else {cmd += *it + ' ';}
-    }
-
-    Comando aux(cmd);
-
-    if (aux.validaCmd() != 0 || !aux.validaStx()) {// <- Alerta Recursividade!!!!
-        cout << "\n\nComando no parametro nr." << pos << " invalido";
-        return false;
-    } else {
-        cout << "\n\nComando no parametro nr." << pos << ':';
-        cout << aux.descricao();
-        return true;
-    }
+[[nodiscard]]
+bool Comando::isBetween(int val, int min, int max) {
+    if (val >= min && val <= max) {return true;}
+    else {return false;}
 }

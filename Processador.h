@@ -1,13 +1,15 @@
-//
-// Created by 35193 on 10/11/2023.
-//
+#ifndef CODIGOFONTE_PROCESSADOR_H
+#define CODIGOFONTE_PROCESSADOR_H
 
-#ifndef OOP_TRABALHO_PROCESSADOR_H
-#define OOP_TRABALHO_PROCESSADOR_H
+#include "Sensor.h"
 #include "Regra.h"
 #include "Aparelho.h"
-#include <vector>
+
+#include <iostream>
 #include <memory>
+#include <vector>
+
+using namespace std;
 
 class Processador {
     static int baseId;
@@ -15,8 +17,9 @@ class Processador {
     vector<shared_ptr<Regra>> regras;
     // ainda nao esta a ser usado para nada
     vector<weak_ptr<Aparelho>> aparelhos;
+
 public:
-    Processador();
+    Processador() : id(baseId++) {}
     ~Processador();
     bool addRegra(const string & funcao, shared_ptr<Sensor> sensor , optional<double> x, optional<double> y = {});
     [[nodiscard]]
@@ -28,4 +31,4 @@ public:
     void eleminarRegra(int idRegra);
 };
 
-#endif //OOP_TRABALHO_PROCESSADOR_H
+#endif //CODIGOFONTE_PROCESSADOR_H

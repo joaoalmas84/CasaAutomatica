@@ -1,25 +1,25 @@
-//
-// Created by 35193 on 10/11/2023.
-//
-
 #include "Processador.h"
-#include "Regra.h"
-#include "Aparelho.h"
-#include <vector>
-#include <memory>
-#include <sstream>
+#include "Sensor.h"
+
 #include <iostream>
+#include <sstream>
+#include <algorithm>
+#include <optional>
+
+using namespace std;
+
 int Processador::baseId = 0;
-Processador::Processador(): id(baseId++) {}
+
 Processador::~Processador(){
     regras.clear();
 }
 
-bool Processador::addRegra(const string & funcao, shared_ptr<Sensor> sensor, optional<double> x, optional<double> y){
+bool Processador::addRegra(const string & funcao, shared_ptr<Sensor> sensor, optional<double> x, optional<double> y) {
     regras.push_back(make_shared<Regra>(funcao, sensor, x, y));
     return true;
 }
 
+[[nodiscard]]
 string Processador::getAsSting() const {
     ostringstream os;
     os << "Processador id: " << id <<endl;
@@ -30,6 +30,7 @@ string Processador::getAsSting() const {
     return os.str();
 }
 
+[[nodiscard]]
 bool Processador::testar() const {
     bool test = true;
     for(auto R : regras){
@@ -39,6 +40,7 @@ bool Processador::testar() const {
     return test;
 }
 
+[[nodiscard]]
 int Processador::getid() const {
     return id;
 }

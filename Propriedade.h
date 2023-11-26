@@ -1,11 +1,8 @@
-//
-// Created by 35193 on 09/11/2023.
-//
+#ifndef CODIGOFONTE_PROPRIEDADE_H
+#define CODIGOFONTE_PROPRIEDADE_H
 
-#ifndef OOP_TRABALHO_PROPRIEDADE_H
-#define OOP_TRABALHO_PROPRIEDADE_H
+#include <iostream>
 #include <optional>
-#include <string>
 
 using namespace std;
 
@@ -15,24 +12,24 @@ class Propriedade {
     double valor;
     optional<double> minimo;
     optional<double> maximo;
+
 public:
     //Propriedade(optional<double> max = {}, bool escolha = 'p');
     Propriedade(optional<double> min = {}, optional<double> max = {});
     void definirValor(double v);
     [[nodiscard]]
-    double getValor() const;
+    double getValor()const;
     [[nodiscard]]
-    bool has_max() const;
+    bool has_max()const;
     [[nodiscard]]
-    bool has_min() const;
+    bool has_min()const;
     [[nodiscard]]
-    double getmax() const;
+    double getmax()const;
     [[nodiscard]]
-    double getmin() const;
+    double getmin()const;
     [[nodiscard]]
-    int getid() const;
+    int getid()const;
+
 };
 
-
-
-#endif //OOP_TRABALHO_PROPRIEDADE_H
+#endif //CODIGOFONTE_PROPRIEDADE_H
