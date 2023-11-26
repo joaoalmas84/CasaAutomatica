@@ -8,7 +8,7 @@
 
 int Propriedade::baseId = 0;
 
-Propriedade::Propriedade(optional<double> min, optional<double> max): minimo(min), maximo(max), valor(0), id(baseId++) {
+Propriedade::Propriedade(optional<double> min, optional<double> max) : minimo(min), maximo(max), valor(0), id(baseId++) {
     if (minimo.has_value() && maximo.has_value())
         if (minimo > maximo){
             tie(minimo, maximo) = make_tuple(maximo, minimo);

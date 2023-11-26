@@ -97,7 +97,7 @@ void UI::START() {
     int res = 0;
     int i = 0;
 
-    *dadosW << set_color(5) << move_to(0, numdados++) << "\t\t\t\tBem Vindo\nAs dimensoes de uma habitacao tem obrigatoriamente de estar entre 2x2 e 4x4\n\tUma zona nao pode ocupar o total da sua habitacao";
+    *dadosW << set_color(5) << move_to(0, numdados++) << "\t\t\t\tBem Vindo\nAs dimensoes de uma habitacao tem obrigatoriamente de estar entre 2x2 e 4x4\n\tUma zona nao pode estar fora da habitação";
 
     while (res != 1) {
         cmd = getCmd();
