@@ -53,7 +53,9 @@ bool Comando::validaStx() {
             break;
         case 2:
         case 4:
+        case 13:
         case 14:
+        case 18:
         case 19:
             if (!isIntegerString({vectorInput[1],vectorInput[2]})) {return false;}
             else {return true;}
@@ -68,9 +70,8 @@ bool Comando::validaStx() {
             return true;
             break;
         case 11:
-        case 13:
-        case 18:
             if (!isIntegerString({vectorInput[1], vectorInput[2]})) {return false;}
+            if (procuraEmVector(spa, vectorInput[2]) == -1) {return false;}
             else {return true;}
             break;
         case 12:
