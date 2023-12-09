@@ -100,12 +100,14 @@ void UI::START() {
     *dadosW << set_color(5) << move_to(0, numdados++) << "\t\t\t\tBem Vindo\nAs dimensoes de uma habitacao tem obrigatoriamente de estar entre 2x2 e 4x4\n\tUma zona nao pode estar fora da habitação";
 
     while (res != 1) {
+        cleandados();
         cmd = getCmd();
         if (i == 0) {
             dadosW = ini_dadosW_UI();
         }
         i++;
         res = commandLine(cmd);
+        cleandados();
     }
 }
 
@@ -161,8 +163,12 @@ int UI::commandLine(string cmd) {
                             if (c.znova(habitacao)) {
                                 linhasTemp = stoi(inputAux[1]);
                                 colunasTemp = stoi(inputAux[2]);
-                                habitacao->add_Zona(linhasTemp, colunasTemp);
-                                atualizar_zonas_UI(linhas, colunas);
+                                try{
+                                    habitacao->add_Zona(linhasTemp, colunasTemp);
+                                    atualizar_zonas_UI(linhas, colunas);
+                                }catch(const char* exce){
+                                    *dadosW << set_color(5) << move_to(0, numdados++) << exce;
+                                }
                             } else {
                                 *dadosW << set_color(5) << move_to(0, numdados++) << "Dimensoes invalidas";
                             }
@@ -192,6 +198,7 @@ int UI::commandLine(string cmd) {
                 *dadosW << set_color(19) << move_to(0, numdados++) << "Sintaxe invalida";
             }
             break;
+
         case 1:
             *dadosW << set_color(19) << move_to(0, numdados++) << "Comando nao encontrado";
             break;
@@ -252,6 +259,13 @@ bool UI::isIntegerString(string s) const {
 
     return true;
 }
+void UI::cleandados() {
+    if (numdados + 8 >= dimy - 4){
+        numdados = 0;
+        dadosW->clear();
+    }
+}
+
 
 bool UI::isIntegerString(initializer_list<string> list) const {
     int n;
@@ -264,3 +278,4 @@ bool UI::isIntegerString(initializer_list<string> list) const {
 
     return true;
 }
+

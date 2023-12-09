@@ -42,6 +42,7 @@ private:
     bool isIntegerString(string s)const;
     [[nodiscard]]
     bool isIntegerString(initializer_list<string> list)const;
+    void cleandados();
 };
 
 #endif //CODIGOFONTE_UI_H

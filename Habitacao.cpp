@@ -37,6 +37,12 @@ Habitacao::~Habitacao() {
 }
 
 void Habitacao::add_Zona(const int &linha, const int &coluna) {
+    if (linha < 0 || linha >= linhas || coluna < 0 || coluna >= colunas){
+        throw "Zona está fora dos limites da habitação";
+    }
+    if(zonas[linha][coluna] != nullptr){
+        throw "Ja existe uma Zona nesse lugar";
+    }
     zonas[linha][coluna] = new Zona("sala");
 }
 
