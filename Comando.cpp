@@ -35,7 +35,6 @@ int Comando::validaCmd() {
     index = cmdIndex;
     if (n_Args[cmdIndex] == -1) {numArg = -1;}
     else {numArg = cmdNumArg;}
-    stx = sintaxe[cmdIndex];
     return 0;
 }
 
@@ -88,23 +87,6 @@ bool Comando::validaStx() {
             return true;
     }
     return false;
-}
-
-string Comando::descricao() const {
-    ostringstream oss;
-    string aux;
-
-    if (numArg == -1) {aux = "Nr. indefinido";}
-    else {aux = to_string(numArg);}
-
-    oss << "\nInput:\t\t" << input
-        << "\nComando:\t" << nome
-        << "\nIndex:\t\t" << index
-        << "\nArgumentos:\t" << aux
-        << "\nSintaxe:\t" << stx
-        << '\n';
-
-    return oss.str();
 }
 
 bool Comando::SAIR() const {

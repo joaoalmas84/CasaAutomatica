@@ -17,7 +17,7 @@ public:
     void add_Zona(const int &linha,const int &coluna);
     //zrem <ID zona>
     void removerZona(const int &idZonaARemover);
-    Zona* get_idZona(int linha, int coluna)const;
+    Zona* get_ptrZona(int linha, int coluna)const;
     //zlista
     string zlista() const;
 
@@ -31,6 +31,9 @@ public:
     int getLin();
     [[nodiscard]]
     int getCol();
+private:
+    [[nodiscard]]
+    bool validaCoord(int col, int lin)const;
 };
 
 

@@ -37,12 +37,13 @@ Habitacao::~Habitacao() {
 }
 
 void Habitacao::add_Zona(const int &linha, const int &coluna) {
-    if (linha < 0 || linha >= linhas || coluna < 0 || coluna >= colunas){
+    if (!validaCoord(linha, coluna)) {
         throw "Zona está fora dos limites da habitação";
     }
-    if(zonas[linha][coluna] != nullptr){
+    if (zonas[linha][coluna] != nullptr) {
         throw "Ja existe uma Zona nesse lugar";
     }
+
     zonas[linha][coluna] = new Zona("sala");
 }
 
@@ -60,8 +61,10 @@ void Habitacao::removerZona(const int &idZonaARemover) {
     }
 }
 
-Zona* Habitacao::get_idZona(int linha, int coluna) const {
-    //if(linha < linhas && coluna < colunas)
+Zona* Habitacao::get_ptrZona(int linha, int coluna) const {
+    if (linha < linhas || coluna < colunas) {
+
+    }
     return zonas[linha][coluna];
     return nullptr;
 }
@@ -108,3 +111,9 @@ int Habitacao::getLin() {return linhas;}
 
 [[nodiscard]]
 int Habitacao::getCol() {return colunas;}
+
+bool Habitacao::validaCoord(int col, int lin) const {
+    if (col < 0 || lin < 0) {return false;}
+    if (col >= colunas || lin >= linhas) {return false;}
+    return true;
+}

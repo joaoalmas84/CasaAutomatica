@@ -75,16 +75,16 @@ void UI::criarZonasWindow() {
 void UI::atualizar_zonas_UI(const int &linha, const int &coluna) {
     for (int i = 0; i < linha; i++) {
         for (int j = 0; j < coluna; j++) {
-            if(habitacao->get_idZona(i, j) != nullptr){
+            if(habitacao->get_ptrZona(i, j) != nullptr){
 
                 if(zonasW[i][j] == nullptr)
                     zonasW[i][j] = new Window(j*dimzonasx, i*dimzonasy, dimzonasx, dimzonasy);
 
                 (zonasW[i][j])->clear();
-                *(zonasW[i][j]) << set_color(3) << move_to(0, 0) << habitacao->get_idZona(i, j)->getId();
-                *(zonasW[i][j]) << set_color(3) << move_to(0, 1) << "num de Sensores: "<< habitacao->get_idZona(i, j)->numeroDeSensores();
-                *(zonasW[i][j]) << set_color(3) << move_to(0, 2) << "num de Aparelhos: "<<habitacao->get_idZona(i, j)->numeroDeAparelhos();
-                *(zonasW[i][j]) << set_color(3) << move_to(0, 3) << "num de Processadores: "<<habitacao->get_idZona(i, j)->numeroDeProcessadores();
+                *(zonasW[i][j]) << set_color(3) << move_to(0, 0) << habitacao->get_ptrZona(i, j)->getId();
+                *(zonasW[i][j]) << set_color(3) << move_to(0, 1) << "num de Sensores: "<< habitacao->get_ptrZona(i, j)->numeroDeSensores();
+                *(zonasW[i][j]) << set_color(3) << move_to(0, 2) << "num de Aparelhos: "<<habitacao->get_ptrZona(i, j)->numeroDeAparelhos();
+                *(zonasW[i][j]) << set_color(3) << move_to(0, 3) << "num de Processadores: "<<habitacao->get_ptrZona(i, j)->numeroDeProcessadores();
             }
         }
     }
@@ -97,7 +97,7 @@ void UI::START() {
     int res = 0;
     int i = 0;
 
-    *dadosW << set_color(5) << move_to(0, numdados++) << "\t\t\t\tBem Vindo\nAs dimensoes de uma habitacao tem obrigatoriamente de estar entre 2x2 e 4x4\n\tUma zona nao pode estar fora da habitação";
+    *dadosW << set_color(5) << move_to(0, numdados++) << "\t\t\t\tBem Vindo\nAs dimensoes de uma habitacao tem obrigatoriamente de estar entre 2x2 e 4x4\n\tUma zona nao pode estar fora da habitacao";
 
     while (res != 1) {
         cleandados();
@@ -130,13 +130,11 @@ int UI::commandLine(string cmd) {
     }
 
     Comando c(cmd);
-
+    *dadosW << set_color(5) << move_to(0, numdados++) << cmd;
     switch (c.validaCmd()) {
         case 0:
             bool flag;
             if (c.validaStx()) {
-                *dadosW << set_color(5) << move_to(0, numdados) << c.descricao();
-                numdados += 6;
                 if (c.SAIR()) {return 1;}
 
                 vector <string> inputAux = c.getVectorInput();
