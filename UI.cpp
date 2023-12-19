@@ -19,17 +19,7 @@ UI::UI(): t(Terminal::instance()), dimx(t.getNumCols()), dimy(t.getNumRows()), l
 }
 
 UI::~UI() {
-    for (int i = 0; i < linhas; ++i) {
-        for (int j = 0; j < colunas; ++j) {
-            delete zonasW[i][j];
-        }
-    }
-
-    for (int i = 0; i < linhas; ++i) {
-        delete[] zonasW[i];
-    }
-
-    delete[] zonasW;
+    deleteZonasWindow();
     delete dadosW;
     delete cmdW;
     delete habitacao;
@@ -71,6 +61,23 @@ void UI::criarZonasWindow() {
         }
     }
 }
+
+void UI::deleteZonasWindow() {
+
+    for (int i = 0; i < linhas; ++i) {
+        for (int j = 0; j < colunas; ++j) {
+            delete zonasW[i][j];
+        }
+    }
+
+    for (int i = 0; i < linhas; ++i) {
+        delete[] zonasW[i];
+    }
+
+    delete[] zonasW;
+}
+
+
 
 void UI::atualizar_zonas_UI(const int &linha, const int &coluna) {
     for (int i = 0; i < linha; i++) {
@@ -154,6 +161,15 @@ int UI::commandLine(string cmd) {
                         } else { // <- Habitação já existe
                             *dadosW << set_color(5) << move_to(0, numdados++) << "Ja existe uma habitacao";
                         }
+                        break;
+                    case 3:
+                        delete habitacao;
+                        habitacao = nullptr;
+                        linhas = 0;
+                        colunas = 0;
+                        deleteZonasWindow();
+                        dadosW =ini_dadosW_UI();
+                        *dadosW << set_color(5) << move_to(0, numdados++) << "\t\t\t\tBem Vindo\nAs dimensoes de uma habitacao tem obrigatoriamente de estar entre 2x2 e 4x4\n\tUma zona nao pode estar fora da habitacao";
                         break;
                     case 4:
                         if (habitacao != nullptr) { // <- Habitação já existe
