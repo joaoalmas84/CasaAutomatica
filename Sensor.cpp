@@ -8,7 +8,7 @@ using namespace std;
 
 int Sensor::baseId = 0;
 
-Sensor::Sensor(Propriedade* propriedade): propriedade(propriedade), id(baseId++){medir();}
+Sensor::Sensor(weak_ptr<Propriedade> propriedade): propriedade(propriedade), id(baseId++){medir();}
 
 Sensor::~Sensor() {}
 
@@ -32,6 +32,10 @@ string Sensor::getAsString() const {
 }
 
 bool Sensor::medir() {
+    shared_ptr<Propriedade> propriedade = this->propriedade.lock();
+    if(!propriedade){
+        throw "Erro: O sensor não tem nenhuma propriedade associada.";
+    }
     ultimaMedicao = propriedade->getValor();
     return true;
 }

@@ -26,7 +26,7 @@ string Zona::getAsStringSimple() const {
     return os.str();
 }
 
-/*string Zona::getAsString() const {
+string Zona::getAsString() const {
     ostringstream os;
     os << "S: " << numeroDeSensores();
     for (auto s: sensores) {
@@ -42,7 +42,7 @@ string Zona::getAsStringSimple() const {
     }
 
     return os.str();
-}*/
+}
 
 int Zona::getId() const {
     return id;
@@ -57,7 +57,7 @@ bool Zona::addPropriedade(const string& nomeDaPropriedades, optional<double> min
     if (propriedades.find(nomeDaPropriedades) != propriedades.end()) {
         return false;
     }
-    propriedades[nomeDaPropriedades] = new Propriedade(min);
+    propriedades[nomeDaPropriedades] = make_shared<Propriedade>(min);
     return true;
 }
 
@@ -65,7 +65,7 @@ bool Zona::addPropriedade(const string& nomeDaPropriedades, optional<double> min
     if (propriedades.find(nomeDaPropriedades) != propriedades.end()) {
         return false;
     }
-    propriedades[nomeDaPropriedades] = new Propriedade(min, max);
+    propriedades[nomeDaPropriedades] = make_shared<Propriedade>(min, max);
     return true;
 }
 
@@ -73,7 +73,7 @@ bool Zona::addPropriedade(const string& nomeDaPropriedades) {
     if (propriedades.find(nomeDaPropriedades) != propriedades.end()) {
         return false;
     }
-    propriedades[nomeDaPropriedades] = new Propriedade();
+    propriedades[nomeDaPropriedades] = make_shared<Propriedade>();
     return true;
 }
 
@@ -90,7 +90,7 @@ bool Zona::addSensor(const string &propsNome) {
     if (propriedades.find(propsNome) == propriedades.end()) {
         return false;
     }
-    sensores.push_back(make_shared<Sensor>(propriedades[propsNome]));
+    sensores.push_back(make_shared<Sensor>(weak_ptr<Propriedade>(propriedades[propsNome])));
     return true;
 }
 
@@ -153,9 +153,6 @@ int Zona::numeroDeProcessadores() const {
 }
 
 Zona::~Zona() {
-    for (auto pro: propriedades) {
-        delete pro.second;
-    }
     sensores.clear();
     processadores.clear();
     aparelhos.clear();
@@ -166,11 +163,11 @@ void Zona::iniciarPropriedadesDefault(){
     int min[] = {-273, 0};
     int max[] = {100};
 
-    propriedades["Temperatura"] = new Propriedade(min[0]);
-    propriedades["Luz"] = new Propriedade(min[1]);
-    propriedades["Radiacao"] = new Propriedade(min[1]);
-    propriedades["Vibracao"] = new Propriedade(min[1]);
-    propriedades["Humidade"] = new Propriedade(min[1], max[0]);
-    propriedades["Fumo"] = new Propriedade(min[1], max[0]);
-    propriedades["Som"] = new Propriedade(min[1]);
+    propriedades["Temperatura"] = make_shared<Propriedade>(min[0]);
+    propriedades["Luz"] = make_shared<Propriedade>(min[1]);
+    propriedades["Radiacao"] = make_shared<Propriedade>(min[1]);
+    propriedades["Vibracao"] = make_shared<Propriedade>(min[1]);
+    propriedades["Humidade"] = make_shared<Propriedade>(min[1], max[0]);
+    propriedades["Fumo"] = make_shared<Propriedade>(min[1], max[0]);
+    propriedades["Som"] = make_shared<Propriedade>(min[1]);
 }
