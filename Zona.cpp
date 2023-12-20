@@ -18,23 +18,31 @@ int Zona::baseId = 1;
 Zona::Zona(string  nomeDaZona): tilulo(std::move(nomeDaZona)), id(baseId++){iniciarPropriedadesDefault();}
 
 // info
-string Zona::getAsString() const {
+string Zona::getAsStringSimple() const {
     ostringstream os;
-    os << "componente do tipo : sensores" << endl;
+    os << "S: " << numeroDeSensores();
+    os << " || P : " << numeroDeProcessadores();
+    os << " || A : " << numeroDeAparelhos() <<  endl;
+    return os.str();
+}
+
+/*string Zona::getAsString() const {
+    ostringstream os;
+    os << "S: " << numeroDeSensores();
     for (auto s: sensores) {
         os << "s" << s->getid() << " // nome sensor // " << "estado: " << s->getvalor() << endl;
     }
-    os << "componente do tipo : processadores" << endl;
+    os << " || P : " << numeroDeProcessadores();
     for (auto p: processadores) {
         os << "s" << p->getid() << " // nome sensor // " << "estado: " << endl;//<< p->();
     }
-    os << "componente do tipo : aparelhos" << endl;
+    os << " || A : " << numeroDeAparelhos() <<  endl;
     for (auto a: aparelhos) {
         //os << "s" << s->getid() << " // nome sensor // " << "estado: " << s->getvalor();
     }
 
     return os.str();
-}
+}*/
 
 int Zona::getId() const {
     return id;

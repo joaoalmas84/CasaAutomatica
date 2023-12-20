@@ -89,9 +89,7 @@ void UI::atualizar_zonas_UI(const int &linha, const int &coluna) {
 
                 (zonasW[i][j])->clear();
                 *(zonasW[i][j]) << set_color(3) << move_to(0, 0) << habitacao->get_ptrZona(i, j)->getId();
-                *(zonasW[i][j]) << set_color(3) << move_to(0, 1) << "num de Sensores: "<< habitacao->get_ptrZona(i, j)->numeroDeSensores();
-                *(zonasW[i][j]) << set_color(3) << move_to(0, 2) << "num de Aparelhos: "<<habitacao->get_ptrZona(i, j)->numeroDeAparelhos();
-                *(zonasW[i][j]) << set_color(3) << move_to(0, 3) << "num de Processadores: "<<habitacao->get_ptrZona(i, j)->numeroDeProcessadores();
+                *(zonasW[i][j]) << set_color(3) << move_to(0, 1) << ""<< habitacao->get_ptrZona(i, j)->getAsStringSimple();
 
             }else if(zonasW[i][j] != nullptr){
                     delete zonasW[i][j];
@@ -212,6 +210,12 @@ int UI::commandLine(string cmd) {
                             }
                         } else { // <- Habitação ainda não existe
                             *dadosW << set_color(3) << move_to(0, numdados++) << "Habitacao ainda nao existe";
+                        }
+                        break;
+                    case 6:
+                        if(habitacao != nullptr) {
+                            *dadosW << set_color(5) << move_to(0, numdados) << habitacao->zlista();
+                            numdados += habitacao->getNumZonas()*2;
                         }
                         break;
                     case 10:

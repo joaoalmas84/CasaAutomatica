@@ -63,6 +63,31 @@ void Habitacao::removerZona(const int &idZonaARemover) {
     }
 }
 
+string Habitacao::getAsStringSimple() const {
+    ostringstream os;
+    for (int i = 0; i < linhas; ++i) {
+        for (int j = 0; j < colunas; ++j) {
+            if(zonas[i][j] != nullptr){
+                os << "zona: " << zonas[i][j]->getId() << endl;
+                os << "\t" << zonas[i][j]->getAsStringSimple() << endl;
+            }
+        }
+    }
+    return os.str();
+}
+
+int Habitacao::getNumZonas() const {
+    int numZonas = 0;
+    for (int i = 0; i < linhas; ++i) {
+        for (int j = 0; j < colunas; ++j) {
+            if(zonas[i][j] != nullptr){
+                numZonas++;
+            }
+        }
+    }
+    return numZonas;
+}
+
 Zona* Habitacao::get_ptrZona(int linha, int coluna) const {
     if (linha < linhas || coluna < colunas) {
 
@@ -73,14 +98,11 @@ Zona* Habitacao::get_ptrZona(int linha, int coluna) const {
 
 string Habitacao::zlista() const {
     ostringstream os;
-
     for (int i = 0; i < linhas; ++i) {
         for (int j = 0; j < colunas; ++j) {
-            if(zonas[i][j] != nullptr) {
-                os << "ID Zona: " << zonas[i][j]->getId() << endl;
-                os << "numero de sensores: " << zonas[i][j]->numeroDeSensores() << endl;
-                os << "numero de processadores: " << zonas[i][j]->numeroDeProcessadores() << endl;
-                os << "numero de aparelhos: " << zonas[i][j]->numeroDeAparelhos() << endl;
+            if(zonas[i][j] != nullptr){
+                os << "zona: " << zonas[i][j]->getId() << endl;
+                os << "\t" << zonas[i][j]->getAsStringSimple();
             }
         }
     }
@@ -105,7 +127,7 @@ string Habitacao::zcomp(const int &IDzona) const {
     }
     return "zona nao existe";
     found:
-    return  zonas[i][j]->getAsString();
+    return  zonas[i][j]->getAsStringSimple();
 }
 
 [[nodiscard]]
