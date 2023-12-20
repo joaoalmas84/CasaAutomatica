@@ -121,6 +121,14 @@ bool Comando::znova(Habitacao* h) {
     return true;
 }
 
+
+[[nodiscard]]
+bool Comando::zrem() {
+    vector <string> inputAux = getVectorInput();
+    stoi(inputAux[1]);
+    return true;
+}
+
 /***************************************** Private *****************************************/
 
 string Comando::getNomeCmd() const {

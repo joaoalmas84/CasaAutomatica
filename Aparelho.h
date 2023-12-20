@@ -13,7 +13,10 @@ class Aparelho {
     struct modifa *modifica;
 
 public:
-    ~Aparelho();
+    Aparelho();
+    virtual void mudificarPropriedade();
+    virtual void desligarLIgar();
+    virtual ~Aparelho() = 0;
 };
 
 #endif //CODIGOFONTE_APARELHO_H

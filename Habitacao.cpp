@@ -47,16 +47,18 @@ void Habitacao::add_Zona(const int &linha, const int &coluna) {
     zonas[linha][coluna] = new Zona("sala");
 }
 
+
 void Habitacao::removerZona(const int &idZonaARemover) {
     // verificar se existe esta zona
     for (int i = 0; i < linhas; ++i) {
         for (int j = 0; j < colunas; ++j) {
-            if(zonas[i][j] != nullptr)
-                if(zonas[i][j]->getId() == idZonaARemover){
+            if(zonas[i][j] != nullptr) {
+                if (zonas[i][j]->getId() == idZonaARemover) {
                     delete zonas[i][j];
                     zonas[i][j] = nullptr;
                     return;
                 }
+            }
         }
     }
 }
