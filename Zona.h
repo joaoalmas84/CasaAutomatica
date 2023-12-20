@@ -25,7 +25,7 @@ public:
     ////////////////////////////construtores da class zona
     explicit Zona(string nomeDaZona = "zona sem nome");
     [[nodiscard]]
-    string getAsString()const;
+    string getAsStringSimple()const;
     [[nodiscard]]
     int getId() const;
     [[nodiscard]]
@@ -41,9 +41,7 @@ public:
     ///////////////////// criar sensores
     // a funcao tem um porblema
     bool addSensor(const string& propsNome);
-
     bool addProcessador();
-
     bool addRegrasPorc(const int idProc,int idsensor, const std::string &funcao, optional<double> x, optional<double> y = {});
     [[nodiscard]]
     string listaPropriedades()const;

@@ -32,6 +32,8 @@ public:
     bool hnova();
     [[nodiscard]]
     bool znova(Habitacao* h);
+    [[nodiscard]]
+    bool zrem();
 
 private:
     [[nodiscard]]

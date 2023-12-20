@@ -89,10 +89,12 @@ void UI::atualizar_zonas_UI(const int &linha, const int &coluna) {
 
                 (zonasW[i][j])->clear();
                 *(zonasW[i][j]) << set_color(3) << move_to(0, 0) << habitacao->get_ptrZona(i, j)->getId();
-                *(zonasW[i][j]) << set_color(3) << move_to(0, 1) << "num de Sensores: "<< habitacao->get_ptrZona(i, j)->numeroDeSensores();
-                *(zonasW[i][j]) << set_color(3) << move_to(0, 2) << "num de Aparelhos: "<<habitacao->get_ptrZona(i, j)->numeroDeAparelhos();
-                *(zonasW[i][j]) << set_color(3) << move_to(0, 3) << "num de Processadores: "<<habitacao->get_ptrZona(i, j)->numeroDeProcessadores();
-            }
+                *(zonasW[i][j]) << set_color(3) << move_to(0, 1) << ""<< habitacao->get_ptrZona(i, j)->getAsStringSimple();
+
+            }else if(zonasW[i][j] != nullptr){
+                    delete zonasW[i][j];
+                    zonasW[i][j] = nullptr;
+                }
         }
     }
 }
@@ -104,7 +106,7 @@ void UI::START() {
     int res = 0;
     int i = 0;
 
-    *dadosW << set_color(5) << move_to(0, numdados++) << "\t\t\t\tBem Vindo\nAs dimensoes de uma habitacao tem obrigatoriamente de estar entre 2x2 e 4x4\n\tUma zona nao pode estar fora da habitacao";
+    *dadosW << set_color(5) << move_to(0 , numdados++) << "\t\t\t\tBem Vindo\nAs dimensoes de uma habitacao tem obrigatoriamente de estar entre 2x2 e 4x4\n\tUma zona nao pode estar fora da habitacao";
 
     while (res != 1) {
         cleandados();
@@ -163,13 +165,15 @@ int UI::commandLine(string cmd) {
                         }
                         break;
                     case 3:
-                        delete habitacao;
-                        habitacao = nullptr;
-                        linhas = 0;
-                        colunas = 0;
-                        deleteZonasWindow();
-                        dadosW =ini_dadosW_UI();
-                        *dadosW << set_color(5) << move_to(0, numdados++) << "\t\t\t\tBem Vindo\nAs dimensoes de uma habitacao tem obrigatoriamente de estar entre 2x2 e 4x4\n\tUma zona nao pode estar fora da habitacao";
+                        if (habitacao != nullptr) {
+                            delete habitacao;
+                            habitacao = nullptr;
+                            linhas = 0;
+                            colunas = 0;
+                            deleteZonasWindow();
+                            dadosW = ini_dadosW_UI();
+                            *dadosW << set_color(5) << move_to(0, numdados++) << "\t\t\t\tBem Vindo\nAs dimensoes de uma habitacao tem obrigatoriamente de estar entre 2x2 e 4x4\n\tUma zona nao pode estar fora da habitacao";
+                        }
                         break;
                     case 4:
                         if (habitacao != nullptr) { // <- Habitação já existe
@@ -188,6 +192,30 @@ int UI::commandLine(string cmd) {
                             }
                         } else { // <- Habitação ainda não existe
                             *dadosW << set_color(3) << move_to(0, numdados++) << "Habitacao ainda nao existe";
+                        }
+                        break;
+                    case 5:
+                        if (habitacao != nullptr) { // <- Habitação já existe
+                            //teste a mudar
+                            int idzona;
+
+                            if (c.zrem()) {
+                                idzona = stoi(inputAux[1]);
+                                try{
+                                    habitacao->removerZona(idzona);
+                                    atualizar_zonas_UI(linhas, colunas);
+                                }catch(const char* exce){
+                                    *dadosW << set_color(5) << move_to(0, numdados++) << exce;
+                                }
+                            }
+                        } else { // <- Habitação ainda não existe
+                            *dadosW << set_color(3) << move_to(0, numdados++) << "Habitacao ainda nao existe";
+                        }
+                        break;
+                    case 6:
+                        if(habitacao != nullptr) {
+                            *dadosW << set_color(5) << move_to(0, numdados) << habitacao->zlista();
+                            numdados += habitacao->getNumZonas()*2;
                         }
                         break;
                     case 10:

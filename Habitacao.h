@@ -17,6 +17,8 @@ public:
     void add_Zona(const int &linha,const int &coluna);
     //zrem <ID zona>
     void removerZona(const int &idZonaARemover);
+    string getAsStringSimple()const;
+    int getNumZonas()const;
     Zona* get_ptrZona(int linha, int coluna)const;
     //zlista
     string zlista() const;

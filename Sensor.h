@@ -2,7 +2,6 @@
 #define CODIGOFONTE_SENSOR_H
 
 #include "Propriedade.h"
-
 #include <iostream>
 
 using namespace std;

@@ -47,18 +47,45 @@ void Habitacao::add_Zona(const int &linha, const int &coluna) {
     zonas[linha][coluna] = new Zona("sala");
 }
 
+
 void Habitacao::removerZona(const int &idZonaARemover) {
     // verificar se existe esta zona
     for (int i = 0; i < linhas; ++i) {
         for (int j = 0; j < colunas; ++j) {
-            if(zonas[i][j] != nullptr)
-                if(zonas[i][j]->getId() == idZonaARemover){
+            if(zonas[i][j] != nullptr) {
+                if (zonas[i][j]->getId() == idZonaARemover) {
                     delete zonas[i][j];
                     zonas[i][j] = nullptr;
                     return;
                 }
+            }
         }
     }
+}
+
+string Habitacao::getAsStringSimple() const {
+    ostringstream os;
+    for (int i = 0; i < linhas; ++i) {
+        for (int j = 0; j < colunas; ++j) {
+            if(zonas[i][j] != nullptr){
+                os << "zona: " << zonas[i][j]->getId() << endl;
+                os << "\t" << zonas[i][j]->getAsStringSimple() << endl;
+            }
+        }
+    }
+    return os.str();
+}
+
+int Habitacao::getNumZonas() const {
+    int numZonas = 0;
+    for (int i = 0; i < linhas; ++i) {
+        for (int j = 0; j < colunas; ++j) {
+            if(zonas[i][j] != nullptr){
+                numZonas++;
+            }
+        }
+    }
+    return numZonas;
 }
 
 Zona* Habitacao::get_ptrZona(int linha, int coluna) const {
@@ -71,14 +98,11 @@ Zona* Habitacao::get_ptrZona(int linha, int coluna) const {
 
 string Habitacao::zlista() const {
     ostringstream os;
-
     for (int i = 0; i < linhas; ++i) {
         for (int j = 0; j < colunas; ++j) {
-            if(zonas[i][j] != nullptr) {
-                os << "ID Zona: " << zonas[i][j]->getId() << endl;
-                os << "numero de sensores: " << zonas[i][j]->numeroDeSensores() << endl;
-                os << "numero de processadores: " << zonas[i][j]->numeroDeProcessadores() << endl;
-                os << "numero de aparelhos: " << zonas[i][j]->numeroDeAparelhos() << endl;
+            if(zonas[i][j] != nullptr){
+                os << "zona: " << zonas[i][j]->getId() << endl;
+                os << "\t" << zonas[i][j]->getAsStringSimple();
             }
         }
     }
@@ -103,7 +127,7 @@ string Habitacao::zcomp(const int &IDzona) const {
     }
     return "zona nao existe";
     found:
-    return  zonas[i][j]->getAsString();
+    return  zonas[i][j]->getAsStringSimple();
 }
 
 [[nodiscard]]
