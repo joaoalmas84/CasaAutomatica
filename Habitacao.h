@@ -22,7 +22,8 @@ public:
     Zona* get_ptrZona(int linha, int coluna)const;
     //zlista
     string zlista() const;
-
+    string zprops(const int &IDzona) const;
+    bool pmod(const int &IDzona, const string &nomeDaPropriedade, const int &valor);
                         //////////////////////////////////////////////////////////////////
                         /////////// Comandos para gerir habitação e zonas/////////////////
                         //////////////////////////////////////////////////////////////////

@@ -28,19 +28,28 @@ string Zona::getAsStringSimple() const {
 
 string Zona::getAsString() const {
     ostringstream os;
-    os << "S: " << numeroDeSensores();
-    for (auto s: sensores) {
-        os << "s" << s->getid() << " // nome sensor // " << "estado: " << s->getvalor() << endl;
-    }
-    os << " || P : " << numeroDeProcessadores();
-    for (auto p: processadores) {
-        os << "s" << p->getid() << " // nome sensor // " << "estado: " << endl;//<< p->();
-    }
+    os << "Zona: " << id << endl;
     os << " || A : " << numeroDeAparelhos() <<  endl;
     for (auto a: aparelhos) {
-        //os << "s" << s->getid() << " // nome sensor // " << "estado: " << s->getvalor();
+        //os << "\ta" << a-> << " // nome sensor // " << "estado: " << s->getvalor();
     }
+    os << "S: " << numeroDeSensores() <<  endl;
+    for (auto s: sensores) {
+        os << "\ts" << s->getid() << " // nome sensor // " << "estado: " << s->getvalor() << endl;
+    }
+    os << " || P : " << numeroDeProcessadores() <<  endl;
+    for (auto p: processadores) {
+        os << "\ts" << p->getid() << " // nome sensor // " << "estado: " << endl;//<< p->();
+    }
+    return os.str();
+}
 
+string Zona::propsAsString() const {
+    ostringstream os;
+    os << "Zona: " << id << endl;
+    for(auto props : propriedades){
+        os << "propriedade: " << props.second->getid() << " : " << props.first << " valor: " << props.second->getValor() << endl;
+    }
     return os.str();
 }
 
@@ -95,7 +104,7 @@ bool Zona::addSensor(const string &propsNome) {
 }
 
 bool Zona::addProcessador() {
-    processadores.push_back(make_shared<Processador>());
+    processadores.push_back(make_shared<Processador>(id));
     return true;
 }
 

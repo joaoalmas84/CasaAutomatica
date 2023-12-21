@@ -14,12 +14,13 @@ using namespace std;
 class Processador {
     static int baseId;
     const int id;
+    int idzona;// para o psalva ser mais facil;
     vector<unique_ptr<Regra>> regras;
     // ainda nao esta a ser usado para nada
     vector<weak_ptr<Aparelho>> aparelhos;
 
 public:
-    Processador() : id(baseId++) {}
+    Processador(int _idzona);
     ~Processador();
     bool addRegra(const string & funcao, shared_ptr<Sensor> sensor , optional<double> x, optional<double> y = {});
     [[nodiscard]]

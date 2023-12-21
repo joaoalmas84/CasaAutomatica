@@ -29,6 +29,8 @@ public:
     [[nodiscard]]
     string getAsString() const;
     [[nodiscard]]
+    string propsAsString() const;
+    [[nodiscard]]
     int getId() const;
     [[nodiscard]]
     int getNumeroPropriedades()const;
