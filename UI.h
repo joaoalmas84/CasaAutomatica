@@ -44,6 +44,7 @@ private:
     [[nodiscard]]
     bool isIntegerString(initializer_list<string> list)const;
     void cleandados();
+    int contlinhas(const string &texto)const;
 };
 
 #endif //CODIGOFONTE_UI_H

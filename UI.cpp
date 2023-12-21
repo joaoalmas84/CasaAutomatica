@@ -218,6 +218,34 @@ int UI::commandLine(string cmd) {
                             numdados += habitacao->getNumZonas()*2;
                         }
                         break;
+                    case 8:
+                        if (habitacao != nullptr) { // <- Habitação já existe
+                            int idzona;
+
+                            if (c.zrem()) {
+                                idzona = stoi(inputAux[1]);
+                                    string texto = habitacao->zprops(idzona);
+                                    *dadosW << set_color(5) << move_to(0, numdados) << texto;
+                                    numdados += contlinhas(texto);
+                            }
+                        } else { // <- Habitação ainda não existe
+                            *dadosW << set_color(3) << move_to(0, numdados++) << "Habitacao ainda nao existe";
+                        }
+                        break;
+                    case 9:
+                        if (habitacao != nullptr) { // <- Habitação já existe
+                            int idzona = stoi(inputAux[1]);
+                            string nomeProp = inputAux[2];
+                            int valor = stoi(inputAux[3]);
+                            if(habitacao->pmod(idzona, nomeProp, valor)){
+                                *dadosW << set_color(5) << move_to(0, numdados++) << "Propriedade alterada";
+                            }else{
+                                *dadosW << set_color(5) << move_to(0, numdados++) << "Nao foi possivil alterar a propridade";
+                            }
+                        } else { // <- Habitação ainda não existe
+                            *dadosW << set_color(3) << move_to(0, numdados++) << "Habitacao ainda nao existe";
+                        }
+                        break;
                     case 10:
                         if (inputAux[2] == "s" && c.procuraEmVector(sensores, inputAux[3]) == -1) {
                             *dadosW << set_color(3) << move_to(0, numdados++) << "Sensor desconhecido";
@@ -306,6 +334,15 @@ void UI::cleandados() {
         numdados = 0;
         dadosW->clear();
     }
+}
+
+int UI::contlinhas(const string &texto)const{
+    int n=0;
+    for(int i=0; i<texto.size(); i++){
+        if(texto[i] == '\n')
+            n++;
+    }
+    return n;
 }
 
 

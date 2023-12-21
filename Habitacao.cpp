@@ -109,26 +109,48 @@ string Habitacao::zlista() const {
     return os.str();
 }
 
-                            //////////////////////////////////////////////////////////////////
-                            /////////// Comandos para gerir habitação e zonas/////////////////
-                            //////////////////////////////////////////////////////////////////
-
 string Habitacao::zcomp(const int &IDzona) const {
-    int i;
-    int j;
-    for (i = 0; i < linhas; ++i) {
-        for (j = 0; j < colunas; ++j) {
+    for (int i = 0; i < linhas; ++i) {
+        for ( int j = 0; j < colunas; ++j) {
             if(zonas[i][j] != nullptr) {
                 if (zonas[i][j]->getId() == IDzona){
-                    goto found;
+                    return zonas[i][j]->getAsString();
                 }
             }
         }
     }
     return "zona nao existe";
-    found:
-    return  zonas[i][j]->getAsStringSimple();
 }
+string Habitacao::zprops(const int &IDzona) const {
+    for (int i = 0; i < linhas; ++i) {
+        for ( int j = 0; j < colunas; ++j) {
+            if(zonas[i][j] != nullptr) {
+                if (zonas[i][j]->getId() == IDzona){
+                    return zonas[i][j]->propsAsString();
+                }
+            }
+        }
+    }
+    return "zona nao existe";
+}
+
+bool Habitacao::pmod(const int &IDzona, const string &nomeDaPropriedade, const int &valor) {
+    for (int i = 0; i < linhas; ++i) {
+        for ( int j = 0; j < colunas; ++j) {
+            if(zonas[i][j] != nullptr) {
+                if (zonas[i][j]->getId() == IDzona){
+                    return zonas[i][j]->setPropriedades(nomeDaPropriedade, valor);
+                }
+            }
+        }
+    }
+    return false;
+}
+                            //////////////////////////////////////////////////////////////////
+                            /////////// Comandos para gerir habitação e zonas/////////////////
+                            //////////////////////////////////////////////////////////////////
+
+
 
 [[nodiscard]]
 int Habitacao::getLin() {return linhas;}

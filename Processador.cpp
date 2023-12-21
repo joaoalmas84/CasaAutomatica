@@ -10,6 +10,8 @@ using namespace std;
 
 int Processador::baseId = 0;
 
+Processador::Processador(int _idzona) : id(baseId++), idzona(_idzona) {}
+
 Processador::~Processador(){
     regras.clear();
 }

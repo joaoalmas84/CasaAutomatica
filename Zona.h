@@ -16,7 +16,7 @@ class Zona {
     static int baseId;
     const int id;
     string tilulo;
-    map<string, Propriedade*> propriedades;
+    map<string, shared_ptr<Propriedade>> propriedades;
     vector<shared_ptr<Sensor>> sensores;
     vector<shared_ptr<Processador>> processadores;
     vector<shared_ptr<Aparelho>> aparelhos;
@@ -26,6 +26,10 @@ public:
     explicit Zona(string nomeDaZona = "zona sem nome");
     [[nodiscard]]
     string getAsStringSimple()const;
+    [[nodiscard]]
+    string getAsString() const;
+    [[nodiscard]]
+    string propsAsString() const;
     [[nodiscard]]
     int getId() const;
     [[nodiscard]]

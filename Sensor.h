@@ -3,17 +3,17 @@
 
 #include "Propriedade.h"
 #include <iostream>
-
+#include <memory>
 using namespace std;
 
 class Sensor {
     static int baseId;
     const int id;
-    Propriedade* propriedade;
+    weak_ptr<Propriedade> propriedade;
     double ultimaMedicao;
 
 public:
-    Sensor(Propriedade* propriedade);
+    Sensor(weak_ptr<Propriedade> propriedade);
     ~Sensor();
     [[nodiscard]]
     int getid()const;
