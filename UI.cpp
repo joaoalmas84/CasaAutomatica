@@ -151,7 +151,7 @@ int UI::commandLine(string cmd) {
                 switch (c.getIndex()) {
                     case 2:
                         if (habitacao == nullptr) { // <- Habitação ainda não existe
-                            if (c.hnova()) {
+                            if (c.verificaDimensoes_habitacao()) {
                                 linhas = stoi(inputAux[1]);
                                 colunas = stoi(inputAux[2]);
                                 habitacao = new Habitacao(linhas, colunas);
@@ -178,7 +178,7 @@ int UI::commandLine(string cmd) {
                     case 4:
                         if (habitacao != nullptr) { // <- Habitação já existe
                             int linhasTemp, colunasTemp;
-                            if (c.znova(habitacao)) {
+                            if (c.verificaDimensoes_zona(habitacao)) {
                                 linhasTemp = stoi(inputAux[1]);
                                 colunasTemp = stoi(inputAux[2]);
                                 try{
@@ -282,23 +282,7 @@ int UI::commandLine(string cmd) {
                             atualizar_zonas_UI(linhas, colunas);
                         }
 
-                        /*
-                        if (inputAux[2] == "s" && c.procuraEmVector(sensores, inputAux[3]) == -1) {
-                            *dadosW << set_color(3) << move_to(0, numdados++) << "Sensor desconhecido";
-                        }else{
-
-                        }
-                        if (inputAux[2] == "a" && c.procuraEmVector(aparelhos, inputAux[3]) == -1) {
-                            *dadosW << set_color(3) << move_to(0, numdados++) << "Aparelho desconhecido";
-                        }*/
                         break;
-                    case 11:
-                        if (inputAux[2] == "s" && c.procuraEmVector(sensores, inputAux[3]) == -1) {
-                            *dadosW << set_color(3) << move_to(0, numdados++) << "Sensor desconhecido";
-                        }
-                        if (inputAux[2] == "a" && c.procuraEmVector(aparelhos, inputAux[3]) == -1) {
-                            *dadosW << set_color(3) << move_to(0, numdados++) << "Aparelho desconhecido";
-                        }
                     default:
                         break;
                 }
