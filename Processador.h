@@ -15,12 +15,13 @@ class Processador {
     static int baseId;
     const int id;
     int idzona;// para o psalva ser mais facil;
+    string comando;
     vector<unique_ptr<Regra>> regras;
     // ainda nao esta a ser usado para nada
     vector<weak_ptr<Aparelho>> aparelhos;
 
 public:
-    Processador(int _idzona);
+    Processador(const int &_idzona,const string& _comando);
     ~Processador();
     bool addRegra(const string & funcao, shared_ptr<Sensor> sensor , optional<double> x, optional<double> y = {});
     [[nodiscard]]

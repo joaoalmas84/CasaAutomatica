@@ -29,17 +29,17 @@ string Zona::getAsStringSimple() const {
 string Zona::getAsString() const {
     ostringstream os;
     os << "Zona: " << id << endl;
-    os << " || A : " << numeroDeAparelhos() <<  endl;
+    os << "A : " << numeroDeAparelhos() <<  endl;
     for (auto a: aparelhos) {
         //os << "\ta" << a-> << " // nome sensor // " << "estado: " << s->getvalor();
     }
-    os << "S: " << numeroDeSensores() <<  endl;
+    os << "S : " << numeroDeSensores() <<  endl;
     for (auto s: sensores) {
-        os << "\ts" << s->getid() << " // nome sensor // " << "estado: " << s->getvalor() << endl;
+        os << "\t" << s->getAsString();
     }
-    os << " || P : " << numeroDeProcessadores() <<  endl;
+    os << "P : " << numeroDeProcessadores() <<  endl;
     for (auto p: processadores) {
-        os << "\ts" << p->getid() << " // nome sensor // " << "estado: " << endl;//<< p->();
+        os << "\t" << p->getAsSting();//<< p->();
     }
     return os.str();
 }
@@ -103,8 +103,8 @@ bool Zona::addSensor(const string &propsNome) {
     return true;
 }
 
-bool Zona::addProcessador() {
-    processadores.push_back(make_shared<Processador>(id));
+bool Zona::addProcessador(const string& comando) {
+    processadores.push_back(make_shared<Processador>(id, comando));
     return true;
 }
 

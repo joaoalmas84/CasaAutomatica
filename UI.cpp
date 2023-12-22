@@ -188,7 +188,7 @@ int UI::commandLine(string cmd) {
                                     *dadosW << set_color(5) << move_to(0, numdados++) << exce;
                                 }
                             } else {
-                                *dadosW << set_color(5) << move_to(0, numdados++) << "Dimensoes invalidas";
+                                *dadosW << set_color(5) << move_to(0, numdados++) << "Dimensoes invalidas " << habitacao->getLin() << " " << habitacao->getCol();
                             }
                         } else { // <- Habitação ainda não existe
                             *dadosW << set_color(3) << move_to(0, numdados++) << "Habitacao ainda nao existe";
@@ -215,6 +215,12 @@ int UI::commandLine(string cmd) {
                     case 6:
                         if(habitacao != nullptr) {
                             *dadosW << set_color(5) << move_to(0, numdados) << habitacao->zlista();
+                            numdados += habitacao->getNumZonas()*2;
+                        }
+                        break;
+                    case 7:
+                        if(habitacao != nullptr) {
+                            *dadosW << set_color(5) << move_to(0, numdados) << habitacao->zcomp(stoi(inputAux[1]));
                             numdados += habitacao->getNumZonas()*2;
                         }
                         break;
@@ -247,12 +253,44 @@ int UI::commandLine(string cmd) {
                         }
                         break;
                     case 10:
+
+                        if(habitacao != nullptr){
+                            // falta verificacao  de erros !
+                            // e so um teste para ver se  funcionar
+
+                            if(inputAux[2] == "s"){
+                                if(habitacao->cnovo_sensor(stoi(inputAux[1]), inputAux[3])) {
+                                    *dadosW << set_color(5) << move_to(0, numdados++) << "Sensor adicionado";
+                                }else{
+                                    *dadosW << set_color(5) << move_to(0, numdados++) << "erro a adicionar sensor";
+                                }
+                            }else if(inputAux[2] == "a"){
+                                if(habitacao->cnovo_aparelho(stoi(inputAux[1]), inputAux[3])) {
+                                    *dadosW << set_color(5) << move_to(0, numdados++) << "Sensor adicionado";
+                                }else{
+                                    *dadosW << set_color(5) << move_to(0, numdados++) << "erro a adicionar aparelho";
+                                }
+                            } else if(inputAux[2] == "p"){
+                                if(habitacao->cnovo_processador(stoi(inputAux[1]), inputAux[3])) {
+                                    *dadosW << set_color(5) << move_to(0, numdados++) << "Sensor adicionado";
+                                }else{
+                                    *dadosW << set_color(5) << move_to(0, numdados++) << "erro a adicionar processador";
+                                }
+                            }else{
+                                *dadosW << set_color(3) << move_to(0, numdados++) << "erro de sintaxe";
+                            }
+                            atualizar_zonas_UI(linhas, colunas);
+                        }
+
+                        /*
                         if (inputAux[2] == "s" && c.procuraEmVector(sensores, inputAux[3]) == -1) {
                             *dadosW << set_color(3) << move_to(0, numdados++) << "Sensor desconhecido";
+                        }else{
+
                         }
                         if (inputAux[2] == "a" && c.procuraEmVector(aparelhos, inputAux[3]) == -1) {
                             *dadosW << set_color(3) << move_to(0, numdados++) << "Aparelho desconhecido";
-                        }
+                        }*/
                         break;
                     case 11:
                         if (inputAux[2] == "s" && c.procuraEmVector(sensores, inputAux[3]) == -1) {

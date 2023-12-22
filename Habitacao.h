@@ -17,13 +17,23 @@ public:
     void add_Zona(const int &linha,const int &coluna);
     //zrem <ID zona>
     void removerZona(const int &idZonaARemover);
+    [[nodiscard]]
     string getAsStringSimple()const;
+    [[nodiscard]]
     int getNumZonas()const;
+    [[nodiscard]]
     Zona* get_ptrZona(int linha, int coluna)const;
     //zlista
+    [[nodiscard]]
     string zlista() const;
+    [[nodiscard]]
     string zprops(const int &IDzona) const;
+    [[nodiscard]]
     bool pmod(const int &IDzona, const string &nomeDaPropriedade, const int &valor);
+    [[nodiscard]]
+    bool cnovo_sensor(const int &IDzona, const string &tipo);
+    bool cnovo_aparelho(const int &IDzona, const string &tipo);
+    bool cnovo_processador(const int &IDzona, const string &tipo);
                         //////////////////////////////////////////////////////////////////
                         /////////// Comandos para gerir habitação e zonas/////////////////
                         //////////////////////////////////////////////////////////////////
