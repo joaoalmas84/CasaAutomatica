@@ -46,7 +46,7 @@ public:
     // a funcao tem um porblema
     bool addSensor(const string& propsNome);
     bool addProcessador(const string& comando);
-    bool addRegrasPorc(const int idProc,int idsensor, const std::string &funcao, optional<double> x, optional<double> y = {});
+    bool addRegrasPorc(const int idProc,int idsensor, const std::string &funcao, const vector<double>& valores);
     [[nodiscard]]
     string listaPropriedades()const;
 

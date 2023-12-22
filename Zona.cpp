@@ -108,7 +108,7 @@ bool Zona::addProcessador(const string& comando) {
     return true;
 }
 
-bool Zona::addRegrasPorc(const int idProc,int idsensor, const std::string &funcao, optional<double> x, optional<double> y) {
+bool Zona::addRegrasPorc(const int idProc,int idsensor, const string &funcao, const vector<double>& valores) {
     auto it = processadores.begin();
     while (it != processadores.end()) {
         if ((*it)->getid() == idProc) {
@@ -124,7 +124,7 @@ bool Zona::addRegrasPorc(const int idProc,int idsensor, const std::string &funca
         ++it2;
     }
     if(it != processadores.end() && it2 != sensores.end()) {
-        (*it)->addRegra(funcao, (*it2), x, y);
+        (*it)->addRegra(funcao, weak_ptr<Sensor>(*it2), valores);
         return true;
     } else {
         return false;

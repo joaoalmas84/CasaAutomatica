@@ -4,7 +4,7 @@
 
 #include "Regra_Igual.h"
 #include <sstream>
-Regra_Igual::Regra_Igual(weak_ptr<Sensor> _sensor, double _X) : RegraBase(_sensor), X(_X) {}
+Regra_Igual::Regra_Igual(weak_ptr<Sensor> _sensor, const double &_X) : RegraBase(_sensor), X(_X) {}
 
 bool Regra_Igual::getEstado() {
     return RegraBase::getvalor() == X;
@@ -15,4 +15,3 @@ string Regra_Igual::getAsString() const {
     os << "X : " << X << endl;
     return os.str();
 }
-Regra_Igual::~Regra_Igual() = default;

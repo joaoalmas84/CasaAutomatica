@@ -9,12 +9,12 @@
 class Regra_Igual : public RegraBase{
     double X;
 public:
-    Regra_Igual(weak_ptr<Sensor> _sensor, double _X);
+    Regra_Igual(weak_ptr<Sensor> _sensor,const double &_X);
     [[nodiscard]]
-    bool getEstado();
+    bool getEstado() final;
     [[nodiscard]]
-    string getAsString()const;
-    ~Regra_Igual();
+    string getAsString()const final;
+    ~Regra_Igual() = default;
 };
 
 
