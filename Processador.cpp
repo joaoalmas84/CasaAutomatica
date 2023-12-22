@@ -3,14 +3,13 @@
 
 #include <iostream>
 #include <sstream>
-#include <algorithm>
 #include <optional>
 
 using namespace std;
 
 int Processador::baseId = 0;
 
-Processador::Processador(int _idzona) : id(baseId++), idzona(_idzona) {}
+Processador::Processador(const int &_idzona, const string &_comando) : id(baseId++), idzona(_idzona), comando(_comando){}
 
 Processador::~Processador(){
     regras.clear();
@@ -24,8 +23,7 @@ bool Processador::addRegra(const string & funcao, shared_ptr<Sensor> sensor, opt
 [[nodiscard]]
 string Processador::getAsSting() const {
     ostringstream os;
-    os << "Processador id: " << id <<endl;
-    os << "numero de regras: " << regras.size() << endl;
+    os << "p" << id << " num regras: " << regras.size() << endl;
     for (auto &r : regras){
         os << "\t" <<r->getAsString();
     }

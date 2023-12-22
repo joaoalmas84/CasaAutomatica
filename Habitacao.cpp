@@ -37,7 +37,7 @@ Habitacao::~Habitacao() {
 }
 
 void Habitacao::add_Zona(const int &linha, const int &coluna) {
-    if (!validaCoord(linha, coluna)) {
+    if (!validaCoord(coluna, linha)) {
         throw "Zona está fora dos limites da habitação";
     }
     if (zonas[linha][coluna] != nullptr) {
@@ -140,6 +140,44 @@ bool Habitacao::pmod(const int &IDzona, const string &nomeDaPropriedade, const i
             if(zonas[i][j] != nullptr) {
                 if (zonas[i][j]->getId() == IDzona){
                     return zonas[i][j]->setPropriedades(nomeDaPropriedade, valor);
+                }
+            }
+        }
+    }
+    return false;
+}
+
+bool Habitacao::cnovo_sensor(const int &IDzona, const string &tipo) {
+    for (int i = 0; i < linhas; ++i) {
+        for ( int j = 0; j < colunas; ++j) {
+            if(zonas[i][j] != nullptr) {
+                if (zonas[i][j]->getId() == IDzona){
+                    return zonas[i][j]->addSensor(tipo);
+                }
+            }
+        }
+    }
+    return false;
+}
+
+bool Habitacao::cnovo_aparelho(const int &IDzona, const string &tipo) {
+    for (int i = 0; i < linhas; ++i) {
+        for ( int j = 0; j < colunas; ++j) {
+            if(zonas[i][j] != nullptr) {
+                if (zonas[i][j]->getId() == IDzona){
+                    throw "nao implementado";
+                }
+            }
+        }
+    }
+    return false;
+}
+bool Habitacao::cnovo_processador(const int &IDzona, const string &tipo) {
+    for (int i = 0; i < linhas; ++i) {
+        for ( int j = 0; j < colunas; ++j) {
+            if(zonas[i][j] != nullptr) {
+                if (zonas[i][j]->getId() == IDzona){
+                    return zonas[i][j]->addProcessador(tipo);
                 }
             }
         }
