@@ -17,48 +17,34 @@ Propriedade::Propriedade(optional<double> min, optional<double> max) : minimo(mi
 
 //Propriedade::Propriedade(optional<double> max, bool escolha): minimo({}), maximo(max), valor(0){}
 
-void Propriedade::definirValor(double valorA) {
-    if (minimo.has_value() && maximo.has_value()) {
-        if (valor + valorA < minimo.value()) {
-            valor = minimo.value();
-        } else if (valor + valorA > maximo.value()) {
-            valor = maximo.value();
-        } else {
-            valor += valorA;
+void Propriedade::aumentaValor(double val) {
+    if (has_max()) {
+        if (getValor() == getmax()) {return;}
+        else if ((valor += val) >= getmax()) {
+            valor = getmax();
+            return;
         }
-    } else if (minimo.has_value()) {
-        if (valor + valorA < minimo.value()) {
-            valor = minimo.value();
-        } else {
-            valor += valorA;
-        }
-    } else if (maximo.has_value()) {
-        if (valor + valorA > maximo.value()) {
-            valor = maximo.value();
-        } else {
-            valor += valorA;
-        }
-    } else {
-        valor += valorA;
     }
+    valor += val;
 }
 
-[[nodiscard]]
-double Propriedade::getValor() const {
-    return valor;
+void Propriedade::diminuiValor(double val) {
+    if (has_min()) {
+        if (getValor() == getmin()) {return;}
+        else if ((valor -= val) <= getmin()) {
+            valor = getmin();
+            return;
+        }
+    }
+    valor -= val;
 }
 
-[[nodiscard]]
-bool Propriedade::has_max() const {
-    return minimo.has_value();
-}
+double Propriedade::getValor() const {return valor;}
 
-[[nodiscard]]
-bool Propriedade::has_min() const {
-    return maximo.has_value();
-}
+bool Propriedade::has_max() const {return maximo.has_value();}
 
-[[nodiscard]]
+bool Propriedade::has_min() const {return minimo.has_value();}
+
 double Propriedade::getmax() const {
     if (maximo.has_value())
         return maximo.value();
@@ -66,7 +52,6 @@ double Propriedade::getmax() const {
         throw "erro nao ha maximo";
 }
 
-[[nodiscard]]
 double Propriedade::getmin() const {
     if (minimo.has_value())
         return minimo.value();
@@ -74,10 +59,7 @@ double Propriedade::getmin() const {
         throw "erro nao ha minimo";
 }
 
-[[nodiscard]]
-int Propriedade::getid() const {
-    return id;
-}
+int Propriedade::getid() const {return id;}
 
 
 /***************************************** Private *****************************************/

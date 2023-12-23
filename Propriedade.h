@@ -16,7 +16,8 @@ class Propriedade {
 public:
     //Propriedade(optional<double> max = {}, bool escolha = 'p');
     Propriedade(optional<double> min = {}, optional<double> max = {});
-    void definirValor(double v);
+    void aumentaValor(double val);
+    void diminuiValor(double val);
     [[nodiscard]]
     double getValor()const;
     [[nodiscard]]

@@ -3,20 +3,31 @@
 
 #include "Propriedade.h"
 
-struct modifa {
-    Propriedade* propriedade;
-    double valorA_Modeficar;
-};
+#include <iostream>
+#include <memory>
+#include <map>
+
+using namespace std;
 
 class Aparelho {
+    static int baseID;
+    int id;
     bool ligado;
-    struct modifa *modifica;
+    map<string, Propriedade*> props;
 
 public:
-    Aparelho();
-    virtual void mudificarPropriedade();
-    virtual void desligarLIgar();
+    Aparelho() : id(baseID++), ligado(false) {props.clear();}
+    virtual void liga();
+    virtual void desliga();
+    void addProp(string nome, Propriedade* ptr);
+    void aumentaProp(string nome, int val);
+    void diminuiProp(string nome, int val);
+    int getPropValue(string nome)const;
     virtual ~Aparelho() = 0;
+private:
+    bool findProp(string nome);
+
 };
+
 
 #endif //CODIGOFONTE_APARELHO_H
