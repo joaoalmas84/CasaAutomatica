@@ -38,4 +38,6 @@ int Aparelho::getPropValue(string nome) const {
     return it->second->getValor();
 }
 
+Aparelho::~Aparelho() = default;
+
 /***************************************** Private *****************************************/
