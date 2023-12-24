@@ -9,6 +9,7 @@ public:
     Aspersor(Propriedade* humidade, Propriedade* vibracao, Propriedade* fumo);
     void liga()override;
     void desliga()override;
+    void mudaEstado(const string& nome);
 };
 
 

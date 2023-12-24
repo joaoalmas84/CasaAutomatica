@@ -15,6 +15,7 @@ public:
     Aquecedor(Propriedade* temperatura, Propriedade* ruido);
     void liga()override;
     void desliga()override;
+    void mudaEstado(const string& nome);
 };
 
 
