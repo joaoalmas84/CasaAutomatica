@@ -7,7 +7,7 @@
 #include "Regra_fora.h"
 #include <iostream>
 #include <sstream>
-#include <optional>
+#include <memory>
 
 using namespace std;
 
@@ -62,6 +62,20 @@ bool Processador::testar() const {
 [[nodiscard]]
 int Processador::getid() const {
     return id;
+}
+
+void Processador::alteraEstada() {
+    bool estado = true;
+    for(auto &R : regras){
+        if(!R->getEstado())
+            estado = false;
+    }
+    if(estado){
+        shared_ptr<Aparelho> aparelho = aparelhos.lock();
+        if(aparelho != nullptr){
+            aparelho->mudaEstado(comando);
+        }
+    }
 }
 
 void Processador::eleminarRegra(int idRegra) {

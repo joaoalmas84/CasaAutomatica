@@ -165,7 +165,7 @@ bool Habitacao::cnovo_aparelho(const int &IDzona, const string &tipo) {
         for ( int j = 0; j < colunas; ++j) {
             if(zonas[i][j] != nullptr) {
                 if (zonas[i][j]->getId() == IDzona){
-                    throw "nao implementado";
+                    return zonas[i][j]->addAparelho(tipo);
                 }
             }
         }

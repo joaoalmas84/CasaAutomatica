@@ -2,7 +2,7 @@
 
 /***************************************** Public *****************************************/
 
-Aquecedor::Aquecedor(Propriedade* temperatura, Propriedade* ruido) {
+Aquecedor::Aquecedor(Propriedade* temperatura, Propriedade* ruido): Aparelho(){
     addProp("Temperatura", temperatura);
     addProp("Ruido", ruido);
 }
@@ -25,5 +25,9 @@ void Aquecedor::desliga() {
         diminuiProp("Ruido", getPropValue("Ruido"));
     } catch(string err) {cout << err;}
 }
-
+void Aquecedor::mudaEstado(const std::string &nome) {
+    if(nome == "ligar"){
+        liga();
+    }
+}
 /***************************************** Private *****************************************/

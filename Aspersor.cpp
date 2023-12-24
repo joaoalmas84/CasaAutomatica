@@ -30,4 +30,10 @@ void Aspersor::desliga() {
     } catch(string err) {cout << err;}
 }
 
+void Aspersor::mudaEstado(const std::string &nome) {
+    if(nome == "ligar"){
+        liga();
+    }
+}
+
 /***************************************** Private *****************************************/

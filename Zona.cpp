@@ -4,7 +4,8 @@
 #include <optional>
 #include <sstream>
 #include <algorithm>
-
+#include <cctype>
+#include "Aquecedor.h"
 using namespace std;
 
 // inicialiar as var static;;
@@ -23,6 +24,14 @@ string Zona::getAsStringSimple() const {
     os << "S: " << numeroDeSensores();
     os << " || P : " << numeroDeProcessadores();
     os << " || A : " << numeroDeAparelhos() <<  endl;
+    int cont = 0;
+    for(auto props : propriedades){
+        os << props.first.at(0) << ": "  << props.second->getValor() << " ";
+        cont++;
+        if(cont % 3 == 0){
+            os << endl;
+        }
+    }
     return os.str();
 }
 
@@ -55,6 +64,27 @@ string Zona::propsAsString() const {
 
 int Zona::getId() const {
     return id;
+}
+
+bool Zona::addAparelho(const string &tipo) {
+    string tipotoupper = tipo;
+    transform(tipotoupper.begin(), tipotoupper.end(), tipotoupper.begin(), [](unsigned char c){ return std::toupper(c); });
+    if(tipotoupper == "AQUECEDOR"){
+
+        ///// temporatio // temporatio // temporatio // temporatio // temporatio // temporatio // temporatio
+        Propriedade *tem = nullptr, *rui = nullptr;
+        for(auto p : propriedades){
+            if(p.first == "Temperatura"){
+                tem = p.second.get();
+            }
+            if(p.first == "Ruido"){
+                rui = p.second.get();
+            }
+        }
+        ///// temporatio // temporatio // temporatio // temporatio // temporatio // temporatio // temporatio // temporatio
+        aparelhos.push_back(make_shared<Aquecedor>(tem, rui));
+    }
+    return true;
 }
 
 int Zona::getNumeroPropriedades() const {
@@ -90,7 +120,11 @@ bool Zona::setPropriedades(const string& nomeDaPropriedades, int valor) {
     if (propriedades.find(nomeDaPropriedades) == propriedades.end()) {
         return false;
     }
-    propriedades[nomeDaPropriedades]->definirValor(valor);
+    if(valor < 0){
+        propriedades[nomeDaPropriedades]->diminuiValor((-valor));
+    }else{
+        propriedades[nomeDaPropriedades]->aumentaValor(valor);
+    }
     return true;
 }
 

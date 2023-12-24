@@ -23,6 +23,7 @@ public:
     void aumentaProp(string nome, int val);
     void diminuiProp(string nome, int val);
     int getPropValue(string nome)const;
+    virtual void mudaEstado(const string& nome) = 0;
     virtual ~Aparelho() = 0;
 private:
     bool findProp(string nome);

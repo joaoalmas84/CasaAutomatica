@@ -44,8 +44,12 @@ public:
 
     ///////////////////// criar sensores
     // a funcao tem um porblema
+    [[nodiscard]]
     bool addSensor(const string& propsNome);
+    [[nodiscard]]
     bool addProcessador(const string& comando);
+    [[nodiscard]]
+    bool addAparelho(const string& tipo);
     bool addRegrasPorc(const int idProc,int idsensor, const std::string &funcao, const vector<double>& valores);
     [[nodiscard]]
     string listaPropriedades()const;

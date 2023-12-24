@@ -245,12 +245,14 @@ int UI::commandLine(string cmd) {
                             int valor = stoi(inputAux[3]);
                             if(habitacao->pmod(idzona, nomeProp, valor)){
                                 *dadosW << set_color(5) << move_to(0, numdados++) << "Propriedade alterada";
+                                atualizar_zonas_UI(linhas, colunas);
                             }else{
                                 *dadosW << set_color(5) << move_to(0, numdados++) << "Nao foi possivil alterar a propridade";
                             }
                         } else { // <- Habitação ainda não existe
                             *dadosW << set_color(3) << move_to(0, numdados++) << "Habitacao ainda nao existe";
                         }
+
                         break;
                     case 10:
 

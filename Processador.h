@@ -18,7 +18,7 @@ class Processador {
     string comando;
     vector<unique_ptr<RegraBase>> regras;
     // ainda nao esta a ser usado para nada
-    vector<weak_ptr<Aparelho>> aparelhos;
+    weak_ptr<Aparelho> aparelhos;
 
 public:
     Processador(const int &_idzona,const string& _comando);
@@ -31,6 +31,7 @@ public:
     [[nodiscard]]
     int getid()const;
     void eleminarRegra(int idRegra);
+    void alteraEstada();
 };
 
 #endif //CODIGOFONTE_PROCESSADOR_H
