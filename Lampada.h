@@ -5,9 +5,10 @@
 
 class Lampada : public Aparelho {
 public:
-    Lampada(Propriedade* iluminacao);
+    Lampada(shared_ptr<Propriedade> iluminacao);
     void liga()override;
     void desliga()override;
+    void mudaEstado(const string & nome)override;
 };
 
 

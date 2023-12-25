@@ -5,22 +5,24 @@
 #include "Regra_menor.h"
 #include "Regra_maior.h"
 #include "Regra_fora.h"
+
 #include <iostream>
 #include <sstream>
 #include <memory>
+#include <algorithm>
 
 using namespace std;
 
 int Processador::baseId = 0;
 
-Processador::Processador(const int &_idzona, const string &_comando) : id(baseId++), idzona(_idzona), comando(_comando){}
+Processador::Processador(const int &_idzona, const string &_comando) : id(baseId++), idzona(_idzona), comando(_comando) {}
 
-Processador::~Processador(){
+Processador::~Processador() {
     regras.clear();
 }
 
 bool Processador::addRegra(const string & funcao, weak_ptr<Sensor> sensor, const vector<double> &valores) {
-    if(funcao == "igual"){
+    if (funcao == "igual") {
         regras.push_back(make_unique<Regra_Igual>(sensor, valores[0]));
         return true;
     }else if(funcao == "maior"){

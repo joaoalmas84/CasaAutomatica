@@ -1,7 +1,7 @@
 #include "Aspersor.h"
 
 /***************************************** Public *****************************************/
-Aspersor::Aspersor(Propriedade* humidade, Propriedade* vibracao, Propriedade* fumo) {
+Aspersor::Aspersor(shared_ptr<Propriedade> humidade, shared_ptr<Propriedade> vibracao, shared_ptr<Propriedade> fumo) : Aparelho() {
     addProp("Humidade", humidade);
     addProp("Vibracao", vibracao);
     addProp("Fumo", fumo);
@@ -20,7 +20,6 @@ void Aspersor::liga() {
     try {
         diminuiProp("Fumo", getPropValue("Fumo"));
     } catch(string err) {cout << err;}
-
 }
 
 void Aspersor::desliga() {
@@ -31,9 +30,8 @@ void Aspersor::desliga() {
 }
 
 void Aspersor::mudaEstado(const std::string &nome) {
-    if(nome == "ligar"){
-        liga();
-    }
+    if (nome == "ligar") {liga();}
+    else if (nome == "desligar") {desliga();}
 }
 
 /***************************************** Private *****************************************/

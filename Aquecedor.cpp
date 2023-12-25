@@ -2,14 +2,13 @@
 
 /***************************************** Public *****************************************/
 
-Aquecedor::Aquecedor(Propriedade* temperatura, Propriedade* ruido): Aparelho(){
+Aquecedor::Aquecedor(shared_ptr<Propriedade> temperatura, shared_ptr<Propriedade> ruido): Aparelho() {
     addProp("Temperatura", temperatura);
     addProp("Ruido", ruido);
 }
 
 void Aquecedor::liga() {
     Aparelho::liga();
-
     try {
         aumentaProp("Temperatura", 3);
     } catch(string err) {cout << err;}
@@ -25,9 +24,9 @@ void Aquecedor::desliga() {
         diminuiProp("Ruido", getPropValue("Ruido"));
     } catch(string err) {cout << err;}
 }
-void Aquecedor::mudaEstado(const std::string &nome) {
-    if(nome == "ligar"){
-        liga();
-    }
+
+void Aquecedor::mudaEstado(const string & nome) {
+    if (nome == "ligar") {liga();}
+    else if (nome == "desligar") {desliga();}
 }
 /***************************************** Private *****************************************/

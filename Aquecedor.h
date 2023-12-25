@@ -12,10 +12,10 @@ using namespace std;
 
 class Aquecedor : public Aparelho {
 public:
-    Aquecedor(Propriedade* temperatura, Propriedade* ruido);
+    Aquecedor(shared_ptr<Propriedade> temperatura, shared_ptr<Propriedade> ruido);
     void liga()override;
     void desliga()override;
-    void mudaEstado(const string& nome);
+    void mudaEstado(const string & nome)override;
 };
 
 

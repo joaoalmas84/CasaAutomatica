@@ -4,8 +4,6 @@
 #include <map>
 
 /***************************************** Public *****************************************/
-
-
 int Propriedade::baseId = 0;
 
 Propriedade::Propriedade(optional<double> min, optional<double> max) : minimo(min), maximo(max), valor(0), id(baseId++) {
@@ -23,11 +21,8 @@ void Propriedade::aumentaValor(double val) {
         else if ((valor += val) >= getmax()) {
             valor = getmax();
             return;
-        }else{
-            return;
-        }
+        } else {valor += val;}
     }
-    valor += val;
 }
 
 void Propriedade::diminuiValor(double val) {
@@ -36,18 +31,15 @@ void Propriedade::diminuiValor(double val) {
         else if ((valor -= val) <= getmin()) {
             valor = getmin();
             return;
-        }else{
-            return;
-        }
+        } else {valor -= val;}
     }
-    valor -= val;
 }
 
-double Propriedade::getValor() const { return valor;}
+double Propriedade::getValor() const {return valor;}
 
-bool Propriedade::has_max() const { return maximo.has_value();}
+bool Propriedade::has_max() const {return maximo.has_value();}
 
-bool Propriedade::has_min() const { return minimo.has_value();}
+bool Propriedade::has_min() const {return minimo.has_value();}
 
 double Propriedade::getmax() const {
     if (maximo.has_value())

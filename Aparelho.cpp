@@ -1,5 +1,7 @@
 #include "Aparelho.h"
 
+#include <sstream>
+
 /***************************************** Public *****************************************/
 int Aparelho::baseID = 1;
 
@@ -7,7 +9,24 @@ void Aparelho::liga() {ligado = true;}
 
 void Aparelho::desliga() {ligado = false;}
 
-void Aparelho::addProp(string nome, Propriedade* ptr) {
+string Aparelho::getAsString() const {
+    ostringstream oss;
+    oss << "\nID: " << id
+        << "\nEstado: " << ligado
+        << listProps();
+    return oss.str();
+}
+
+string Aparelho::listProps() const {
+    ostringstream oss;
+    oss << "\nPropriedades que afeta:";
+    for (const auto & pair : props) {
+       oss << '\n' << pair.first;
+    }
+    return oss.str();
+}
+
+void Aparelho::addProp(string nome, shared_ptr<Propriedade> ptr) {
     props.insert(make_pair(nome, ptr));
 }
 
@@ -43,3 +62,4 @@ int Aparelho::getPropValue(string nome) const {
 Aparelho::~Aparelho() = default;
 
 /***************************************** Private *****************************************/
+
