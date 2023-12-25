@@ -221,6 +221,19 @@ bool Habitacao::rnova(const int &IDzona, const int &idproce, const string &funca
     }
     return false;
 }
+
+bool Habitacao::asoc(const int &IDzona, const int &idproce, const int &idaparelho) {
+    for (int i = 0; i < linhas; ++i) {
+        for ( int j = 0; j < colunas; ++j) {
+            if(zonas[i][j] != nullptr) {
+                if (zonas[i][j]->getId() == IDzona){
+                    return zonas[i][j]->asoc(idproce, idaparelho);
+                }
+            }
+        }
+    }
+    return false;
+}
                             //////////////////////////////////////////////////////////////////
                             /////////// Comandos para gerir habitação e zonas/////////////////
                             //////////////////////////////////////////////////////////////////

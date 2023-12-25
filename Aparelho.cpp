@@ -36,10 +36,10 @@ string Aparelho::listProps() const {
 }
 
 void Aparelho::addProp(string nome, shared_ptr<Propriedade> ptr) {
-    props.emplace(make_pair(nome, ptr));
+    props.emplace(nome, ptr);
 }
 
-void Aparelho::aumentaProp(string nome, int val) {
+void Aparelho::aumentaProp(string nome, double val) {
     string err = "Propriedade nao encontrada.";
     auto it = props.find(nome);
 
@@ -50,7 +50,7 @@ void Aparelho::aumentaProp(string nome, int val) {
 
 int Aparelho::getid() const {return id;}
 
-void Aparelho::diminuiProp(string nome, int val) {
+void Aparelho::diminuiProp(string nome, double val) {
     string err = "Propriedade nao encontrada.";
     auto it = props.find(nome);
 

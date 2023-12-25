@@ -21,8 +21,8 @@ void Propriedade::aumentaValor(double val) {
         else if ((valor += val) >= getmax()) {
             valor = getmax();
             return;
-        } else {valor += val;}
-    }
+        }
+    }else {valor += val;}
 }
 
 void Propriedade::diminuiValor(double val) {
@@ -31,8 +31,8 @@ void Propriedade::diminuiValor(double val) {
         else if ((valor -= val) <= getmin()) {
             valor = getmin();
             return;
-        } else {valor -= val;}
-    }
+        }
+    } else {valor -= val;}
 }
 
 double Propriedade::getValor() const {return valor;}

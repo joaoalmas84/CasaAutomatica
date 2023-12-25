@@ -31,6 +31,7 @@ public:
     int getid()const;
     void eleminarRegra(int idRegra);
     void alteraEstada();
+    void addAparelho(weak_ptr<Aparelho> _aparelhos);
 };
 
 #endif //CODIGOFONTE_PROCESSADOR_H

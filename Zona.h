@@ -54,6 +54,8 @@ public:
     [[nodiscard]]
     string listaPropriedades()const;
 
+    bool asoc(const int &idproce, const int &idaparelho);
+
     void eleminarSensor(const int &id);
     void eleminarRegraPorc(const int &idProc);
     void eleminarProcessador(const int &id);

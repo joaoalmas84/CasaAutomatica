@@ -240,10 +240,7 @@ int UI::commandLine(string cmd) {
                         break;
                     case 9:
                         if (habitacao != nullptr) { // <- Habitação já existe
-                            int idzona = stoi(inputAux[1]);
-                            string nomeProp = inputAux[2];
-                            int valor = stoi(inputAux[3]);
-                            if(habitacao->pmod(idzona, nomeProp, valor)){
+                            if(habitacao->pmod(stoi(inputAux[1]), inputAux[2], stoi(inputAux[3]))){
                                 *dadosW << set_color(5) << move_to(0, numdados++) << "Propriedade alterada";
                                 atualizar_zonas_UI(linhas, colunas);
                             }else{
@@ -306,6 +303,19 @@ int UI::commandLine(string cmd) {
                                 atualizar_zonas_UI(linhas, colunas);
                             }else{
                                 *dadosW << set_color(5) << move_to(0, numdados++) << "erro a adicionar regra";
+                            }
+
+                        }
+
+                        break;
+                    case 16:
+                        if(habitacao != nullptr){
+                            // falta verificacao  de erros !
+                            // e so um teste para ver se  funcionar
+                            if(habitacao->asoc(stoi(inputAux[1]), stoi(inputAux[2]), stoi(inputAux[3]))){
+                                atualizar_zonas_UI(linhas, colunas);
+                            }else{
+                                *dadosW << set_color(5) << move_to(0, numdados++) << "erro a acuc«sicao dos rewfeqfw";
                             }
 
                         }
