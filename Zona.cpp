@@ -101,7 +101,7 @@ bool Zona::asoc(const int &idproce, const int &idaparelho) {
     }
     if(it != processadores.end() && it2 != aparelhos.end()) {
         (*it)->addAparelho(weak_ptr<Aparelho>(*it2));
-        (*it)->alteraEstada();
+        //(*it)->alteraEstada();
         return true;
     } else {
         return false;
