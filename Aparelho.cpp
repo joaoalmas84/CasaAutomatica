@@ -20,6 +20,8 @@ void Aparelho::aumentaProp(string nome, int val) {
     it->second->aumentaValor(val);
 }
 
+int Aparelho::getid() const {return id;}
+
 void Aparelho::diminuiProp(string nome, int val) {
     string err = "Propriedade nao encontrada.";
     auto it = props.find(nome);

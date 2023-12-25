@@ -2,7 +2,6 @@
 #define CODIGOFONTE_PROCESSADOR_H
 
 #include "Sensor.h"
-#include "Regra.h"
 #include "Aparelho.h"
 
 #include <iostream>

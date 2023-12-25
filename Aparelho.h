@@ -19,6 +19,7 @@ public:
     Aparelho() : id(baseID++), ligado(false) {props.clear();}
     virtual void liga();
     virtual void desliga();
+    int getid()const;
     void addProp(string nome, Propriedade* ptr);
     void aumentaProp(string nome, int val);
     void diminuiProp(string nome, int val);

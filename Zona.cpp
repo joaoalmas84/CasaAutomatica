@@ -158,8 +158,7 @@ bool Zona::addRegrasPorc(const int idProc,int idsensor, const string &funcao, co
         ++it2;
     }
     if(it != processadores.end() && it2 != sensores.end()) {
-        (*it)->addRegra(funcao, weak_ptr<Sensor>(*it2), valores);
-        return true;
+        return (*it)->addRegra(funcao, weak_ptr<Sensor>(*it2), valores);
     } else {
         return false;
     }
@@ -173,14 +172,19 @@ string Zona::listaPropriedades() const {
     return os.str();
 }
 
-void Zona::eleminarSensor(int _id) {
+void Zona::eleminarSensor(const int &_id) {
         sensores.erase(std::remove_if(sensores.begin(), sensores.end(), [&_id](const std::shared_ptr<Sensor>& s) {
             cout << s->getid() << " ";return s->getid() == _id;}), sensores.end());
 }
 
-void Zona::eleminarProcessador(int _id) {
+void Zona::eleminarProcessador(const int &_id) {
     processadores.erase(remove_if(processadores.begin(), processadores.end(), [&_id](const shared_ptr<Processador> & p){
         return  p->getid() == _id;}), processadores.end());
+}
+
+void Zona::eleminarAparelho(const int &_id) {
+    aparelhos.erase(remove_if(aparelhos.begin(), aparelhos.end(), [&_id](const shared_ptr<Aparelho> & a){
+        return  a->getid() == _id;}), aparelhos.end());
 }
 
 int Zona::numeroDeSensores() const {

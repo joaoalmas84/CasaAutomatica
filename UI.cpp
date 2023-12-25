@@ -285,6 +285,32 @@ int UI::commandLine(string cmd) {
                         }
 
                         break;
+                    case 11:
+                        if(habitacao != nullptr){
+                            // falta verificacao  de erros !
+                            // e so um teste para ver se  funcionar
+                            habitacao->crem(stoi(inputAux[1]), inputAux[2], stoi(inputAux[3]));
+                            atualizar_zonas_UI(linhas, colunas);
+                        }
+
+                        break;
+                    case 12:
+                        if(habitacao != nullptr){
+                            // falta verificacao  de erros !
+                            // e so um teste para ver se  funcionar
+                            vector<double> valores;
+                            for (int i = 5; i < inputAux.size(); ++i) {
+                                valores.emplace_back(stoi(inputAux[i]));
+                            }
+                            if(habitacao->rnova(stoi(inputAux[1]), stoi(inputAux[2]), inputAux[3], stoi(inputAux[4]), valores)){
+                                atualizar_zonas_UI(linhas, colunas);
+                            }else{
+                                *dadosW << set_color(5) << move_to(0, numdados++) << "erro a adicionar regra";
+                            }
+
+                        }
+
+                        break;
                     default:
                         break;
                 }

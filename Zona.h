@@ -54,9 +54,10 @@ public:
     [[nodiscard]]
     string listaPropriedades()const;
 
-    void eleminarSensor(int id);
+    void eleminarSensor(const int &id);
     void eleminarRegraPorc(const int &idProc);
-    void eleminarProcessador(int id);
+    void eleminarProcessador(const int &id);
+    void eleminarAparelho(const int &id);
 
     // ESTE MÉTODOS SÃO PARA O MÉTODO DE DA CLASSE HABITAÇÃO
     [[nodiscard]]

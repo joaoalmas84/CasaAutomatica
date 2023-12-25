@@ -34,6 +34,8 @@ public:
     bool cnovo_sensor(const int &IDzona, const string &tipo);
     bool cnovo_aparelho(const int &IDzona, const string &tipo);
     bool cnovo_processador(const int &IDzona, const string &tipo);
+    bool crem(const int &IDzona, const string &tipo, const int &id);
+    bool rnova(const int &IDzona, const int &idproce, const string &funcao, const int& idsensor ,const vector<double> &valores);
                         //////////////////////////////////////////////////////////////////
                         /////////// Comandos para gerir habitação e zonas/////////////////
                         //////////////////////////////////////////////////////////////////
