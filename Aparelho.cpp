@@ -5,6 +5,15 @@
 /***************************************** Public *****************************************/
 int Aparelho::baseID = 1;
 
+Aparelho::Aparelho(Aparelho & outro) {
+    id = baseID++;
+    ligado = outro.ligado;
+    props.clear();
+    for (const auto & pair : outro.props) {
+        props.emplace(pair);
+    }
+}
+
 void Aparelho::liga() {ligado = true;}
 
 void Aparelho::desliga() {ligado = false;}
@@ -27,7 +36,7 @@ string Aparelho::listProps() const {
 }
 
 void Aparelho::addProp(string nome, shared_ptr<Propriedade> ptr) {
-    props.insert(make_pair(nome, ptr));
+    props.emplace(make_pair(nome, ptr));
 }
 
 void Aparelho::aumentaProp(string nome, int val) {
@@ -59,7 +68,9 @@ int Aparelho::getPropValue(string nome) const {
     return it->second->getValor();
 }
 
-Aparelho::~Aparelho() = default;
+Aparelho::~Aparelho() {
+    props.clear();
+}
 
 /***************************************** Private *****************************************/
 

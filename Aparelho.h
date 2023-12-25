@@ -17,6 +17,7 @@ class Aparelho {
 
 public:
     Aparelho() : id(baseID++), ligado(false) {props.clear();}
+    Aparelho(Aparelho & outro);
     virtual void liga();
     virtual void desliga();
     virtual string getAsString()const;
@@ -27,7 +28,7 @@ public:
     void diminuiProp(string nome, int val);
     int getPropValue(string nome)const;
     virtual void mudaEstado(const string & nome) = 0;
-    virtual ~Aparelho() = 0;
+    virtual ~Aparelho();
 private:
 };
 

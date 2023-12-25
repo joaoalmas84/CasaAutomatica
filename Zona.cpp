@@ -1,11 +1,14 @@
 #include "Zona.h"
 
+#include "Aquecedor.h"
+
 #include <iostream>
 #include <optional>
 #include <sstream>
 #include <algorithm>
 #include <cctype>
-#include "Aquecedor.h"
+#include <memory>
+
 using namespace std;
 
 // inicialiar as var static;;
@@ -69,16 +72,15 @@ int Zona::getId() const {
 bool Zona::addAparelho(const string &tipo) {
     string tipotoupper = tipo;
     transform(tipotoupper.begin(), tipotoupper.end(), tipotoupper.begin(), [](unsigned char c){ return std::toupper(c); });
-    if(tipotoupper == "AQUECEDOR"){
-
+    if(tipotoupper == "AQUECEDOR") {
         ///// temporatio // temporatio // temporatio // temporatio // temporatio // temporatio // temporatio
-        Propriedade *tem = nullptr, *rui = nullptr;
+        shared_ptr<Propriedade> tem = nullptr, rui = nullptr;
         for(auto p : propriedades){
-            if(p.first == "Temperatura"){
-                tem = p.second.get();
+            if (p.first == "Temperatura") {
+                tem = p.second;
             }
-            if(p.first == "Ruido"){
-                rui = p.second.get();
+            if (p.first == "Ruido") {
+                rui = p.second;
             }
         }
         ///// temporatio // temporatio // temporatio // temporatio // temporatio // temporatio // temporatio // temporatio
