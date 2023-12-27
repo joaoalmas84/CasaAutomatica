@@ -20,6 +20,7 @@ class Zona {
     vector<shared_ptr<Sensor>> sensores;
     vector<shared_ptr<Processador>> processadores;
     vector<shared_ptr<Aparelho>> aparelhos;
+    vector<string> nomes = {"Aquecedor", "Aspersor", "Refrigerador", "Lampada"};
 
 public:
     ////////////////////////////construtores da class zona
@@ -73,6 +74,12 @@ public:
 
 private:
     void iniciarPropriedadesDefault();
+    [[nodiscard]]
+    int procuraEmVector(vector<string> v, string str)const;// <- Devolve -1 se nao encontrar str. Se encontrar devolve o indice da posicao
+    bool addAquecedor();
+    bool addAspersor();
+    bool addRefrigerador();
+    bool addLampada();
 
 };
 
