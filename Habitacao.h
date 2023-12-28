@@ -43,6 +43,7 @@ public:
     bool rrem(const int &IDzona, const int &idproce, const int &idregra);
     bool ades(const int &IDzonam, const int &IDproc, const int &regra);
     bool acom(const int &IDzona, const int &IDaparelho, const string &comdando);
+    void prox();
                         //////////////////////////////////////////////////////////////////
                         /////////// Comandos para gerir habitação e zonas/////////////////
                         //////////////////////////////////////////////////////////////////

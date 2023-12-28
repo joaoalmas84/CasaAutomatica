@@ -300,6 +300,16 @@ for (int i = 0; i < linhas; ++i) {
     return false;
 }
 
+void Habitacao::prox() {
+    for (int i = 0; i < linhas; ++i) {
+        for ( int j = 0; j < colunas; ++j){
+            if(zonas[i][j] != nullptr){
+                zonas[i][j]->prox();
+            }
+        }
+    }
+}
+
 
                             //////////////////////////////////////////////////////////////////
                             /////////// Comandos para gerir habitação e zonas/////////////////

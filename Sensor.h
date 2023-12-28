@@ -22,6 +22,7 @@ public:
     [[nodiscard]]
     string getAsString()const;
     bool medir();
+    void prox();
 };
 
 #endif //CODIGOFONTE_SENSOR_H

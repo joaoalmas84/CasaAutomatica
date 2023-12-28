@@ -19,7 +19,6 @@ int Sensor::getid() const {
 
 [[nodiscard]]
 double Sensor::getvalor(){
-    medir();
     return ultimaMedicao;
 }
 
@@ -37,4 +36,8 @@ bool Sensor::medir() {
     }
     ultimaMedicao = propriedade->getValor();
     return true;
+}
+
+void Sensor::prox() {
+    medir();
 }

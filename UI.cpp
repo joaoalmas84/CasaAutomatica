@@ -149,6 +149,24 @@ int UI::commandLine(string cmd) {
                 vector <string> inputAux = c.getVectorInput();
 
                 switch (c.getIndex()) {
+                    case 0:
+                        if (habitacao != nullptr) { // <- Habitação ainda não existe
+                            habitacao->prox();
+                            atualizar_zonas_UI(linhas, colunas);
+                        } else { // <- Habitação já existe
+                            *dadosW << set_color(5) << move_to(0, numdados++) << "Ja existe uma habitacao";
+                        }
+                        break;
+                    case 1:
+                        if (habitacao != nullptr) { // <- Habitação ainda não existe
+                            for (int i = 0; i < stoi(inputAux[1]); ++i) {
+                                habitacao->prox();
+                            }
+                            atualizar_zonas_UI(linhas, colunas);
+                        } else { // <- Habitação já existe
+                            *dadosW << set_color(5) << move_to(0, numdados++) << "Ja existe uma habitacao";
+                        }
+                        break;
                     case 2:
                         if (habitacao == nullptr) { // <- Habitação ainda não existe
                             if (c.verificaDimensoes_habitacao()) {

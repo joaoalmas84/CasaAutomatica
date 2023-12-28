@@ -78,7 +78,7 @@ public:
     bool ades(const int &IDproc, const int &IDaparelho);
     [[nodiscard]]
     bool acom(const int &IDaparelho, const string &comdando);
-
+    void prox();
 
 
     ~Zona();

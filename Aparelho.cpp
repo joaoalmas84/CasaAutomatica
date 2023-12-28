@@ -35,38 +35,44 @@ string Aparelho::listProps() const {
     return oss.str();
 }
 
-void Aparelho::addProp(string nome, shared_ptr<Propriedade> ptr) {
+void Aparelho::addProp(string nome, weak_ptr<Propriedade> &ptr) {
     props.emplace(nome, ptr);
 }
 
 void Aparelho::aumentaProp(string nome, double val) {
-    string err = "Propriedade nao encontrada.";
-    auto it = props.find(nome);
-
-    if (it == props.end()) {throw err;}
-
-    it->second->aumentaValor(val);
+    auto pro = props.find(nome);
+    if(pro != props.end()){
+        auto ptr = pro->second;
+        if(ptr.lock() != nullptr){
+            ptr.lock()->aumentaValor(val);
+        }
+    }
 }
 
 int Aparelho::getid() const {return id;}
 
 void Aparelho::diminuiProp(string nome, double val) {
-    string err = "Propriedade nao encontrada.";
-    auto it = props.find(nome);
-
-    if (it == props.end()) {throw err;}
-
-    it->second->diminuiValor(val);
+    auto pro = props.find(nome);
+    if(pro != props.end()){
+        auto ptr = pro->second;
+        if(ptr.lock() != nullptr){
+            ptr.lock()->diminuiValor(val);
+        }
+    }
 }
 
 int Aparelho::getPropValue(string nome) const {
-    string err = "Propriedade nao encontrada.";
     auto it = props.find(nome);
-
-    if (it == props.end()) {throw err;}
-
-    return it->second->getValor();
+    if (it != props.end()){
+        auto ptr = it->second;
+        if(ptr.lock() != nullptr){
+            return ptr.lock()->getValor();
+        }
+    }
+    throw "erro nao exisre propriedade";
 }
+
+bool Aparelho::getligado() const {return ligado;}
 
 Aparelho::~Aparelho() {
     props.clear();

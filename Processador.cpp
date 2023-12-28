@@ -51,7 +51,7 @@ string Processador::getAsSting() const {
     for(auto &aparelho : aparelhos){
         if(aparelho.lock() != nullptr){
             if(aparelho.lock() != nullptr){
-                os << "\t" << aparelho.lock()->getAsString();
+                os << "\t" << aparelho.lock()->getAsString() << endl;
             }
         }
     }

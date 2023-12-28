@@ -37,6 +37,7 @@ public:
     string getRegraAsString() const;
     void removerRegra(const int &idRegra);
     void removerAparelho(const int &idAparelho);
+    void prox();
 
 };
 

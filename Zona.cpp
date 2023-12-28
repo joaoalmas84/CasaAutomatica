@@ -134,6 +134,19 @@ bool Zona::acom(const int &IDaparelho, const string &comdando) {
     }
 }
 
+void Zona::prox() {
+    for (auto s : sensores) {
+        s->prox();
+    }
+    for (auto p : processadores) {
+        p->alteraEstada();
+    }
+    for (auto a : aparelhos) {
+        a->prox();
+    }
+
+}
+
 int Zona::getNumeroPropriedades() const {
     return (int)propriedades.size();
 }
