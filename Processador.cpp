@@ -84,3 +84,7 @@ void Processador::eleminarRegra(int idRegra) {
 void Processador::addAparelho(weak_ptr<Aparelho> _aparelhos) {
     aparelhos = _aparelhos;
 }
+
+void Processador::setComando(const string &_comando) {
+    this->comando = _comando;
+}

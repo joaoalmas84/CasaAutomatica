@@ -77,7 +77,6 @@ int Zona::getId() const {
 bool Zona::addAparelho(const string &tipo) {
     string tipotoupper = tipo;
     transform(tipotoupper.begin(), tipotoupper.end(), tipotoupper.begin(), [](unsigned char c){ return std::toupper(c); });
-
     switch (procuraEmVector(nomes, tipotoupper)) {
         case -1:
             return false;
@@ -118,7 +117,7 @@ bool Zona::asoc(const int &idproce, const int &idaparelho) {
     }
     if(it != processadores.end() && it2 != aparelhos.end()) {
         (*it)->addAparelho(weak_ptr<Aparelho>(*it2));
-        //(*it)->alteraEstada();
+        (*it)->alteraEstada();
         return true;
     } else {
         return false;
@@ -235,6 +234,17 @@ int Zona::numeroDeProcessadores() const {
     return processadores.size();
 }
 
+bool Zona::pmuda(const int &idproce, const string &novoComando) {
+    auto it = std::find_if(processadores.begin(), processadores.end(),[idproce](const auto& processo) {return processo->getid() == idproce;});
+    if (it != processadores.end()) {
+        (*it)->setComando(novoComando);
+        (*it)->alteraEstada();
+        return true;
+    } else{
+        return false;
+    }
+}
+
 Zona::~Zona() {
     sensores.clear();
     processadores.clear();
@@ -262,10 +272,9 @@ int Zona::procuraEmVector(vector<string> v, string str) const {
     if (it == v.end()) {return -1;}
     else {return distance(v.begin(), it);}
 }
-
 bool Zona::addAquecedor() {
     auto tem = propriedades["Temperatura"];
-    auto rui = propriedades["Ruido"];
+    auto rui = propriedades["Vibracao"];
 
     if(tem == nullptr || rui == nullptr){return false;}
 
@@ -288,7 +297,7 @@ bool Zona::addAspersor() {
 
 bool Zona::addRefrigerador() {
     auto temp = propriedades["Temperatura"];
-    auto rui = propriedades["Ruido"];
+    auto rui = propriedades["Vibracao"];
 
     if(temp == nullptr || rui == nullptr){return false;}
 
@@ -298,7 +307,7 @@ bool Zona::addRefrigerador() {
 }
 
 bool Zona::addLampada() {
-    auto ilum = propriedades["Iluminacao"];
+    auto ilum = propriedades["Luz"];
 
     if(ilum == nullptr){return false;}
 

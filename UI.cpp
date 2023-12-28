@@ -308,6 +308,17 @@ int UI::commandLine(string cmd) {
                         }
 
                         break;
+                    case 13:
+                        if(habitacao != nullptr){
+                            if(habitacao->pmuda(stoi(inputAux[1]), stoi(inputAux[2]), inputAux[3])){
+                                atualizar_zonas_UI(linhas, colunas);
+                            }else{
+                                *dadosW << set_color(5) << move_to(0, numdados++) << "erro na mudaca do comdando";
+                            }
+
+                        }
+
+                        break;
                     case 16:
                         if(habitacao != nullptr){
                             // falta verificacao  de erros !

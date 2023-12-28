@@ -32,6 +32,7 @@ public:
     void eleminarRegra(int idRegra);
     void alteraEstada();
     void addAparelho(weak_ptr<Aparelho> _aparelhos);
+    void setComando(const string &comando);
 };
 
 #endif //CODIGOFONTE_PROCESSADOR_H

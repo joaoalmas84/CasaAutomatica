@@ -20,7 +20,7 @@ class Zona {
     vector<shared_ptr<Sensor>> sensores;
     vector<shared_ptr<Processador>> processadores;
     vector<shared_ptr<Aparelho>> aparelhos;
-    vector<string> nomes = {"Aquecedor", "Aspersor", "Refrigerador", "Lampada"};
+    vector<string> nomes = {"AQUECEDOR", "ASPERSOR", "REFRIGERADOR", "LAMPADA"};
 
 public:
     ////////////////////////////construtores da class zona
@@ -69,6 +69,9 @@ public:
     int numeroDeAparelhos()const;
     [[nodiscard]]
     int numeroDeProcessadores()const;
+    [[nodiscard]]
+    bool pmuda(const int & idproce, const string &novoComando);
+
 
     ~Zona();
 
