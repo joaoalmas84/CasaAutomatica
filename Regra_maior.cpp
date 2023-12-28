@@ -12,6 +12,6 @@ bool Regra_maior::getEstado() {
 string Regra_maior::getAsString() const {
     ostringstream os;
     os << RegraBase::getAsString();
-    os << "X : " << X << endl;
+    os << "X : " << X << " | fum: maior" << endl;
     return os.str();
 }

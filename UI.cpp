@@ -220,8 +220,9 @@ int UI::commandLine(string cmd) {
                         break;
                     case 7:
                         if(habitacao != nullptr) {
-                            *dadosW << set_color(5) << move_to(0, numdados) << habitacao->zcomp(stoi(inputAux[1]));
-                            numdados += habitacao->getNumZonas()*2;
+                            string texto = habitacao->zcomp(stoi(inputAux[1]));
+                            *dadosW << set_color(5) << move_to(0, numdados) << texto;
+                            numdados += contlinhas(texto);
                         }
                         break;
                     case 8:
@@ -319,6 +320,26 @@ int UI::commandLine(string cmd) {
                         }
 
                         break;
+                    case 14:
+                        if(habitacao != nullptr){
+                            try{
+                                string texto = habitacao->rlista(stoi(inputAux[1]), stoi(inputAux[2]));
+                                *dadosW << set_color(5) << move_to(0, numdados) << texto;
+                                numdados += contlinhas(texto);
+                            }catch(const char* exce){
+                                *dadosW << set_color(5) << move_to(0, numdados++) << exce;
+                            }
+                        }
+                        break;
+                    case 15:
+                        if(habitacao != nullptr){
+                            if(habitacao->rrem(stoi(inputAux[1]), stoi(inputAux[2]), stoi(inputAux[3]))){
+
+                            }else {
+                                *dadosW << set_color(5) << move_to(0, numdados++) << "erro a remiver a regra";
+                            }
+                        }
+                        break;
                     case 16:
                         if(habitacao != nullptr){
                             // falta verificacao  de erros !
@@ -330,7 +351,30 @@ int UI::commandLine(string cmd) {
                             }
 
                         }
+                        break;
+                    case 17:
+                        if(habitacao != nullptr){
+                            // falta verificacao  de erros !
+                            // e so um teste para ver se  funcionar
+                            if(habitacao->ades(stoi(inputAux[1]), stoi(inputAux[2]), stoi(inputAux[3]))){
+                                atualizar_zonas_UI(linhas, colunas);
+                            }else{
+                                *dadosW << set_color(5) << move_to(0, numdados++) << "erro a acuc«sicao dos rewfeqfw";
+                            }
 
+                        }
+                        break;
+                    case 18:
+                        if(habitacao != nullptr){
+                            // falta verificacao  de erros !
+                            // e so um teste para ver se  funcionar
+                            if(habitacao->acom(stoi(inputAux[1]), stoi(inputAux[2]), inputAux[3])){
+                                atualizar_zonas_UI(linhas, colunas);
+                            }else{
+                                *dadosW << set_color(5) << move_to(0, numdados++) << "erro a enviar o comando";
+                            }
+
+                        }
                         break;
                     default:
                         break;

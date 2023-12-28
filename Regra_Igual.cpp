@@ -12,6 +12,6 @@ bool Regra_Igual::getEstado() {
 string Regra_Igual::getAsString() const {
     ostringstream os;
     os << RegraBase::getAsString();
-    os << "X : " << X << endl;
+    os << "X : " << X << " | fum: igual" << endl;
     return os.str();
 }

@@ -124,6 +124,16 @@ bool Zona::asoc(const int &idproce, const int &idaparelho) {
     }
 }
 
+bool Zona::acom(const int &IDaparelho, const string &comdando) {
+    auto it = std::find_if(aparelhos.begin(), aparelhos.end(),[&IDaparelho](const auto& aparelho) {return aparelho->getid() == IDaparelho;});
+    if (it != aparelhos.end()) {
+        (*it)->mudaEstado(comdando);
+        return true;
+    } else{
+        return false;
+    }
+}
+
 int Zona::getNumeroPropriedades() const {
     return (int)propriedades.size();
 }
@@ -241,6 +251,34 @@ bool Zona::pmuda(const int &idproce, const string &novoComando) {
         (*it)->alteraEstada();
         return true;
     } else{
+        return false;
+    }
+}
+
+string Zona::rlista(const int &idproce) const {;
+    auto it = std::find_if(processadores.begin(), processadores.end(),[idproce](const auto& processo) {return processo->getid() == idproce;});
+    if (it != processadores.end()) {
+        return (*it)->getRegraAsString();
+    }
+    throw "o processador nao existe";
+}
+
+bool Zona::rrem(const int &idproce, const int &idregra) {
+    auto it = std::find_if(processadores.begin(), processadores.end(),[idproce](const auto& processo) {return processo->getid() == idproce;});
+    if (it != processadores.end()) {
+        (*it)->removerRegra(idregra);
+        return true;
+    }else{
+        return false;
+    }
+}
+
+bool Zona::ades(const int &IDproc, const int &IDaparelho) {
+    auto it = std::find_if(processadores.begin(), processadores.end(),[IDproc](const auto& processo) {return processo->getid() == IDproc;});
+    if (it != processadores.end()) {
+        (*it)->removerAparelho(IDaparelho);
+        return true;
+    }else{
         return false;
     }
 }

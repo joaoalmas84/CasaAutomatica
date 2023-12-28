@@ -12,6 +12,6 @@ bool Regra_menor::getEstado() {
 string Regra_menor::getAsString() const {
     ostringstream os;
     os << RegraBase::getAsString();
-    os << "X : " << X << endl;
+    os << "X : " << X << " | fum: menor"<<endl;
     return os.str();
 }

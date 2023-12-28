@@ -16,7 +16,6 @@ bool Regra_fora::getEstado() {
 string Regra_fora::getAsString() const {
     ostringstream os;
     os << RegraBase::getAsString();
-    os << "X : " << X << endl;
-    os << "Y : " << Y << endl;
+    os << "X : " << X << " Y : " << Y << " | fum: fora" << endl;
     return os.str();
 }

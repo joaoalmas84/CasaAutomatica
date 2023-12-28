@@ -47,6 +47,14 @@ string Processador::getAsSting() const {
     for (auto &r : regras){
         os << "\t" <<r->getAsString();
     }
+    os << "aparelhos: " << endl;
+    for(auto &aparelho : aparelhos){
+        if(aparelho.lock() != nullptr){
+            if(aparelho.lock() != nullptr){
+                os << "\t" << aparelho.lock()->getAsString();
+            }
+        }
+    }
     return os.str();
 }
 
@@ -70,9 +78,10 @@ void Processador::alteraEstada() {
             estado = false;
     }
     if(estado){
-        shared_ptr<Aparelho> aparelho = aparelhos.lock();
-        if(aparelho != nullptr){
-            aparelho->mudaEstado(comando);
+        for(auto &aparelho : aparelhos){
+            if(aparelho.lock() != nullptr){
+                aparelho.lock()->mudaEstado(comando);
+            }
         }
     }
 }
@@ -82,9 +91,34 @@ void Processador::eleminarRegra(int idRegra) {
 }
 
 void Processador::addAparelho(weak_ptr<Aparelho> _aparelhos) {
-    aparelhos = _aparelhos;
+    auto it = find_if(aparelhos.begin(), aparelhos.end(), [&_aparelhos](weak_ptr<Aparelho> &aparelho){
+        return aparelho.lock()->getid() == _aparelhos.lock()->getid();});
+
+    if(it != aparelhos.end()){
+        return;
+    }
+
+    aparelhos.push_back(_aparelhos);
 }
 
 void Processador::setComando(const string &_comando) {
     this->comando = _comando;
+}
+
+string Processador::getRegraAsString() const {
+    ostringstream os;
+    for(auto &R : regras){
+        os << R->getAsString();
+    }
+    return os.str();
+}
+
+void Processador::removerRegra(const int &idRegra) {
+    regras.erase(remove_if(regras.begin(), regras.end(), [&idRegra](const auto& regra){
+        return regra->getId() == idRegra;}), regras.end());
+}
+
+void Processador::removerAparelho(const int& idAparelho) {
+    aparelhos.erase(remove_if(aparelhos.begin(), aparelhos.end(), [&idAparelho](const auto& aparelho){
+        return aparelho.lock()->getid() == idAparelho;}), aparelhos.end());
 }

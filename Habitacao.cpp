@@ -222,6 +222,19 @@ bool Habitacao::rnova(const int &IDzona, const int &idproce, const string &funca
     return false;
 }
 
+bool Habitacao::asoc(const int &IDzona, const int &idproce, const int &idaparelho) {
+    for (int i = 0; i < linhas; ++i) {
+        for ( int j = 0; j < colunas; ++j) {
+            if(zonas[i][j] != nullptr) {
+                if (zonas[i][j]->getId() == IDzona){
+                    return zonas[i][j]->asoc(idproce, idaparelho);
+                }
+            }
+        }
+    }
+    return false;
+}
+
 bool Habitacao::pmuda(const int &IDzona, const int & idproce, const string &novoComando) {
     for (int i = 0; i < linhas; ++i) {
         for ( int j = 0; j < colunas; ++j) {
@@ -235,18 +248,59 @@ bool Habitacao::pmuda(const int &IDzona, const int & idproce, const string &novo
     return false;
 }
 
-bool Habitacao::asoc(const int &IDzona, const int &idproce, const int &idaparelho) {
-    for (int i = 0; i < linhas; ++i) {
+string Habitacao::rlista(const int &IDzona, const int &idproce) const {
+for (int i = 0; i < linhas; ++i) {
         for ( int j = 0; j < colunas; ++j) {
-            if(zonas[i][j] != nullptr) {
+            if(zonas[i][j] != nullptr){
                 if (zonas[i][j]->getId() == IDzona){
-                    return zonas[i][j]->asoc(idproce, idaparelho);
+                    return zonas[i][j]->rlista(idproce);
+                }
+            }
+        }
+    }
+    throw "Zona nao existe";
+}
+
+bool Habitacao::rrem(const int &IDzona, const int &idproce, const int &idregra) {
+for (int i = 0; i < linhas; ++i) {
+        for ( int j = 0; j < colunas; ++j) {
+            if(zonas[i][j] != nullptr){
+                if (zonas[i][j]->getId() == IDzona){
+                    return zonas[i][j]->rrem(idproce, idregra);
                 }
             }
         }
     }
     return false;
 }
+
+bool Habitacao::ades(const int &IDzonam, const int &IDproc, const int &regra) {
+    for (int i = 0; i < linhas; ++i) {
+        for ( int j = 0; j < colunas; ++j) {
+                if(zonas[i][j] != nullptr){
+                    if (zonas[i][j]->getId() == IDzonam){
+                        return zonas[i][j]->ades(IDproc, regra);
+                    }
+                }
+        }
+    }
+    return false;
+}
+
+bool Habitacao::acom(const int &IDzona, const int &IDaparelho, const string &comdando) {
+for (int i = 0; i < linhas; ++i) {
+        for ( int j = 0; j < colunas; ++j){
+            if(zonas[i][j] != nullptr){
+                if (zonas[i][j]->getId() == IDzona){
+                    return zonas[i][j]->acom(IDaparelho, comdando);
+                }
+            }
+        }
+    }
+    return false;
+}
+
+
                             //////////////////////////////////////////////////////////////////
                             /////////// Comandos para gerir habitação e zonas/////////////////
                             //////////////////////////////////////////////////////////////////
