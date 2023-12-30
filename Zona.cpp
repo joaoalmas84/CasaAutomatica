@@ -63,17 +63,17 @@ string Zona::getAsStringSimple() const {
 string Zona::getAsString() const {
     ostringstream os;
     os << "Zona: " << id << endl;
-    os << "A : " << numeroDeAparelhos() <<  endl;
+    os << "\t\tA : " << numeroDeAparelhos() <<  endl;
     for (auto a: aparelhos) {
-        os << "\t" << a->getAsString();
+        os << a->getAsString();
     }
-    os << "S : " << numeroDeSensores() <<  endl;
+    os << "\t\tS : " << numeroDeSensores() <<  endl;
     for (auto s: sensores) {
-        os << "\t" << s->getAsString();
+        os << s->getAsString();
     }
-    os << "P : " << numeroDeProcessadores() <<  endl;
+    os << "\t\tP : " << numeroDeProcessadores() <<  endl;
     for (auto p: processadores) {
-        os << "\t" << p->getAsSting();//<< p->();
+        os << p->getAsSting();//<< p->();
     }
     return os.str();
 }
@@ -258,8 +258,16 @@ void Zona::eleminarProcessador(const int &_id) {
 }
 
 void Zona::eleminarAparelho(const int &_id) {
-    aparelhos.erase(remove_if(aparelhos.begin(), aparelhos.end(), [&_id](const shared_ptr<Aparelho> & a){
-        return  a->getid() == _id;}), aparelhos.end());
+    auto it = find_if(aparelhos.begin(), aparelhos.end(), [&_id](const shared_ptr<Aparelho> & a) {
+        return a->getid() == _id;});
+
+    if(it != aparelhos.end()) {
+
+        (*it)->mudaEstado("desligar");
+        aparelhos.erase(remove_if(aparelhos.begin(), aparelhos.end(), [&_id](const shared_ptr<Aparelho> &a) {
+            return a->getid() == _id;
+        }), aparelhos.end());
+    }
 }
 
 int Zona::numeroDeSensores() const {

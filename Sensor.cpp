@@ -25,7 +25,7 @@ double Sensor::getvalor(){
 [[nodiscard]]
 string Sensor::getAsString() const {
     ostringstream os;
-    os << "s" << id << "Estado: " << ultimaMedicao << endl;
+    os << "s" << id << " ||  Estado: " << ultimaMedicao << endl;
     return os.str();
 }
 

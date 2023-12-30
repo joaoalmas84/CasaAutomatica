@@ -42,9 +42,13 @@ bool Processador::addRegra(const string & funcao, weak_ptr<Sensor> sensor, const
         regras.push_back(make_unique<Regra_menor>(sensor, valores[0]));
         return true;
     }else if(funcao == "entre"){
+        if(valores.size() < 2)
+            return false;
         regras.push_back(make_unique<Regra_entre>(sensor, valores[0], valores[1]));
         return true;
     }else if(funcao == "fora"){
+        if(valores.size() < 2)
+            return false;
         regras.push_back(make_unique<Regra_fora>(sensor, valores[0], valores[1]));
         return true;
     }
@@ -53,15 +57,19 @@ bool Processador::addRegra(const string & funcao, weak_ptr<Sensor> sensor, const
 
 string Processador::getAsSting() const {
     ostringstream os;
-    os << "p" << id << " num regras: " << regras.size() << endl;
+    os << "p" << id << " | func: " << comando << " | estado: " << testar() << endl;
+    os << " | num regras: " << regras.size() << " : "<< endl;
     for (auto &r : regras){
-        os << "\t" <<r->getAsString();
+        os <<r->getAsString();
     }
-    os << "aparelhos: " << endl;
+    if(!aparelhos.empty())
+        os << "Aparelhos: " << endl;
+    else
+        os << "Sem Aparelhos" << endl;
     for(auto &aparelho : aparelhos){
         if(aparelho.lock() != nullptr){
             if(aparelho.lock() != nullptr){
-                os << "\t" << aparelho.lock()->getAsString() << endl;
+                os << aparelho.lock()->getid() << " | ";
             }
         }
     }
@@ -70,11 +78,15 @@ string Processador::getAsSting() const {
 
 bool Processador::testar() const {
     bool test = true;
+    int algumaRegra = 0;
     for(auto &R : regras){
-        if(!R->getEstado())
-            test = false;
+        if(R->temSensor()) {
+            algumaRegra++;
+            if (!R->getEstado())
+                test = false;
+        }
     }
-    return test;
+    return algumaRegra > 0 && test;
 }
 
 int Processador::getid() const {
@@ -87,11 +99,15 @@ int Processador::getidzona() const {
 
 void Processador::alteraEstada() {
     bool estado = true;
+    int algumaRegra = 0;
     for(auto &R : regras){
-        if(!R->getEstado())
-            estado = false;
+        if(R->temSensor()) {
+            algumaRegra++;
+            if (!R->getEstado())
+                estado = false;
+        }
     }
-    if(estado){
+    if(algumaRegra > 0 && estado){
         for(auto &aparelho : aparelhos){
             if(aparelho.lock() != nullptr){
                 aparelho.lock()->mudaEstado(comando);

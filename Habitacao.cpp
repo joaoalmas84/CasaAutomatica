@@ -122,7 +122,7 @@ string Habitacao::zlista() const {
         for (int j = 0; j < colunas; ++j) {
             if(zonas[i][j] != nullptr){
                 os << "zona: " << zonas[i][j]->getId() << endl;
-                os << "\t" << zonas[i][j]->getAsStringSimple();
+                os << zonas[i][j]->getAsStringSimple() << endl;
             }
         }
     }

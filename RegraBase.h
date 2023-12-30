@@ -20,6 +20,8 @@ public:
     [[nodiscard]]
     int getId()const;
     int getvalor()const;
+    [[nodiscard]]
+    bool temSensor()const;
     virtual unique_ptr<RegraBase> clone() = 0;
     virtual ~RegraBase() = 0;
 };

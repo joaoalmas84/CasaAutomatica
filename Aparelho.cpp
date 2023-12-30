@@ -3,7 +3,7 @@
 #include <sstream>
 
 /***************************************** Public *****************************************/
-int Aparelho::baseID = 1;
+int Aparelho::baseID = 0;
 
 Aparelho::Aparelho(Aparelho & outro) {
     id = baseID++;
@@ -20,18 +20,19 @@ void Aparelho::desliga() {ligado = false;}
 
 string Aparelho::getAsString() const {
     ostringstream oss;
-    oss << "\nID: " << id
-        << "\nEstado: " << ligado
-        << listProps();
+    oss << "a" << id
+        << "      Estado: " << ligado << endl;
+    oss << listProps();
     return oss.str();
 }
 
 string Aparelho::listProps() const {
     ostringstream oss;
-    oss << "\nPropriedades que afeta:";
+    oss << "Propriedades que afeta:" << endl;
     for (const auto & pair : props) {
-       oss << '\n' << pair.first;
+       oss << pair.first << "  ";
     }
+    oss << endl;
     return oss.str();
 }
 

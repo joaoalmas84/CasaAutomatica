@@ -29,9 +29,18 @@ string RegraBase::getAsString() const {
     os << "id : " << id << endl;
     shared_ptr<Sensor> sensor = Psensor.lock();
     if(sensor) {
-        os << "Sensor associado : " << sensor->getAsString() << endl;
+        os << "Sensor associado : s" << sensor->getid() << endl;
     }else{
         os << "Sensor associado : " << "Sem sensor associado" << endl;
     }
     return os.str();
+}
+
+bool RegraBase::temSensor() const {
+    shared_ptr<Sensor> sensor = Psensor.lock();
+    if(sensor){
+        return true;
+    }else{
+        return false;
+    }
 }

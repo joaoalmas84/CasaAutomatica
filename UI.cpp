@@ -14,7 +14,7 @@ UI::UI(): t(Terminal::instance()), dimx(t.getNumCols()), dimy(t.getNumRows()), l
     numdados = 0;
     ini_cor();
     cmdW = ini_cmd_UI();
-    *cmdW << set_color(3) <<move_to(0,0) << "Comando -> ";
+    *cmdW << set_color(6) <<move_to(0,0) << "Comando -> ";
     dadosW = ini_dadosW_UI();
 }
 
@@ -45,7 +45,7 @@ void UI::ini_cor(){
 
 void UI::atulizar_cmdW() {
     cmdW->clear();
-    *cmdW << set_color(3) << move_to(0,0) << "Comando -> ";
+    *cmdW << set_color(6) << move_to(0,0) << "Comando -> ";
 }
 
 void UI::criarZonasWindow() {
@@ -88,8 +88,8 @@ void UI::atualizar_zonas_UI(const int &linha, const int &coluna) {
                     zonasW[i][j] = new Window(j*dimzonasx, i*dimzonasy, dimzonasx, dimzonasy);
 
                 (zonasW[i][j])->clear();
-                *(zonasW[i][j]) << set_color(3) << move_to(0, 0) << habitacao->get_ptrZona(i, j)->getId();
-                *(zonasW[i][j]) << set_color(3) << move_to(0, 1) << ""<< habitacao->get_ptrZona(i, j)->getAsStringSimple();
+                *(zonasW[i][j]) << set_color(6) << move_to(0, 0) << "zona Id: "<< habitacao->get_ptrZona(i, j)->getId();
+                *(zonasW[i][j]) << set_color(6) << move_to(0, 1) << habitacao->get_ptrZona(i, j)->getAsStringSimple();
 
             }else if(zonasW[i][j] != nullptr){
                     delete zonasW[i][j];
@@ -105,7 +105,10 @@ void UI::START() {
     string cmd;
     int res = 0;
     int i = 0;
-    *dadosW << set_color(5) << move_to(0 , numdados++) << "\t\t\t\tBem Vindo\nAs dimensoes de uma habitacao tem obrigatoriamente de estar entre 2x2 e 4x4\n\tUma zona nao pode estar fora da habitacao";
+    *dadosW << set_color(6) << move_to((dimx-9)  / 2 , (dimy - 10) / 2 + numdados++) << "Bem Vindo";
+    *dadosW << set_color(6) << move_to((dimx-75)  / 2 , (dimy -10) / 2 +numdados++) << "As dimensoes de uma habitacao tem obrigatoriamente de estar entre 2x2 e 4x4";
+    *dadosW << set_color(6) << move_to((dimx-41)  / 2 , (dimy -10) / 2 +numdados++) << "Uma zona nao pode estar fora da habitacao";
+
 
     while (res != 1) {
         cmd = getCmd();
@@ -137,8 +140,8 @@ int UI::commandLine(string cmd) {
     }
 
     Comando c(cmd);
-    *dadosW << set_color(5) << move_to(0, numdados++) << cmd;
-    *dadosW << set_color(12) << move_to(0, 0) << "Instantes: " << instantes;
+    *dadosW << set_color(12) << move_to(0, numdados++) << cmd;
+    *dadosW << set_color(4) << move_to(0, 0) << "Instantes: " << instantes;
     switch (c.validaCmd()) {
         case 0:
             bool flag;
@@ -152,10 +155,10 @@ int UI::commandLine(string cmd) {
                         if (habitacao != nullptr) { // <- Habitação ainda não existe
                             habitacao->prox();
                             instantes++;
-                            *dadosW << set_color(12) << move_to(0, 0) << "Instantes: " << instantes;
+                            *dadosW << set_color(4) << move_to(0, 0) << "Instantes: " << instantes;
                             atualizar_zonas_UI(linhas, colunas);
                         } else { // <- Habitação já existe
-                            *dadosW << set_color(5) << move_to(0, numdados++) << "Ja existe uma habitacao";
+                            *dadosW << set_color(10) << move_to(0, numdados++) << "Ja existe uma habitacao";
                         }
                         break;
                     case 1:
@@ -164,10 +167,10 @@ int UI::commandLine(string cmd) {
                                 habitacao->prox();
                                 instantes++;
                             }
-                            *dadosW << set_color(12) << move_to(0, 0) << "Instantes: " << instantes;
+                            *dadosW << set_color(4) << move_to(0, 0) << "Instantes: " << instantes;
                             atualizar_zonas_UI(linhas, colunas);
                         } else { // <- Habitação já existe
-                            *dadosW << set_color(5) << move_to(0, numdados++) << "Ja existe uma habitacao";
+                            *dadosW << set_color(10) << move_to(0, numdados++) << "Ja existe uma habitacao";
                         }
                         break;
                     case 2:
@@ -179,10 +182,10 @@ int UI::commandLine(string cmd) {
                                 criarZonasWindow();
                                 dadosW =ini_dadosW_UI();
                             } else {
-                                *dadosW << set_color(5) << move_to(0, numdados++) << "Dimensoes invalidas";
+                                *dadosW << set_color(10) << move_to(0, numdados++) << "Dimensoes invalidas";
                             }
                         } else { // <- Habitação já existe
-                            *dadosW << set_color(5) << move_to(0, numdados++) << "Ja existe uma habitacao";
+                            *dadosW << set_color(10) << move_to(0, numdados++) << "Ja existe uma habitacao";
                         }
                         break;
                     case 3:
@@ -193,7 +196,9 @@ int UI::commandLine(string cmd) {
                             colunas = 0;
                             deleteZonasWindow();
                             dadosW = ini_dadosW_UI();
-                            *dadosW << set_color(5) << move_to(0, numdados++) << "\t\t\t\tBem Vindo\nAs dimensoes de uma habitacao tem obrigatoriamente de estar entre 2x2 e 4x4\n\tUma zona nao pode estar fora da habitacao";
+                            *dadosW << set_color(6) << move_to((dimx-9)  / 2 , (dimy - 10) / 2 + numdados++) << "Bem Vindo";
+                            *dadosW << set_color(6) << move_to((dimx-75)  / 2 , (dimy -10) / 2 +numdados++) << "As dimensoes de uma habitacao tem obrigatoriamente de estar entre 2x2 e 4x4";
+                            *dadosW << set_color(6) << move_to((dimx-41)  / 2 , (dimy -10) / 2 +numdados++) << "Uma zona nao pode estar fora da habitacao";
                         }
                         break;
                     case 4:
@@ -206,13 +211,13 @@ int UI::commandLine(string cmd) {
                                     habitacao->add_Zona(linhasTemp, colunasTemp);
                                     atualizar_zonas_UI(linhas, colunas);
                                 }catch(const char* exce){
-                                    *dadosW << set_color(5) << move_to(0, numdados++) << exce;
+                                    *dadosW << set_color(10) << move_to(0, numdados++) << exce;
                                 }
                             } else {
-                                *dadosW << set_color(5) << move_to(0, numdados++) << "Dimensoes invalidas " << habitacao->getLin() << " " << habitacao->getCol();
+                                *dadosW << set_color(10) << move_to(0, numdados++) << "Dimensoes invalidas " << habitacao->getLin() << " " << habitacao->getCol();
                             }
                         } else { // <- Habitação ainda não existe
-                            *dadosW << set_color(3) << move_to(0, numdados++) << "Habitacao ainda nao existe";
+                            *dadosW << set_color(10) << move_to(0, numdados++) << "Habitacao ainda nao existe";
                         }
                         break;
                     case 5:
@@ -226,23 +231,24 @@ int UI::commandLine(string cmd) {
                                     habitacao->removerZona(idzona);
                                     atualizar_zonas_UI(linhas, colunas);
                                 }catch(const char* exce){
-                                    *dadosW << set_color(5) << move_to(0, numdados++) << exce;
+                                    *dadosW << set_color(10) << move_to(0, numdados++) << exce;
                                 }
                             }
                         } else { // <- Habitação ainda não existe
-                            *dadosW << set_color(3) << move_to(0, numdados++) << "Habitacao ainda nao existe";
+                            *dadosW << set_color(10) << move_to(0, numdados++) << "Habitacao ainda nao existe";
                         }
                         break;
                     case 6:
                         if(habitacao != nullptr) {
-                            *dadosW << set_color(5) << move_to(0, numdados) << habitacao->zlista();
-                            numdados += habitacao->getNumZonas()*2;
+                            string texto = habitacao->zlista();
+                            *dadosW << set_color(7) << move_to(0, numdados) << texto;
+                            numdados += contlinhas(texto);
                         }
                         break;
                     case 7:
                         if(habitacao != nullptr) {
                             string texto = habitacao->zcomp(stoi(inputAux[1]));
-                            *dadosW << set_color(5) << move_to(0, numdados) << texto;
+                            *dadosW << set_color(7) << move_to(0, numdados) << texto;
                             numdados += contlinhas(texto);
                         }
                         break;
@@ -253,23 +259,23 @@ int UI::commandLine(string cmd) {
                             if (c.zrem()) {
                                 idzona = stoi(inputAux[1]);
                                     string texto = habitacao->zprops(idzona);
-                                    *dadosW << set_color(5) << move_to(0, numdados) << texto;
+                                    *dadosW << set_color(7) << move_to(0, numdados) << texto;
                                     numdados += contlinhas(texto);
                             }
                         } else { // <- Habitação ainda não existe
-                            *dadosW << set_color(3) << move_to(0, numdados++) << "Habitacao ainda nao existe";
+                            *dadosW << set_color(10) << move_to(0, numdados++) << "Habitacao ainda nao existe";
                         }
                         break;
                     case 9:
                         if (habitacao != nullptr) { // <- Habitação já existe
                             if(habitacao->pmod(stoi(inputAux[1]), inputAux[2], stoi(inputAux[3]))){
-                                *dadosW << set_color(5) << move_to(0, numdados++) << "Propriedade alterada";
+                                *dadosW << set_color(7) << move_to(0, numdados++) << "Propriedade alterada";
                                 atualizar_zonas_UI(linhas, colunas);
                             }else{
-                                *dadosW << set_color(5) << move_to(0, numdados++) << "Nao foi possivil alterar a propridade";
+                                *dadosW << set_color(10) << move_to(0, numdados++) << "Nao foi possivil alterar a propridade";
                             }
                         } else { // <- Habitação ainda não existe
-                            *dadosW << set_color(3) << move_to(0, numdados++) << "Habitacao ainda nao existe";
+                            *dadosW << set_color(10) << move_to(0, numdados++) << "Habitacao ainda nao existe";
                         }
 
                         break;
@@ -281,24 +287,24 @@ int UI::commandLine(string cmd) {
 
                             if(inputAux[2] == "s"){
                                 if(habitacao->cnovo_sensor(stoi(inputAux[1]), inputAux[3])) {
-                                    *dadosW << set_color(5) << move_to(0, numdados++) << "Sensor adicionado";
+                                    *dadosW << set_color(7) << move_to(0, numdados++) << "Sensor adicionado";
                                 }else{
-                                    *dadosW << set_color(5) << move_to(0, numdados++) << "erro a adicionar sensor";
+                                    *dadosW << set_color(10) << move_to(0, numdados++) << "erro a adicionar sensor";
                                 }
                             }else if(inputAux[2] == "a"){
                                 if(habitacao->cnovo_aparelho(stoi(inputAux[1]), inputAux[3])) {
-                                    *dadosW << set_color(5) << move_to(0, numdados++) << "Sensor adicionado";
+                                    *dadosW << set_color(7) << move_to(0, numdados++) << "Sensor adicionado";
                                 }else{
-                                    *dadosW << set_color(5) << move_to(0, numdados++) << "erro a adicionar aparelho";
+                                    *dadosW << set_color(10) << move_to(0, numdados++) << "erro a adicionar aparelho";
                                 }
                             } else if(inputAux[2] == "p"){
                                 if(habitacao->cnovo_processador(stoi(inputAux[1]), inputAux[3])) {
-                                    *dadosW << set_color(5) << move_to(0, numdados++) << "Sensor adicionado";
+                                    *dadosW << set_color(7) << move_to(0, numdados++) << "Sensor adicionado";
                                 }else{
-                                    *dadosW << set_color(5) << move_to(0, numdados++) << "erro a adicionar processador";
+                                    *dadosW << set_color(10) << move_to(0, numdados++) << "erro a adicionar processador";
                                 }
                             }else{
-                                *dadosW << set_color(3) << move_to(0, numdados++) << "erro de sintaxe";
+                                *dadosW << set_color(10) << move_to(0, numdados++) << "erro de sintaxe";
                             }
                             atualizar_zonas_UI(linhas, colunas);
                         }
@@ -318,13 +324,13 @@ int UI::commandLine(string cmd) {
                             // falta verificacao  de erros !
                             // e so um teste para ver se  funcionar
                             vector<double> valores;
-                            for (int i = 5; i < inputAux.size(); ++i) {
+                            for (int i = 5; i < inputAux.size() - 1; i++) {
                                 valores.emplace_back(stoi(inputAux[i]));
                             }
                             if(habitacao->rnova(stoi(inputAux[1]), stoi(inputAux[2]), inputAux[3], stoi(inputAux[4]), valores)){
                                 atualizar_zonas_UI(linhas, colunas);
                             }else{
-                                *dadosW << set_color(5) << move_to(0, numdados++) << "erro a adicionar regra";
+                                *dadosW << set_color(10) << move_to(0, numdados++) << "erro a adicionar regra";
                             }
 
                         }
@@ -335,7 +341,7 @@ int UI::commandLine(string cmd) {
                             if(habitacao->pmuda(stoi(inputAux[1]), stoi(inputAux[2]), inputAux[3])){
                                 atualizar_zonas_UI(linhas, colunas);
                             }else{
-                                *dadosW << set_color(5) << move_to(0, numdados++) << "erro na mudaca do comdando";
+                                *dadosW << set_color(10) << move_to(0, numdados++) << "erro na mudaca do comdando";
                             }
 
                         }
@@ -345,19 +351,19 @@ int UI::commandLine(string cmd) {
                         if(habitacao != nullptr){
                             try{
                                 string texto = habitacao->rlista(stoi(inputAux[1]), stoi(inputAux[2]));
-                                *dadosW << set_color(5) << move_to(0, numdados) << texto;
+                                *dadosW << set_color(7) << move_to(0, numdados) << texto;
                                 numdados += contlinhas(texto);
                             }catch(const char* exce){
-                                *dadosW << set_color(5) << move_to(0, numdados++) << exce;
+                                *dadosW << set_color(10) << move_to(0, numdados++) << exce;
                             }
                         }
                         break;
                     case 15:
                         if(habitacao != nullptr){
                             if(habitacao->rrem(stoi(inputAux[1]), stoi(inputAux[2]), stoi(inputAux[3]))){
-
+                                atualizar_zonas_UI(linhas, colunas);
                             }else {
-                                *dadosW << set_color(5) << move_to(0, numdados++) << "erro a remiver a regra";
+                                *dadosW << set_color(10) << move_to(0, numdados++) << "Erro na remocao das regras";
                             }
                         }
                         break;
@@ -368,7 +374,7 @@ int UI::commandLine(string cmd) {
                             if(habitacao->asoc(stoi(inputAux[1]), stoi(inputAux[2]), stoi(inputAux[3]))){
                                 atualizar_zonas_UI(linhas, colunas);
                             }else{
-                                *dadosW << set_color(5) << move_to(0, numdados++) << "erro a acuc«sicao dos rewfeqfw";
+                                *dadosW << set_color(10) << move_to(0, numdados++) << "Erro na associacao";
                             }
 
                         }
@@ -380,7 +386,7 @@ int UI::commandLine(string cmd) {
                             if(habitacao->ades(stoi(inputAux[1]), stoi(inputAux[2]), stoi(inputAux[3]))){
                                 atualizar_zonas_UI(linhas, colunas);
                             }else{
-                                *dadosW << set_color(5) << move_to(0, numdados++) << "erro a acuc«sicao dos rewfeqfw";
+                                *dadosW << set_color(10) << move_to(0, numdados++) << "erro na remocao da associacao";
                             }
 
                         }
@@ -392,7 +398,7 @@ int UI::commandLine(string cmd) {
                             if(habitacao->acom(stoi(inputAux[1]), stoi(inputAux[2]), inputAux[3])){
                                 atualizar_zonas_UI(linhas, colunas);
                             }else{
-                                *dadosW << set_color(5) << move_to(0, numdados++) << "erro a enviar o comando";
+                                *dadosW << set_color(10) << move_to(0, numdados++) << "erro a enviar o comando para o aparelho";
                             }
 
                         }
@@ -404,7 +410,7 @@ int UI::commandLine(string cmd) {
                             if(habitacao->psalva(stoi(inputAux[1]), stoi(inputAux[2]), inputAux[3])){
                                 atualizar_zonas_UI(linhas, colunas);
                             }else{
-                                *dadosW << set_color(5) << move_to(0, numdados++) << "erro do psalva";
+                                *dadosW << set_color(10) << move_to(0, numdados++) << "erro do psalva";
                             }
                         }
                         break;
@@ -416,13 +422,15 @@ int UI::commandLine(string cmd) {
                                 habitacao->prepoe(inputAux[1]);
                                 atualizar_zonas_UI(linhas, colunas);
                             }catch(const char* exce) {
-                                *dadosW << set_color(5) << move_to(0, numdados++) << exce;
+                                *dadosW << set_color(10) << move_to(0, numdados++) << exce;
                             }
                         }
                         break;
                     case 21:
                         if(habitacao != nullptr){
                             habitacao->prem(inputAux[1]);
+                        }else{
+                            *dadosW << set_color(10) << move_to(0, numdados++) << "erro na remocao do processador salvo";
                         }
                         break;
                     case 22:
@@ -430,7 +438,7 @@ int UI::commandLine(string cmd) {
                             // falta verificacao  de erros !
                             // e so um teste para ver se  funcionar
                             string testo = habitacao->plista();
-                            *dadosW << set_color(5) << move_to(0, numdados) << testo;
+                            *dadosW << set_color(7) << move_to(0, numdados) << testo;
                             numdados += contlinhas(testo);
                         }
                         break;
@@ -438,18 +446,18 @@ int UI::commandLine(string cmd) {
                         break;
                 }
             } else {
-                *dadosW << set_color(19) << move_to(0, numdados++) << "Sintaxe invalida";
+                *dadosW << set_color(10) << move_to(0, numdados++) << "Sintaxe invalida";
             }
             break;
 
         case 1:
-            *dadosW << set_color(19) << move_to(0, numdados++) << "Comando nao encontrado";
+            *dadosW << set_color(10) << move_to(0, numdados++) << "Comando nao encontrado";
             break;
         case 2:
-            *dadosW << set_color(19) << move_to(0, numdados++) << "Argumentos a menos";
+            *dadosW << set_color(10) << move_to(0, numdados++) << "Argumentos a menos";
             break;
         case 3:
-            *dadosW << set_color(19) << move_to(0, numdados++) << "Argumentos a mais";
+            *dadosW << set_color(10) << move_to(0, numdados++) << "Argumentos a mais";
             break;
         default:
             break;

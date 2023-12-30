@@ -17,7 +17,7 @@ bool Regra_entre::getEstado() {
 string Regra_entre::getAsString() const {
     ostringstream os;
     os << RegraBase::getAsString();
-    os << "X : " << X << "Y : " << Y << " | fum: entre" << endl;
+    os << "X : " << X << " Y : " << Y << " | fum: entre" << endl;
     return os.str();
 }
 Regra_entre::~Regra_entre() {}
