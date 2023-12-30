@@ -15,3 +15,6 @@ string Regra_maior::getAsString() const {
     os << "X : " << X << " | fum: maior" << endl;
     return os.str();
 }
+unique_ptr<RegraBase> Regra_maior::clone() {
+    return make_unique<Regra_maior>(*this);
+}

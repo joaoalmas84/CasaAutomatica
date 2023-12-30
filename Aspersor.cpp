@@ -58,5 +58,8 @@ void Aspersor::prox() {
         } catch(const char* err) {}
     }
 }
+shared_ptr<Aparelho> Aspersor::clone() {
+    return make_shared<Aspersor>(*this);
+}
 
 /***************************************** Private *****************************************/

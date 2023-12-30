@@ -16,6 +16,7 @@ public:
     [[nodiscard]]
     string getAsString()const final;
     ~Regra_fora() = default;
+    unique_ptr<RegraBase> clone() final;
 };
 
 

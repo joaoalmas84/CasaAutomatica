@@ -24,8 +24,25 @@ int Zona::baseId = 1;
                     /////////// Comandos para gerir habitação e zonas/////////////////
                     //////////////////////////////////////////////////////////////////
 
-Zona::Zona(string  nomeDaZona): tilulo(std::move(nomeDaZona)), id(baseId++){iniciarPropriedadesDefault();}
+Zona::Zona(string  nomeDaZona): tilulo(std::move(nomeDaZona)), id(baseId++){
+    iniciarPropriedadesDefault();
+}
 
+Zona::Zona(const Zona &zona): tilulo(zona.tilulo), id(baseId++){
+    for(auto props : zona.propriedades){
+        propriedades[props.first] = make_shared<Propriedade>(*props.second);
+    }
+    for(auto s : zona.sensores){
+        sensores.push_back(make_shared<Sensor>(*s));
+    }
+    for(auto p : zona.processadores){
+        processadores.push_back(make_shared<Processador>(*p));
+    }
+    for(auto a : zona.aparelhos){
+        aparelhos.push_back(a->clone());
+    }
+
+}
 // info
 string Zona::getAsStringSimple() const {
     ostringstream os;
@@ -48,7 +65,7 @@ string Zona::getAsString() const {
     os << "Zona: " << id << endl;
     os << "A : " << numeroDeAparelhos() <<  endl;
     for (auto a: aparelhos) {
-        //os << "\ta" << a-> << " // nome sensor // " << "estado: " << s->getvalor();
+        os << "\t" << a->getAsString();
     }
     os << "S : " << numeroDeSensores() <<  endl;
     for (auto s: sensores) {
@@ -117,7 +134,7 @@ bool Zona::asoc(const int &idproce, const int &idaparelho) {
     }
     if(it != processadores.end() && it2 != aparelhos.end()) {
         (*it)->addAparelho(weak_ptr<Aparelho>(*it2));
-        (*it)->alteraEstada();
+        //(*it)->alteraEstada(); // teste basico
         return true;
     } else {
         return false;
@@ -261,7 +278,7 @@ bool Zona::pmuda(const int &idproce, const string &novoComando) {
     auto it = std::find_if(processadores.begin(), processadores.end(),[idproce](const auto& processo) {return processo->getid() == idproce;});
     if (it != processadores.end()) {
         (*it)->setComando(novoComando);
-        (*it)->alteraEstada();
+        //(*it)->alteraEstada(); // teste basico
         return true;
     } else{
         return false;
@@ -294,6 +311,20 @@ bool Zona::ades(const int &IDproc, const int &IDaparelho) {
     }else{
         return false;
     }
+}
+
+shared_ptr<Processador> Zona::psalva(const int &idproce) {
+    auto it = std::find_if(processadores.begin(), processadores.end(),[idproce](const auto& processo) {return processo->getid() == idproce;});
+    if (it != processadores.end()) {
+        return make_shared<Processador>(*(*it));;
+    }else{
+        return nullptr;
+    }
+}
+
+void Zona::prepoe(shared_ptr<struct Processador> ptr) {
+    eleminarProcessador(ptr->getid());
+    processadores.push_back(ptr);
 }
 
 Zona::~Zona() {

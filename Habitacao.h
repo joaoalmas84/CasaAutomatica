@@ -7,9 +7,12 @@ class Habitacao {
     Zona ***zonas;
     int linhas;
     int colunas;
+    map<string,shared_ptr<Processador>> processadorsalva;
+
 
 public:
     //hnova <num linhas> <num colunas>
+    Habitacao(const Habitacao &habitacao);
     Habitacao(const int &_linhas,const int &_colunas);
     //hrem
     ~Habitacao();
@@ -44,6 +47,10 @@ public:
     bool ades(const int &IDzonam, const int &IDproc, const int &regra);
     bool acom(const int &IDzona, const int &IDaparelho, const string &comdando);
     void prox();
+    bool psalva(const int &IDzona, const int &idproce, const string &nome);
+    string plista() const;
+    void prem(const string &nome);
+    void prepoe(const string &nome);
                         //////////////////////////////////////////////////////////////////
                         /////////// Comandos para gerir habitação e zonas/////////////////
                         //////////////////////////////////////////////////////////////////

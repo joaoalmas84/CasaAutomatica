@@ -9,7 +9,7 @@ using namespace term;
 
 /***************************************** Public *****************************************/
 
-UI::UI(): t(Terminal::instance()), dimx(t.getNumCols()), dimy(t.getNumRows()), linhas(0), colunas(0), dadosW(nullptr), dimzonasy((dimy - 3) / 4), dimzonasx((dimy - 3) / 4 * 3){
+UI::UI(): t(Terminal::instance()), dimx(t.getNumCols()), dimy(t.getNumRows()), linhas(0), colunas(0), dadosW(nullptr), dimzonasy((dimy - 3) / 4), dimzonasx((dimy - 3) / 4 * 3), instantes(0){
     habitacao = nullptr;
     numdados = 0;
     ini_cor();
@@ -33,7 +33,7 @@ Window *UI::ini_cmd_UI() {
 
 Window *UI::ini_dadosW_UI() {
     delete dadosW;
-    numdados = 0;
+    numdados = 1;
     return new Window(dimzonasx*colunas, 0, dimx - (dimzonasx*colunas), dimy-3);
 }
 
@@ -105,18 +105,16 @@ void UI::START() {
     string cmd;
     int res = 0;
     int i = 0;
-
     *dadosW << set_color(5) << move_to(0 , numdados++) << "\t\t\t\tBem Vindo\nAs dimensoes de uma habitacao tem obrigatoriamente de estar entre 2x2 e 4x4\n\tUma zona nao pode estar fora da habitacao";
 
     while (res != 1) {
-        cleandados();
         cmd = getCmd();
         if (i == 0) {
             dadosW = ini_dadosW_UI();
         }
         i++;
-        res = commandLine(cmd);
         cleandados();
+        res = commandLine(cmd);
     }
 }
 
@@ -140,6 +138,7 @@ int UI::commandLine(string cmd) {
 
     Comando c(cmd);
     *dadosW << set_color(5) << move_to(0, numdados++) << cmd;
+    *dadosW << set_color(12) << move_to(0, 0) << "Instantes: " << instantes;
     switch (c.validaCmd()) {
         case 0:
             bool flag;
@@ -152,6 +151,8 @@ int UI::commandLine(string cmd) {
                     case 0:
                         if (habitacao != nullptr) { // <- Habitação ainda não existe
                             habitacao->prox();
+                            instantes++;
+                            *dadosW << set_color(12) << move_to(0, 0) << "Instantes: " << instantes;
                             atualizar_zonas_UI(linhas, colunas);
                         } else { // <- Habitação já existe
                             *dadosW << set_color(5) << move_to(0, numdados++) << "Ja existe uma habitacao";
@@ -161,7 +162,9 @@ int UI::commandLine(string cmd) {
                         if (habitacao != nullptr) { // <- Habitação ainda não existe
                             for (int i = 0; i < stoi(inputAux[1]); ++i) {
                                 habitacao->prox();
+                                instantes++;
                             }
+                            *dadosW << set_color(12) << move_to(0, 0) << "Instantes: " << instantes;
                             atualizar_zonas_UI(linhas, colunas);
                         } else { // <- Habitação já existe
                             *dadosW << set_color(5) << move_to(0, numdados++) << "Ja existe uma habitacao";
@@ -394,6 +397,43 @@ int UI::commandLine(string cmd) {
 
                         }
                         break;
+                    case 19:
+                        if(habitacao != nullptr){
+                            // falta verificacao  de erros !
+                            // e so um teste para ver se  funcionar
+                            if(habitacao->psalva(stoi(inputAux[1]), stoi(inputAux[2]), inputAux[3])){
+                                atualizar_zonas_UI(linhas, colunas);
+                            }else{
+                                *dadosW << set_color(5) << move_to(0, numdados++) << "erro do psalva";
+                            }
+                        }
+                        break;
+                    case 20:
+                        if(habitacao != nullptr){
+                            // falta verificacao  de erros !
+                            // e so um teste para ver se  funcionar
+                            try {
+                                habitacao->prepoe(inputAux[1]);
+                                atualizar_zonas_UI(linhas, colunas);
+                            }catch(const char* exce) {
+                                *dadosW << set_color(5) << move_to(0, numdados++) << exce;
+                            }
+                        }
+                        break;
+                    case 21:
+                        if(habitacao != nullptr){
+                            habitacao->prem(inputAux[1]);
+                        }
+                        break;
+                    case 22:
+                        if(habitacao != nullptr){
+                            // falta verificacao  de erros !
+                            // e so um teste para ver se  funcionar
+                            string testo = habitacao->plista();
+                            *dadosW << set_color(5) << move_to(0, numdados) << testo;
+                            numdados += contlinhas(testo);
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -464,8 +504,9 @@ bool UI::isIntegerString(string s) const {
 }
 void UI::cleandados() {
     if (numdados + 8 >= dimy - 4){
-        numdados = 0;
+        numdados = 1;
         dadosW->clear();
+        *dadosW << set_color(12) << move_to(0, 0) << "Instantes: " << instantes;
     }
 }
 

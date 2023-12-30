@@ -33,4 +33,8 @@ void Lampada::mudaEstado(const string & nome) {
 }
 
 void Lampada::prox() {}
+
+shared_ptr<Aparelho> Lampada::clone() {
+    return make_shared<Lampada>(*this);
+}
 /***************************************** Private *****************************************/

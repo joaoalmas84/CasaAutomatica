@@ -25,6 +25,7 @@ class Zona {
 public:
     ////////////////////////////construtores da class zona
     explicit Zona(string nomeDaZona = "zona sem nome");
+    Zona(const Zona &zona);
     [[nodiscard]]
     string getAsStringSimple()const;
     [[nodiscard]]
@@ -35,6 +36,7 @@ public:
     int getId() const;
     [[nodiscard]]
     int getNumeroPropriedades()const;
+    void prepoe(shared_ptr<struct Processador> ptr);
 
     /////////////////////// criar uma propriedade nova e mudar o valor a funcao set nao deve ser usar e sum para testar
 
@@ -79,6 +81,7 @@ public:
     [[nodiscard]]
     bool acom(const int &IDaparelho, const string &comdando);
     void prox();
+    shared_ptr<Processador> psalva(const int &idproce);
 
 
     ~Zona();

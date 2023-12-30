@@ -16,6 +16,7 @@ public:
     [[nodiscard]]
     string getAsString()const final;
     ~Regra_entre();
+    unique_ptr<RegraBase> clone() final;
 };
 
 

@@ -47,4 +47,8 @@ void Aquecedor::prox(){
         }
     }
 }
+
+shared_ptr<Aparelho> Aquecedor::clone() {
+    return make_shared<Aquecedor>(*this);
+}
 /***************************************** Private *****************************************/

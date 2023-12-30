@@ -21,3 +21,7 @@ string Regra_entre::getAsString() const {
     return os.str();
 }
 Regra_entre::~Regra_entre() {}
+
+unique_ptr<RegraBase> Regra_entre::clone() {
+    return make_unique<Regra_entre>(*this);
+}

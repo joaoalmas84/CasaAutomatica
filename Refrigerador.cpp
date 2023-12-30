@@ -49,5 +49,8 @@ void Refrigerador::prox() {
         }
     }
 }
+shared_ptr<Aparelho> Refrigerador::clone() {
+    return make_shared<Refrigerador>(*this);
+}
 
 /***************************************** Private *****************************************/

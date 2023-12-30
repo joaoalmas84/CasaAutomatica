@@ -15,3 +15,6 @@ string Regra_Igual::getAsString() const {
     os << "X : " << X << " | fum: igual" << endl;
     return os.str();
 }
+unique_ptr<RegraBase> Regra_Igual::clone() {
+    return make_unique<Regra_Igual>(*this);
+}

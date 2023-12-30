@@ -19,3 +19,6 @@ string Regra_fora::getAsString() const {
     os << "X : " << X << " Y : " << Y << " | fum: fora" << endl;
     return os.str();
 }
+unique_ptr<RegraBase> Regra_fora::clone() {
+    return make_unique<Regra_fora>(*this);
+}

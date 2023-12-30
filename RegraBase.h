@@ -11,6 +11,7 @@ class RegraBase {
     const int id;
     weak_ptr<Sensor> Psensor;
 public:
+
     RegraBase(weak_ptr<Sensor> _sensor);
     [[nodiscard]]
     virtual string getAsString() const;
@@ -19,6 +20,7 @@ public:
     [[nodiscard]]
     int getId()const;
     int getvalor()const;
+    virtual unique_ptr<RegraBase> clone() = 0;
     virtual ~RegraBase() = 0;
 };
 

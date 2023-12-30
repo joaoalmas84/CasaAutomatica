@@ -10,6 +10,26 @@
                         /////////// Comandos para gerir habitação e zonas//////////////////
                         ///////////////////////////////////////////////////////////////////
 
+Habitacao::Habitacao(const Habitacao &Habitacao): linhas(Habitacao.linhas), colunas(Habitacao.colunas) {
+    zonas = new Zona **[linhas];
+
+    for (int i = 0; i < linhas; ++i) {
+        zonas[i] = new Zona *[colunas];
+    }
+
+    for (int i = 0; i < linhas; ++i) {
+        for (int j = 0; j < colunas; ++j) {
+            if(Habitacao.zonas[i][j] != nullptr){
+                zonas[i][j] = new Zona(*Habitacao.zonas[i][j]);
+            }else{
+                zonas[i][j] = nullptr;
+            }
+        }
+    }
+    for(auto &p : Habitacao.processadorsalva){
+        processadorsalva[p.first] = make_shared<Processador>(*p.second);
+    }
+}
 Habitacao::Habitacao(const int &_linhas, const int &_colunas): linhas(_linhas), colunas(_colunas) {
     zonas = new Zona **[linhas];
 
@@ -309,6 +329,63 @@ void Habitacao::prox() {
         }
     }
 }
+
+bool Habitacao::psalva(const int &IDzona, const int &idproce, const string &nome) {
+
+    if(processadorsalva.find(nome) != processadorsalva.end()){
+        return false;
+    }
+    for (int i = 0; i < linhas; ++i) {
+        for ( int j = 0; j < colunas; ++j){
+            if(zonas[i][j] != nullptr){
+                if (zonas[i][j]->getId() == IDzona){
+                    auto aux = zonas[i][j]->psalva(idproce);
+                    if(aux != nullptr){
+                        processadorsalva[nome] = aux;
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+string Habitacao::plista() const {
+    ostringstream os;
+    for(auto &p : processadorsalva){
+        os << "\t"<< p.first << endl;
+        os << p.second->getAsSting() << endl;
+    }
+    return os.str();
+}
+
+void Habitacao::prem(const string &nome) {
+    processadorsalva.erase(nome);
+}
+
+void Habitacao::prepoe(const string &nome) {
+    auto proc = processadorsalva.find(nome);
+    if(proc == processadorsalva.end()){
+        throw "Processador nao existe";
+    }
+    for (int i = 0; i < linhas; ++i) {
+        for ( int j = 0; j < colunas; ++j){
+            if(zonas[i][j] != nullptr){
+                if (zonas[i][j]->getId() == proc->second->getidzona()){
+                    zonas[i][j]->prepoe(make_shared<Processador>(*(proc->second)));
+                    return;
+                }
+            }
+        }
+    }
+
+    throw "Zona do proc nao existe :(";
+
+}
+
 
 
                             //////////////////////////////////////////////////////////////////

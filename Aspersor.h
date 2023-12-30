@@ -11,6 +11,7 @@ public:
     void desliga()override;
     void mudaEstado(const string & nome)override;
     void prox();
+    shared_ptr<Aparelho> clone() final;
 };
 
 

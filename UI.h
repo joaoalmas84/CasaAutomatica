@@ -19,6 +19,7 @@ class UI{
     const int dimzonasy;
     int numdados;
     Habitacao *habitacao;
+    int instantes;
 
 public:
     UI();

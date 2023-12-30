@@ -31,6 +31,7 @@ public:
     bool getligado()const;
     virtual void prox() = 0;
     virtual ~Aparelho();
+    virtual shared_ptr<Aparelho> clone() = 0;
 private:
 };
 
