@@ -22,6 +22,7 @@ class UI{
     int instantes;
 
 public:
+    UI(const UI &outro);
     UI();
     ~UI();
     /***** Gestão da Parte Gráfica ****/

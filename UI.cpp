@@ -9,6 +9,34 @@ using namespace term;
 
 /***************************************** Public *****************************************/
 
+UI::UI(const UI &outro): t(Terminal::instance()), dimx(outro.dimx), dimy(outro.dimy), dimzonasx(outro.dimzonasx), dimzonasy(outro.dimzonasy) {
+    linhas = outro.linhas;
+    colunas = outro.colunas;
+    numdados = outro.numdados;
+    habitacao = new Habitacao(*outro.habitacao);
+    instantes = outro.instantes;
+    cmdW = ini_cmd_UI();
+    dadosW = ini_dadosW_UI();
+
+    zonasW = new Window **[linhas];
+
+    for (int i = 0; i < linhas; ++i) {
+        zonasW[i] = new Window *[colunas];
+    }
+
+    for (int i = 0; i < linhas; ++i) {
+        for (int j = 0; j < colunas; ++j) {
+            if(outro.zonasW[i][j] != nullptr){
+                zonasW[i][j] = new Window(j*dimzonasx, i*dimzonasy, dimzonasx, dimzonasy);
+            }else{
+                zonasW[i][j] = nullptr;
+            }
+
+        }
+    }
+    atualizar_zonas_UI(linhas, colunas);
+}
+
 UI::UI(): t(Terminal::instance()), dimx(t.getNumCols()), dimy(t.getNumRows()), linhas(0), colunas(0), dadosW(nullptr), dimzonasy((dimy - 3) / 4), dimzonasx((dimy - 3) / 4 * 3), instantes(0){
     habitacao = nullptr;
     numdados = 0;
