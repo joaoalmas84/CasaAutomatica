@@ -321,13 +321,13 @@ int UI::commandLine(string cmd) {
                                 }
                             }else if(inputAux[2] == "a"){
                                 if(habitacao->cnovo_aparelho(stoi(inputAux[1]), inputAux[3])) {
-                                    *dadosW << set_color(7) << move_to(0, numdados++) << "Sensor adicionado";
+                                    *dadosW << set_color(7) << move_to(0, numdados++) << "aparelho adicionado";
                                 }else{
                                     *dadosW << set_color(10) << move_to(0, numdados++) << "erro a adicionar aparelho";
                                 }
                             } else if(inputAux[2] == "p"){
                                 if(habitacao->cnovo_processador(stoi(inputAux[1]), inputAux[3])) {
-                                    *dadosW << set_color(7) << move_to(0, numdados++) << "Sensor adicionado";
+                                    *dadosW << set_color(7) << move_to(0, numdados++) << "processador adicionado";
                                 }else{
                                     *dadosW << set_color(10) << move_to(0, numdados++) << "erro a adicionar processador";
                                 }

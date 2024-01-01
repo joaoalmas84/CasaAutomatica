@@ -43,6 +43,7 @@ Zona::Zona(const Zona &zona): tilulo(zona.tilulo), id(baseId++){
     }
 
 }
+
 // info
 string Zona::getAsStringSimple() const {
     ostringstream os;

@@ -10,7 +10,7 @@ public:
     void liga()override;
     void desliga()override;
     void mudaEstado(const string & nome)override;
-    void prox();
+    void prox() override;
     shared_ptr<Aparelho> clone() final;
 };
 

@@ -1,7 +1,7 @@
 #include "Aspersor.h"
 
 /***************************************** Public *****************************************/
-Aspersor::Aspersor(weak_ptr<Propriedade> humidade, weak_ptr<Propriedade> vibracao, weak_ptr<Propriedade> fumo): instantes(0){
+Aspersor::Aspersor(weak_ptr<Propriedade> humidade, weak_ptr<Propriedade> vibracao, weak_ptr<Propriedade> fumo): instantes(-1){
     addProp("Humidade", humidade);
     addProp("Vibracao", vibracao);
     addProp("Fumo", fumo);
@@ -44,6 +44,7 @@ void Aspersor::mudaEstado(const std::string &nome) {
 }
 
 void Aspersor::prox() {
+
     if(instantes > 0){
         instantes--;
         if(instantes == 3){
@@ -55,6 +56,7 @@ void Aspersor::prox() {
     if(instantes == 0 && !getligado()){
         try {
             diminuiProp("Vibracao", 100);
+            instantes = -1;
         } catch(const char* err) {}
     }
 }
